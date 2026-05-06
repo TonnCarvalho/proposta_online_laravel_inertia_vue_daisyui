@@ -2,6 +2,9 @@
 import Input from '@/components/form/Input.vue';
 import { useForm } from '@inertiajs/vue3';
 
+const props = defineProps({
+    errors: Object,
+})
 const form = useForm({
     cod_corretor: '',
     password: '',
@@ -40,14 +43,22 @@ const submit = () => {
 
                         <Input label="Senha"
                             name="password"
+                            type="password"
                             v-model="form.password"
                             placeholder="••••••••"
                             :icon="['fas', 'lock']" />
 
+                        <div v-if="props.errors.credentials"
+                            role="alert"
+                            class="alert alert-error alert-soft flex justify-center">
+                            <span>
+                                {{ props.errors.credentials }}
+                            </span>
+                        </div>
+
                         <button type="submit"
-                            class="text-white bg-brand hover:bg-brand-strong box-border border border-transparent focus:ring-4 w-full focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
-                            <font-awesome-icon icon="arrow-right-to-bracket"
-                                class="text-white" />
+                            class="btn btn-primary w-full">
+                            <FontAwesomeIcon :icon="['fas', 'arrow-right-to-bracket']" />
                             Entrar
                         </button>
 

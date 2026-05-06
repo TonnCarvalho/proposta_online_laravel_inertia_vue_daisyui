@@ -22,6 +22,7 @@ defineProps({
             {{ label }}
         </legend>
         <input :name="name"
+            :type="type"
             v-model="model"
             :id="name"
             :placeholder="placeholder"
