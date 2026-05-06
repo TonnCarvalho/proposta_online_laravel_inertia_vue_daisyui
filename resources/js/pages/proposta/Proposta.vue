@@ -26,17 +26,14 @@ defineProps<{
 }>()
 </script>
 <template>
-
     <AppLayout>
+        
         <PageHeader title="Propostas"
             sub-title="Acompanhe suas propostas"
-            icon="file-text" />
+            icon="file-lines" />
 
         <Filtro />
-        <!-- <pre>
-            {{ propostas }}
-        </pre> -->
-        <Tabela :propostas="propostas" />
 
+        <Tabela :propostas="propostas" />
     </AppLayout>
 </template>

@@ -65,7 +65,7 @@ const submit = () => {
                         <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                             Quer ser um corretor ou um associado?
                             <a href="#"
-                                class="font-medium text-primary-600 hover:underline dark:text-primary-500">
+                                class="link link-accent">
                                 Fale conosco
                             </a>
                         </p>
