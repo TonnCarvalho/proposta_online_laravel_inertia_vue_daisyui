@@ -22,7 +22,8 @@ interface Proposta {
 }
 
 defineProps<{
-    propostas: Proposta[]
+    propostas: Proposta[],
+    origens: Origem[]
 }>()
 </script>
 <template>
@@ -32,8 +33,8 @@ defineProps<{
             sub-title="Acompanhe suas propostas"
             icon="file-lines" />
 
-        <Filtro />
+        <Filtro :origens="origens" />
 
-        <Tabela :propostas="propostas" />
+        <Tabela :propostas="propostas"  />
     </AppLayout>
 </template>

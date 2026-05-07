@@ -2,51 +2,49 @@
 
 import { ref } from 'vue'
 
-const origemValue = ref('Todos')
-
 const model = defineModel();
 defineProps({
     label: String,
-    required: Boolean,
     error: String,
     help: String,
-
-    type: {
-        type: String,
-        default: 'text'
-    },
     name: String,
     placeholder: String,
-    size: {
-        type: String,
-        default: 'lg'
+    placeholderDisabled: {
+        type: Boolean,
+        default: false,
     },
-    variant: {
-        type: String,
-        default: 'outline',
-    },
-    icon: String,
-    trailingIcon: String,
-    items: String|Array,
+    items: Array,
+    labelKey: Function,
+    valueKey: Function,
 })
 </script>
 
 <template>
-    <UFormField :label="label"
-        :help="help"
-        :size="size"
-        :required="required"
-        :error="error">
-        <USelect
+    <fieldset class="fieldset">
+        <legend :for="name"
+            class="block mb-1 text-sm font-medium">
+            {{ label }}
+        </legend>
+        <select class="select w-full"
             :name="name"
-            :id="name"
-            :placeholder="placeholder"
-            class="w-full"
-            :class="$attrs.class"
-            :icon="icon"
-            :trailing-icon="trailingIcon"
-            :variant="variant"
-            v-model="model"
-            :items="items" />
-    </UFormField>
+            v-model="model">
+            <option selected
+                value=""
+                :disabled="placeholderDisabled">
+                {{ placeholder }}
+            </option>
+
+            <option v-for="item in items"
+                :key="valueKey(item)"
+                :value="valueKey(item)">
+                {{ labelKey(item) }}
+            </option>
+
+        </select>
+        <span v-if="help"
+            class="label">
+            {{ help }}
+        </span>
+    </fieldset>
+
 </template>

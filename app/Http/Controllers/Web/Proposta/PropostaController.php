@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Proposta;
 
 use App\Http\Controllers\Controller;
+use App\Queries\OrigemQuery;
 use App\Queries\PropostaQuery;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -12,7 +13,7 @@ class PropostaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(PropostaQuery $propostaQuery)
+    public function index(PropostaQuery $propostaQuery, OrigemQuery $origemQuery)
     {
         $propostas = $propostaQuery->select(['id', 'id_associado','id_origem', 'num_proposta', 'status_proposta', 'created_at'])
             ->with([
@@ -20,9 +21,12 @@ class PropostaController extends Controller
             'origem:id,nome'
             ])
             ->get();
+        $origens = $origemQuery->select(['id', 'nome'])
+        ->get();
 
         return Inertia::render('proposta/Proposta', [
             'propostas' => $propostas,
+            'origens' => $origens
         ]);
     }
 
