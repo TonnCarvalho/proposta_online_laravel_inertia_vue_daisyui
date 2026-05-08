@@ -35,6 +35,8 @@ defineProps<{
 
         <Filtro :origens="origens" />
 
-        <Tabela :propostas="propostas"  />
+        <Tabela :propostas="propostas"
+        class="mt-5"
+          />
     </AppLayout>
 </template>

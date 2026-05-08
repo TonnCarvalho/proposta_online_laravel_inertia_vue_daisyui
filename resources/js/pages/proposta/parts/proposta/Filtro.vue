@@ -1,11 +1,23 @@
 <script setup>
 import Input from '@/components/form/Input.vue';
 import Select from '@/components/form/Select.vue';
+import { useForm } from '@inertiajs/vue3';
 
 defineProps({
     origens: Array,
 })
 
+const form = useForm({
+    origem: '',
+    situacao: '',
+})
+
+const situacao = [
+    {label: 'Andamento', value: 'andamento'},
+    {label: 'Andamento', value: 'andamento'},
+    {label: 'Andamento', value: 'andamento'},
+    {label: 'Andamento', value: 'andamento'},
+]
 </script>
 
 <template>
@@ -16,8 +28,16 @@ defineProps({
 
         <Select label="Praça"
             placeholder="Selecione"
+            v-model="form.origem"
             :items="origens"
             :valueKey="item => item.id"
             :labelKey="item => item.nome" />
+
+        <Select label="Situação"
+            placeholder="Selecione"
+            v-model="form.situacao"
+            :items="situacao"
+            :valueKey="item => item.value"
+            :labelKey="item => item.label" />
     </div>
 </template>
