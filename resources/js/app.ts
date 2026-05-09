@@ -3,12 +3,8 @@ import { createApp, h, type DefineComponent } from 'vue'
 import { createInertiaApp, Head, Link } from '@inertiajs/vue3'
 import { ZiggyVue } from '../../vendor/tightenco/ziggy'
 
-// import Main from './layouts/main.vue'
-
-// FontAwesome
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
@@ -20,9 +16,7 @@ createInertiaApp({
   resolve: (name) => {
     const pages = import.meta.glob<DefineComponent>('./pages/**/*.vue', { eager: true })
     const page = pages[`./pages/${name}.vue`]
-
-    page.default.layout = page.default.layout
-
+    if (!page) throw new Error(`Page not found: ./pages/${name}.vue`)
     return page
   },
   setup({ el, App, props, plugin }) {
@@ -32,8 +26,8 @@ createInertiaApp({
       .component('Head', Head)
       .component('Link', Link)
       .component('FontAwesomeIcon', FontAwesomeIcon)
-      .mount(el)
-    },
+      .mount(el) 
+  },
   progress: {
     color: '#4B5563',
     showSpinner: true,
