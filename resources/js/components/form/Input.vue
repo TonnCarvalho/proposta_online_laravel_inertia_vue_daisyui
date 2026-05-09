@@ -18,7 +18,7 @@ defineProps({
 <template>
     <fieldset class="fieldset">
         <legend :for="name"
-            class="block mb-1 text-sm font-medium">
+            class="block mb-1 text-sm font-semibold">
             {{ label }}
         </legend>
         <input :name="name"
