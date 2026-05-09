@@ -28,7 +28,7 @@ defineProps<{
 </script>
 <template>
     <AppLayout>
-        
+
         <PageHeader title="Propostas"
             sub-title="Acompanhe suas propostas"
             icon="file-lines" />
@@ -36,7 +36,6 @@ defineProps<{
         <Filtro :origens="origens" />
 
         <Tabela :propostas="propostas"
-        class="mt-5"
-          />
+            class="mt-5" />
     </AppLayout>
 </template>

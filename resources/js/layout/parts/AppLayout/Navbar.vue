@@ -170,7 +170,7 @@
                         </a>
                         <a href="#"
                             class="flex py-3 px-4 border-b hover:bg-gray-100 dark:hover:bg-gray-600 dark:border-gray-600">
-                            <div class="flex-shrink-0">
+                            <div class="shrink-0">
                                 <img class="w-11 h-11 rounded-full"
                                     src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/joseph-mcfall.png"
                                     alt="Joseph McFall avatar" />

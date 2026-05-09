@@ -8,14 +8,13 @@ const props = defineProps({
 </script>
 
 <template>
-
-  <div class="mt-5 card border border-base-content/20">
-    <div class="card-title text-neutral p-3 flex items-center gap-1">
+  <section>
+    <div class="border border-base-content/20 rounded-t-lg card-title p-3">
       <FontAwesomeIcon :icon="['fas', icon]" />
       {{ title }}
     </div>
 
-    <div class="overflow-x-auto border-t border-base-content/20">
+    <div class="overflow-x-auto border-x border-b border-base-content/20 rounded-b-lg">
 
       <table class="table">
 
@@ -29,5 +28,6 @@ const props = defineProps({
 
       </table>
     </div>
-  </div>
+  </section>
+
 </template>
