@@ -15,18 +15,18 @@ class PropostaController extends Controller
      */
     public function index(PropostaQuery $propostaQuery, OrigemQuery $origemQuery)
     {
-        $propostas = $propostaQuery->select(['id', 'id_associado','id_origem', 'num_proposta', 'status_proposta', 'created_at'])
+        $propostas = $propostaQuery->select(['id', 'id_associado', 'id_origem', 'num_proposta','cod_corretor', 'status_proposta', 'created_at'])
             ->with([
-            'associado:id,nome',
-            'origem:id,nome'
+                'associado:id,nome',
+                'origem:id,nome',
             ])
             ->get();
         $origens = $origemQuery->select(['id', 'nome'])
-        ->get();
+            ->get();
 
         return Inertia::render('proposta/Proposta', [
             'propostas' => $propostas,
-            'origens' => $origens
+            'origens' => $origens,
         ]);
     }
 

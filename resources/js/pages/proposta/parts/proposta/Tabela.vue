@@ -73,7 +73,7 @@ const tableOptionProposta = [
                     </a>
                 </td>
                 <td>
-                    {{ item.status_proposta }}
+                    {{ item.cod_corretor }}
                 </td>
                 <td>
                     <StatusProposta :status="item.status_proposta" />
