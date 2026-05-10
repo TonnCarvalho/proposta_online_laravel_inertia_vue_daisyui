@@ -24,10 +24,9 @@ class AssociadoFactory extends Factory
             'id_origem' => Origem::inRandomOrder()->first()?->id,
             'id_orgao' => Orgao::inRandomOrder()->first()?->id,
 
-            'cod_corretor' => '1000', // fake()->unique()->numberBetween(2000, 3000),
+            'cod_corretor' => fake()->randomElement([100, 1000]), 
 
-            'nome' => fake()->firstName(),
-            'sobrenome' => fake()->lastName(),
+            'nome' => fake()->name(),
 
             'cpf' => fake()->unique()->numerify('###.###.###-##'),
             'rg' => fake()->numerify('########'),

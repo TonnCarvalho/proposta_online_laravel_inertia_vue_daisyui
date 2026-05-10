@@ -39,11 +39,16 @@ return new class extends Migration
             $table->double('taxa')->nullable();
             $table->integer('prazo');
             $table->integer('status_proposta')->default(1);
-            $table->boolean('status_recusado')->default(false);
             $table->integer('status_assinatura')->default(0);
             $table->boolean('status_refin')->default(false);
             $table->string('tipo_proposta', 20)->nullable();
             $table->string('recusado_motivo', 100)->nullable();
+            $table->date('recusado_em')->nullable();
+            $table->foreignIdFor(Usuario::class, 'recusado_por')
+                ->nullable()
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->defa;
             $table->enum('tipo_assinatura', ['digital', 'manual']);
             $table->timestamps();
         });

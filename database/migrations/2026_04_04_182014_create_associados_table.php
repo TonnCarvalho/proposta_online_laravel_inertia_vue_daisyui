@@ -26,8 +26,7 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnUpdate();
             $table->integer('cod_corretor')->index();
-            $table->string('nome', 50);
-            $table->string('sobrenome', 50);
+            $table->string('nome', 100);
             $table->string('cpf', 14)->index();
             $table->string('rg', 50);
             $table->string('orgao_exp', 10);

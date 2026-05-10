@@ -6,7 +6,6 @@ use App\Models\Associado;
 use App\Models\FontePagamento;
 use App\Models\Proposta;
 use App\Models\Usuario;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class PropostaSeeder extends Seeder
@@ -41,7 +40,7 @@ class PropostaSeeder extends Seeder
                 // 🔥 regra real: vem do associado
                 'cod_corretor' => $associado->cod_corretor,
 
-                'num_proposta' => 100000 + $index,
+                'num_proposta' => 300000 + $index,
 
                 'valor_financiado' => $valorFinanciado,
                 'valor_liberado' => $valorFinanciado * 0.9,
@@ -53,21 +52,22 @@ class PropostaSeeder extends Seeder
 
                 'prazo' => $prazo,
 
-                'status_proposta' => fake()->randomElement([1, 2, 3, 4, 5]),
-                'status_recusado' => false,
+                'status_proposta' => fake()->randomElement([0,1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
                 'status_assinatura' => fake()->numberBetween(0, 2),
-                'status_refin' => false,
+                'status_refin' => fake()->randomElement([true, false]),
 
                 'tipo_proposta' => fake()->randomElement([
                     'novo',
-                    'refinanciamento'
+                    'refinanciamento',
                 ]),
 
                 'recusado_motivo' => null,
+                'recusado_em' => null,
+                'recusado_por' => null,
 
                 'tipo_assinatura' => fake()->randomElement([
                     'digital',
-                    'manual'
+                    'manual',
                 ]),
 
                 'created_at' => now(),
