@@ -17,9 +17,6 @@ class PropostaQuery
 
     /**
      * Seleciona as colunas no database
-     *
-     * @param array $columns
-     * @return self
      */
     public function select(array $columns): self
     {
@@ -28,15 +25,30 @@ class PropostaQuery
         return $this;
     }
 
+    public function paginate(int $pages)
+    {
+        return $this->query->paginate($pages);
+    }
+
     public function get(): Collection
     {
         return $this->query->get();
     }
 
+    public function withQueryString(): self
+    {
+        return $this->query->withQueryString();
+    }
+
     public function with(array $relations): self
     {
-         $this->query->with($relations);
-         
-         return $this;
+        $this->query->with($relations);
+
+        return $this;
+    }
+
+    public function filtroPropostaPorNomeNumProposta(string|null $search=null)
+    {
+        return $this->query->where('num_proposta', 'like', '%'. $search . '%');
     }
 }

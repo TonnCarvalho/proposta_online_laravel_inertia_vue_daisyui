@@ -2,20 +2,22 @@
 import Card from '@/components/card/Card.vue';
 import CardBody from '@/components/card/CardBody.vue';
 import CardHead from '@/components/card/cardHead.vue';
-import CardTitle from '@/components/card/CardTitle.vue';
 import Input from '@/components/form/Input.vue';
 import Select from '@/components/form/Select.vue';
-import { useForm } from '@inertiajs/vue3';
+import { router, useForm } from '@inertiajs/vue3';
 
 defineProps({
     origens: Array,
 })
 
 const form = useForm({
+    search: '',
     origem: '',
     situacao: '',
 })
-
+const search = () => {
+    router.get(route('proposta.index'), { search: form.search })
+}
 const situacao = [
     { label: 'Andamento', value: 'andamento' },
     { label: 'Andamento', value: 'andamento' },
@@ -30,9 +32,12 @@ const situacao = [
             icon="filter" />
         <CardBody>
             <div class="grid grid-cols-1 md:grid-cols-3 items-center gap-3">
-                <Input label="Pesquisa"
-                    placeholder="Nome, CPF ou proposta"
-                    type="search" />
+                <form @submit.prevent="search()">
+                    <Input label="Pesquisa"
+                        placeholder="Nome ou Nº proposta"
+                        type="search"
+                        v-model="form.search" />
+                </form>
 
                 <Select label="Praça"
                     placeholder="Selecione"
