@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Web\Proposta;
 
 use App\Http\Controllers\Controller;
-use App\Models\Proposta;
 use App\Queries\OrigemQuery;
 use App\Queries\PropostaQuery;
 use Illuminate\Http\Request;
@@ -17,17 +16,15 @@ class PropostaController extends Controller
     public function index(PropostaQuery $propostaQuery,
         OrigemQuery $origemQuery, Request $request)
     {
-    
-        // $propostas = $propostaQuery->select(['id', 'id_associado', 'id_origem', 'num_proposta', 'cod_corretor', 'status_proposta', 'created_at'])
-        //     ->filtroPropostaPorNomeNumProposta($request->search)
-        //     ->with([
-        //         'associado:id,nome',
-        //         'origem:id,nome',
-        //     ])
-        //    ->paginate(2);
-            $propostas = Proposta::with(['associado:id,nome', 'origem:id,nome'])
-            ->select(['id', 'id_associado', 'id_origem','num_proposta', 'cod_corretor', 'status_proposta', 'created_at'])
-            ->paginate(10);
+
+        $propostas = $propostaQuery->select(['id', 'id_associado', 'id_origem', 'num_proposta', 'cod_corretor', 'status_proposta', 'created_at'])
+            ->filtroPropostaPorNomeNumProposta($request->search)
+            ->with([
+                'associado:id,nome',
+                'origem:id,nome',
+            ])
+           ->paginate(20);
+
 
         $origens = $origemQuery->select(['id', 'nome'])
             ->get();
