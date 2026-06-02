@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\WithoutTimestamps;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -11,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
     'saldo',
     'inativo',
 ])]
+#[WithoutTimestamps]
 class FontePagamento extends Model
 {
     public function proposta(): HasMany

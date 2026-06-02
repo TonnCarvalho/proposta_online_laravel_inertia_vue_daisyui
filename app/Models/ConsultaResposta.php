@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Usuario;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\WithoutTimestamps;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -21,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
     'resposta9',
     'resposta10',
 ])]
+#[WithoutTimestamps]
 class ConsultaResposta extends Model
 {
     protected $primaryKey = 'id_consulta';

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\WithoutTimestamps;
 use Illuminate\Database\Eloquent\Model;
 
 #[Fillable([
@@ -16,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
     'data_vencimento',
     'data_upload',
 ])]
-
+#[WithoutTimestamps]
 class Estoque extends Model
 {
     protected $primaryKey = 'id_estoque';
