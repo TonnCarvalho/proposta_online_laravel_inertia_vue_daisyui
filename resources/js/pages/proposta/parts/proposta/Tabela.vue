@@ -65,9 +65,9 @@ const tableOptionProposta = [
                         <StatusProposta :status="item.status_proposta" />
                     </td>
                     <td>
-                        {{ formatDate(item.created_at) }}
+                        {{ formatDate(item.data_proposta) }}
                         -
-                        {{ formatTime(item.created_at) }}
+                        {{ formatTime(item.data_proposta) }}
                     </td>
 
                     <td class="flex justify-center">

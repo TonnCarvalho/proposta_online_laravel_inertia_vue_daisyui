@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Attributes\WithoutTimestamps;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -31,11 +30,12 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
     'recusado_motivo',
     'tipo_assinatura',
 ])]
-#[WithoutTimestamps]
 class Proposta extends Model
 {
     protected $primaryKey = 'id_proposta';
-    
+
+    public $timestamps = false;
+
     public function acompanhamento(): BelongsTo
     {
         return $this->belongsTo(Acompanhamento::class, 'id_proposta');
@@ -70,4 +70,6 @@ class Proposta extends Model
     {
         return $this->hasMany(Refinanciamento::class, 'id_proposta');
     }
+
+
 }
