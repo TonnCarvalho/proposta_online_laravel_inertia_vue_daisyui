@@ -15,10 +15,9 @@ use Illuminate\Database\Eloquent\Model;
     'valor_presente',
     'data_vencimento',
     'data_upload',
-    'arquivo',
 ])]
 
 class Estoque extends Model
 {
-    //
+    protected $primaryKey = 'id_estoque';
 }

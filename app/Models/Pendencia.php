@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Pendencia extends Model
 {
 
+    protected $primaryKey = 'id_pendencia';
+    
     public function proposta(): BelongsTo
     {
         return $this->belongsTo(Proposta::class, 'id_proposta');

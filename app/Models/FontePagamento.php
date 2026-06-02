@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 #[Fillable([
     'fonte',
     'saldo',
-    'ativo',
+    'inativo',
 ])]
 class FontePagamento extends Model
 {

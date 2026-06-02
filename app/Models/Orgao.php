@@ -8,13 +8,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Fillable([
-    'id_origem',
+    'cod_local',
     'cod_orgao',
     'nome',
-    'ativo',
+    'inativo',
 ])]
 class Orgao extends Model
 {
+    protected $primaryKey = 'id_orgao';
+    
     public function associado(): HasMany
     {
         return $this->hasMany(Associado::class, 'id_orgao');

@@ -3,15 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\WithoutTimestamps;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 #[Fillable([
     'id_usuario',
-    'id_origem',
     'email',
+    'praca',
     'status_consulta',
     'nome1',
     'cpf1',
@@ -54,8 +54,11 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
     'matricula10',
     'data_nascimento10',
 ])]
+#[WithoutTimestamps]
 class Consulta extends Model
 {
+    protected $primaryKey = 'id_consulta';
+
     public function consultaResposta(): HasOne
     {
         return $this->hasOne(ConsultaResposta::class, 'id_consulta');

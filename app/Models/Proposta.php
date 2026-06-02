@@ -32,6 +32,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 ])]
 class Proposta extends Model
 {
+    protected $primaryKey = 'id_proposta';
+    
     public function acompanhamento(): BelongsTo
     {
         return $this->belongsTo(Acompanhamento::class, 'id_proposta');

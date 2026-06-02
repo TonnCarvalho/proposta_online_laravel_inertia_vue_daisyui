@@ -22,6 +22,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 ])]
 class Refinanciamento extends Model
 {
+
+    protected $primaryKey = 'id_refin';
+
     public function usuario():BelongsTo
     {
         return $this->belongsTo(Usuario::class, 'id_usuario');

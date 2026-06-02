@@ -10,12 +10,16 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 #[Fillable([
     'cod_local',
     'nome',
-    'ativo',
+    'inativo',
 ])]
 
-#[Table('origens')]
+#[Table('origem')]
+
 class Origem extends Model
 {
+
+    protected $primaryKey = 'cod_local';
+
     public function associado(): HasMany
     {
         return $this->hasMany(Associado::class, 'id_origem');

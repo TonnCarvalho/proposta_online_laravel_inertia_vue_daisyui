@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\WithoutTimestamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,54 +11,48 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Fillable([
     'id_usuario',
-    'id_origem',
-    'id_orgao',
+    'cod_local',
     'cod_corretor',
     'nome',
-    'sobrenome',
     'cpf',
     'rg',
     'orgao_exp',
     'data_nasc',
-    'naturalidade',
+    'nat',
     'sexo',
     'estado_civil',
-    'ddd_tel',
     'tel',
-    'ddd_cel',
     'cel',
     'email',
     'nome_pai',
     'nome_mae',
-    'matricula',
+    'mat',
+    'cod_orgao',
     'setor',
     'cargo',
     'ocupacao',
     'data_admissao',
     'cep',
     'uf',
-    'localidade',
+    'municipio',
     'bairro',
-    'logradouro',
-    'numero',
-    'complemento',
+    'endereco',
     'banco',
     'agencia',
-    'digito_agencia',
     'conta',
-    'digito_conta',
+    'chave_pix',
     'banco_pagamento',
     'agencia_pagamento',
-    'digito_agencia_pagamento',
     'conta_pagamento',
-    'digito_conta_pagamento',
     'tipo_bancario',
-    'ativo',
+    'inativo',
 ])]
-
+#[WithoutTimestamps]
 class Associado extends Model
 {
     use HasFactory;
+
+    protected $primaryKey = 'id_associado';
 
     public function usuario(): BelongsTo
     {

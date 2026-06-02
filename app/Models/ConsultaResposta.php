@@ -23,6 +23,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 ])]
 class ConsultaResposta extends Model
 {
+    protected $primaryKey = 'id_consulta';
+    
     public function usuario():BelongsTo
     {
         return $this->belongsTo(Usuario::class, 'id_usuario');
