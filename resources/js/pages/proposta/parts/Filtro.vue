@@ -17,11 +17,11 @@ const situacoes = [
     { label: 'Andamento', value: 'andamento' },
 ]
 
-const search = ref('');
+const pesquisa = ref('');
 const origem = ref('');
 const situacao = ref('');
 
-watch(search, (q) => router.get('/proposta',
+watch(pesquisa, (q) => router.get('/proposta',
     { search: q },
     {
         preserveState: true,
@@ -40,7 +40,7 @@ watch(search, (q) => router.get('/proposta',
                 <Input label="Pesquisa"
                     placeholder="nome do associado ou nº da proposta"
                     type="search"
-                    v-model="search" />
+                    v-model="pesquisa" />
 
                 <Select label="Praça"
                     placeholder="Selecione"

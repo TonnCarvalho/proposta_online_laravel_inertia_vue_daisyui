@@ -18,7 +18,13 @@ class PropostaController extends Controller
         OrigemQuery $origemQuery,
         Request $request
     ) {
-        $propostas = $propostaService->listaPropostas($request->search, auth()->user()->cod_corretor);
+        $filters = $request->only([
+            'search',
+            'origem',
+            'status',
+        ]);
+
+        $propostas = $propostaService->listaPropostas($filters);
 
         $origens = $origemQuery->select(['cod_local', 'nome'])
             ->get();

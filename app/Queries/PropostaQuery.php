@@ -54,8 +54,7 @@ class PropostaQuery
         return $this;
     }
     public function listaPropostaAdmin(
-        ?string $search,
-        int $codCorretor
+        array $filters
     ) {
         return Proposta::query()
             ->select([
