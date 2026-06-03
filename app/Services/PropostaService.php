@@ -6,7 +6,7 @@ use App\Queries\PropostaQuery;
 
 class PropostaService
 {
-    public function listarPropostasCorretor(
+    public function listaPropostas(
         string|null $search,
         int $codCorretor
     ) 

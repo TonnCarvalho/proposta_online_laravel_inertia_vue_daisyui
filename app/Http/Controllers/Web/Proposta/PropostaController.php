@@ -13,9 +13,12 @@ class PropostaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(OrigemQuery $origemQuery, PropostaService $propostaService, Request $request)
-    {
-        $propostas = $propostaService->listarPropostasCorretor($request->search, auth()->user()->cod_corretor);
+    public function index(
+        PropostaService $propostaService,
+        OrigemQuery $origemQuery,
+        Request $request
+    ) {
+        $propostas = $propostaService->listaPropostas($request->search, auth()->user()->cod_corretor);
 
         $origens = $origemQuery->select(['cod_local', 'nome'])
             ->get();
