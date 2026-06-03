@@ -53,12 +53,6 @@ class PropostaQuery
 
         return $this;
     }
-
-    public function filtroPropostaPorNumeroProposta(?string $search = null)
-    {
-        return $this->query->where('num_proposta', 'like', '%'.$search.'%');
-    }
-
     public function listaPropostaAdmin(
         ?string $search,
         int $codCorretor
@@ -77,7 +71,12 @@ class PropostaQuery
                 'associado:id_associado,nome',
                 'origem:cod_local,nome',
             ])
-            ->where('num_proposta', 'like', '%'.$search.'%')
+            ->where(function ($query) use ($search) {
+                $query->where('num_proposta', 'like', "%{$search}%")
+                ->orWhereHas('associado', function ($query) use ($search) {
+                    $query->where('nome', 'like', "%{$search}%");
+                });
+            })
             ->orderByDesc('id_proposta')
             ->paginate(20);
     }

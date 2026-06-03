@@ -4,26 +4,31 @@ import CardBody from '@/components/card/CardBody.vue';
 import CardHead from '@/components/card/cardHead.vue';
 import Input from '@/components/form/Input.vue';
 import Select from '@/components/form/Select.vue';
-import { router, useForm } from '@inertiajs/vue3';
+import { router } from '@inertiajs/vue3';
+import { watch, ref } from 'vue';
 
 defineProps({
     origens: Array,
 })
-
-const form = useForm({
-    search: '',
-    origem: '',
-    situacao: '',
-})
-const search = () => {
-    router.get(route('proposta.index'), { search: form.search })
-}
-const situacao = [
+const situacoes = [
     { label: 'Andamento', value: 'andamento' },
     { label: 'Andamento', value: 'andamento' },
     { label: 'Andamento', value: 'andamento' },
     { label: 'Andamento', value: 'andamento' },
 ]
+
+const search = ref('');
+const origem = ref('');
+const situacao = ref('');
+
+watch(search, (q) => router.get('/proposta',
+    { search: q },
+    {
+        preserveState: true,
+        preserveScroll: true
+    },
+));
+
 </script>
 
 <template>
@@ -32,24 +37,22 @@ const situacao = [
             icon="filter" />
         <CardBody>
             <div class="grid grid-cols-1 md:grid-cols-3 items-center gap-3">
-                <form @submit.prevent="search()">
-                    <Input label="Pesquisa"
-                        placeholder="Nome ou Nº proposta"
-                        type="search"
-                        v-model="form.search" />
-                </form>
+                <Input label="Pesquisa"
+                    placeholder="Nome ou Nº proposta"
+                    type="search"
+                    v-model="search" />
 
                 <Select label="Praça"
                     placeholder="Selecione"
-                    v-model="form.origem"
+                    v-model="origem"
                     :items="origens"
                     :valueKey="item => item.id"
                     :labelKey="item => item.nome" />
 
                 <Select label="Situação"
                     placeholder="Selecione"
-                    v-model="form.situacao"
-                    :items="situacao"
+                    v-model="situacao"
+                    :items="situacoes"
                     :valueKey="item => item.value"
                     :labelKey="item => item.label" />
             </div>

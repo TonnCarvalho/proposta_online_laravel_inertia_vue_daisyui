@@ -7,7 +7,6 @@ import Tabela from './parts/proposta/Tabela.vue';
 defineProps({
     propostas: Array|Object,
     origens: Array,
-
 })
 </script>
 <template>
