@@ -1,8 +1,8 @@
 <script setup>
 import AppLayout from '@/layout/AppLayout.vue';
 import PageHeader from '@/layout/parts/AppLayout/PageHeader.vue';
-import Filtro from './parts/proposta/Filtro.vue';
-import Tabela from './parts/proposta/Tabela.vue';
+import Filtro from './parts/Filtro.vue';
+import Tabela from './parts/Tabela.vue';
 
 defineProps({
     propostas: Array|Object,

@@ -38,7 +38,7 @@ watch(search, (q) => router.get('/proposta',
         <CardBody>
             <div class="grid grid-cols-1 md:grid-cols-3 items-center gap-3">
                 <Input label="Pesquisa"
-                    placeholder="Nome ou Nº proposta"
+                    placeholder="nome do associado ou nº da proposta"
                     type="search"
                     v-model="search" />
 
