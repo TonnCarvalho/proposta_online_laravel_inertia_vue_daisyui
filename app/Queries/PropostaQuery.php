@@ -53,7 +53,8 @@ class PropostaQuery
 
         return $this;
     }
-    public function listaPropostaAdmin(
+
+    public function listaProposta(
         array $filters
     ) {
         return Proposta::query()
@@ -70,36 +71,29 @@ class PropostaQuery
                 'associado:id_associado,nome',
                 'origem:cod_local,nome',
             ])
-            ->where(function ($query) use ($search) {
-                $query->where('num_proposta', 'like', "%{$search}%")
-                ->orWhereHas('associado', function ($query) use ($search) {
-                    $query->where('nome', 'like', "%{$search}%");
-                });
-            })
-            ->orderByDesc('id_proposta')
-            ->paginate(20);
-    }
-
-    public function listaPropostaCorretor(
-        ?string $search,
-        int $codCorretor
-    ) {
-        return Proposta::query()
-            ->select([
-                'id_proposta',
-                'id_associado',
-                'cod_local',
-                'num_proposta',
-                'cod_corretor',
-                'status_proposta',
-                'data_proposta',
-            ])
-            ->with([
-                'associado:id_associado,nome',
-                'origem:cod_local,nome',
-            ])
-            ->where('cod_corretor', '=', $codCorretor)
-            ->where('num_proposta', 'like', '%'.$search.'%')
+            ->when(
+                ! empty($filters['search']),
+                function ($query) use ($filters) {
+                    $query->where(function ($q) use ($filters) {
+                        $q->where('num_proposta', 'like', "%{$filters['search']}%")
+                            ->orWhereHas('associado', function ($associado) use ($filters) {
+                                $associado->where('nome', 'like', "%{$filters['search']}%");
+                            });
+                    });
+                }
+            )
+            ->when(
+                ! empty($filters['origem']),
+                function ($query) use ($filters) {
+                    $query->where('cod_local', $filters['origem']);
+                }
+            )
+            ->when(
+                ! empty($filters['status']),
+                function ($query) use ($filters) {
+                    $query->where('status_proposta', $filters['status']);
+                }
+            )
             ->orderByDesc('id_proposta')
             ->paginate(20);
     }
