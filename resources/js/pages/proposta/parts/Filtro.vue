@@ -5,29 +5,30 @@ import CardHead from '@/components/card/cardHead.vue';
 import Input from '@/components/form/Input.vue';
 import Select from '@/components/form/Select.vue';
 import { router } from '@inertiajs/vue3';
-import { watch, ref } from 'vue';
+import { watch, reactive } from 'vue';
 
 defineProps({
     origens: Array,
+    statusProposta: Array,
 })
-const situacoes = [
-    { label: 'Andamento', value: 'andamento' },
-    { label: 'Andamento', value: 'andamento' },
-    { label: 'Andamento', value: 'andamento' },
-    { label: 'Andamento', value: 'andamento' },
-]
 
-const pesquisa = ref('');
-const origem = ref('');
-const situacao = ref('');
+const filters = reactive({
+    search: '',
+    origem: '',
+    status: '',
+})
 
-watch(pesquisa, (q) => router.get('/proposta',
-    { search: q },
-    {
+watch(filters, () => {
+    router.get('/proposta', filters, {
+        preserveScroll: true,
         preserveState: true,
-        preserveScroll: true
-    },
-));
+        replace: true
+    })
+},
+    {
+        deep: true
+    }
+);
 
 </script>
 
@@ -40,21 +41,21 @@ watch(pesquisa, (q) => router.get('/proposta',
                 <Input label="Pesquisa"
                     placeholder="nome do associado ou nº da proposta"
                     type="search"
-                    v-model="pesquisa" />
+                    v-model="filters.search" />
 
                 <Select label="Praça"
                     placeholder="Selecione"
-                    v-model="origem"
+                    v-model="filters.origem"
                     :items="origens"
-                    :valueKey="item => item.id"
+                    :valueKey="item => item.cod_local"
                     :labelKey="item => item.nome" />
 
                 <Select label="Situação"
                     placeholder="Selecione"
-                    v-model="situacao"
-                    :items="situacoes"
-                    :valueKey="item => item.value"
-                    :labelKey="item => item.label" />
+                    v-model="filters.status"
+                    :items="statusProposta"
+                    :labelKey="item => item.label"
+                    :valueKey="item => item.value" />
             </div>
         </CardBody>
     </Card>
