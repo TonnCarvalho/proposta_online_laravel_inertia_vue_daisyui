@@ -7,6 +7,7 @@ import Tabela from './parts/Tabela.vue';
 defineProps({
     propostas: Array|Object,
     origens: Array,
+    statusProposta: Array,
 })
 </script>
 <template>
@@ -15,7 +16,7 @@ defineProps({
             sub-title="Acompanhe suas propostas"
             icon="file-lines" />
 
-        <Filtro :origens="origens" />
+        <Filtro :origens="origens" :statusProposta="statusProposta" />
 
         <Tabela :propostas="propostas" />
     </AppLayout>

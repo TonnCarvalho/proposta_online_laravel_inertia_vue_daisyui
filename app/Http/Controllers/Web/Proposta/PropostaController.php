@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Proposta;
 
+use App\Enum\StatusProposta;
 use App\Http\Controllers\Controller;
 use App\Queries\OrigemQuery;
 use App\Services\PropostaService;
@@ -32,6 +33,7 @@ class PropostaController extends Controller
         return Inertia::render('proposta/Proposta', [
             'propostas' => $propostas,
             'origens' => $origens,
+            'statusProposta' => StatusProposta::option()
         ]);
     }
 
