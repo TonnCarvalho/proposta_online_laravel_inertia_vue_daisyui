@@ -68,8 +68,8 @@ class PropostaQuery
                 'data_proposta',
             ])
             ->with([
-                'associado:id_associado,nome',
-                'origem:cod_local,nome',
+            'associado:id_associado,nome',
+            'origem:cod_local,nome',
             ])
             ->when(
                 ! empty($filters['search']),

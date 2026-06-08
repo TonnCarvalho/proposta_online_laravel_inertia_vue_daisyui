@@ -71,6 +71,6 @@ class Consulta extends Model
 
     public function origem(): BelongsTo
     {
-        return $this->belongsTo(Origem::class, 'id_origem');
+        return $this->belongsTo(Origem::class, 'cod_local');
     }
 }
