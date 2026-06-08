@@ -8,6 +8,7 @@ defineProps({
     propostas: Array|Object,
     origens: Array,
     statusProposta: Array,
+    filtros: Object,
 })
 </script>
 <template>
@@ -16,7 +17,7 @@ defineProps({
             sub-title="Acompanhe suas propostas"
             icon="file-lines" />
 
-        <Filtro :origens="origens" :statusProposta="statusProposta" />
+        <Filtro :origens="origens" :statusProposta="statusProposta" :filtros="filtros" />
 
         <Tabela :propostas="propostas" />
     </AppLayout>

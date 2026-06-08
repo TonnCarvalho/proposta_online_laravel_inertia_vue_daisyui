@@ -19,13 +19,13 @@ class PropostaController extends Controller
         OrigemQuery $origemQuery,
         Request $request
     ) {
-        $filters = $request->only([
+        $filtros = $request->only([
             'search',
             'origem',
             'status',
         ]);
 
-        $propostas = $propostaService->listaPropostas($filters);
+        $propostas = $propostaService->listaPropostas($filtros);
 
         $origens = $origemQuery->select(['cod_local', 'nome'])
             ->get();
@@ -33,7 +33,8 @@ class PropostaController extends Controller
         return Inertia::render('proposta/Proposta', [
             'propostas' => $propostas,
             'origens' => $origens,
-            'statusProposta' => StatusProposta::option()
+            'statusProposta' => StatusProposta::option(),
+            'filtros' => $filtros
         ]);
     }
 

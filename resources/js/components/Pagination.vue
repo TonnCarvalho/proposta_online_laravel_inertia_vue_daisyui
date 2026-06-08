@@ -32,10 +32,6 @@ const makeLabel = (label) => {
                     }" />
             </div>
         </div>
-
-        <p class="text-zinc-400 text-sm">
-            Mostrando de {{ paginator.from }} a {{ paginator.to }} de {{ paginator.total }} resultados
-        </p>
     </div>
 
 </template>
