@@ -29,7 +29,7 @@ const tableOptionProposta = [
                         Associado
                     </th>
                     <th class="font-bold text-black">
-                        Corretor
+                        Praça
                     </th>
                     <th class="font-bold text-black">
                         Situação
@@ -54,12 +54,12 @@ const tableOptionProposta = [
                     </td>
                     <td>
                         <a :href="'/proposta/' + item.id"
-                            class="btn btn-link p-0">
+                            class="text-primary font-semibold btn-link p-0">
                             {{ item.associado.nome }}
                         </a>
                     </td>
                     <td>
-                        {{ item.cod_corretor }}
+                        {{ item.origem.nome }}
                     </td>
                     <td>
                         <StatusProposta :status="item.status_proposta" />
@@ -92,6 +92,6 @@ const tableOptionProposta = [
                 </tr>
             </template>
         </Table>
-        <Pagination :paginator="propostas"/>
+        <Pagination :paginator="propostas" />
     </section>
 </template>
