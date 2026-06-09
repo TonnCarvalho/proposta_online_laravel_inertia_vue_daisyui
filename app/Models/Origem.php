@@ -4,18 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Table;
+use Illuminate\Database\Eloquent\Attributes\WithoutTimestamps;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Fillable([
     'cod_local',
     'nome',
-    'ativo',
+    'inativo',
 ])]
 
-#[Table('origens')]
+#[Table('origem')]
+#[WithoutTimestamps]
 class Origem extends Model
 {
+
+    protected $primaryKey = 'cod_local';
+
     public function associado(): HasMany
     {
         return $this->hasMany(Associado::class, 'id_origem');

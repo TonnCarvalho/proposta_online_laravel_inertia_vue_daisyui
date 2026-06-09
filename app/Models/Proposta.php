@@ -32,6 +32,10 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 ])]
 class Proposta extends Model
 {
+    protected $primaryKey = 'id_proposta';
+
+    public $timestamps = false;
+
     public function acompanhamento(): BelongsTo
     {
         return $this->belongsTo(Acompanhamento::class, 'id_proposta');
@@ -49,7 +53,7 @@ class Proposta extends Model
 
     public function origem(): BelongsTo
     {
-        return $this->belongsTo(Origem::class, 'id_origem');
+        return $this->belongsTo(Origem::class, 'cod_local');
     }
 
     public function fontePagamento(): BelongsTo
@@ -66,4 +70,6 @@ class Proposta extends Model
     {
         return $this->hasMany(Refinanciamento::class, 'id_proposta');
     }
+
+
 }

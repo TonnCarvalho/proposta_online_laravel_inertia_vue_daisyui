@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Web\Proposta;
 
+use App\Enum\StatusProposta;
 use App\Http\Controllers\Controller;
 use App\Queries\OrigemQuery;
-use App\Queries\PropostaQuery;
+use App\Services\PropostaService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -13,25 +14,27 @@ class PropostaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(PropostaQuery $propostaQuery,
-        OrigemQuery $origemQuery, Request $request)
-    {
+    public function index(
+        PropostaService $propostaService,
+        OrigemQuery $origemQuery,
+        Request $request
+    ) {
+        $filtros = $request->only([
+            'search',
+            'origem',
+            'status',
+        ]);
 
-        $propostas = $propostaQuery->select(['id', 'id_associado', 'id_origem', 'num_proposta', 'cod_corretor', 'status_proposta', 'created_at'])
-            ->filtroPropostaPorNomeNumProposta($request->search)
-            ->with([
-                'associado:id,nome',
-                'origem:id,nome',
-            ])
-           ->paginate(20);
+        $propostas = $propostaService->listaPropostas($filtros);
 
-
-        $origens = $origemQuery->select(['id', 'nome'])
+        $origens = $origemQuery->select(['cod_local', 'nome'])
             ->get();
 
         return Inertia::render('proposta/Proposta', [
             'propostas' => $propostas,
             'origens' => $origens,
+            'statusProposta' => StatusProposta::option(),
+            'filtros' => $filtros
         ]);
     }
 

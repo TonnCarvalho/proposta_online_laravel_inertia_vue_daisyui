@@ -30,7 +30,7 @@ class OrigemQuery
 
     public function isActive(): Builder
     {
-        return $this->query->where('ativo', 1 );
+        return $this->query->where('inativo', 0 );
 
     }
 

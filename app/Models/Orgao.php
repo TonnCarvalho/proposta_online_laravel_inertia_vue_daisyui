@@ -3,18 +3,22 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\WithoutTimestamps;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Fillable([
-    'id_origem',
+    'cod_local',
     'cod_orgao',
     'nome',
-    'ativo',
+    'inativo',
 ])]
+#[WithoutTimestamps]
 class Orgao extends Model
 {
+    protected $primaryKey = 'id_orgao';
+
     public function associado(): HasMany
     {
         return $this->hasMany(Associado::class, 'id_orgao');
@@ -22,6 +26,6 @@ class Orgao extends Model
 
     public function origem(): BelongsTo
     {
-        return $this->belongsTo(Origem::class, 'id_origem');
+        return $this->belongsTo(Origem::class, 'cod_local');
     }
 }

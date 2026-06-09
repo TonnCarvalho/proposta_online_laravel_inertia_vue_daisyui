@@ -24,12 +24,12 @@ class AuthenticationService
         }
         
         // Caso 1: senha em MD5 + atualação para Hash
-        if ($this->isMd5Hash($user->password)) {
-            if ($user->password !== md5($password)) {
+        if ($this->isMd5Hash($user->senha)) {
+            if ($user->senha !== md5($password)) {
                 return false;
             }
 
-            $user->password = Hash::make($password);
+            $user->senha = Hash::make($password);
             $user->save();
 
             Auth::login($user);
@@ -38,7 +38,7 @@ class AuthenticationService
         }
 
         // Caso 2: senha já é Hash
-        if (! Hash::check($password, $user->password)) {
+        if (! Hash::check($password, $user->senha)) {
             return false;
         }
 

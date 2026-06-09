@@ -25,6 +25,13 @@ class PropostaQuery
         return $this;
     }
 
+    public function where(string $column, string $operador, string $value): self
+    {
+        $this->query->where($column, $operador, $value);
+
+        return $this;
+    }
+
     public function paginate(int $pages)
     {
         return $this->query->paginate($pages);
@@ -47,8 +54,48 @@ class PropostaQuery
         return $this;
     }
 
-    public function filtroPropostaPorNomeNumProposta(string|null $search=null)
-    {
-        return $this->query->where('num_proposta', 'like', '%'. $search . '%');
+    public function listaProposta(
+        array $filtros
+    ) {
+        return Proposta::query()
+            ->select([
+                'id_proposta',
+                'id_associado',
+                'cod_local',
+                'num_proposta',
+                'cod_corretor',
+                'status_proposta',
+                'data_proposta',
+            ])
+            ->with([
+            'associado:id_associado,nome',
+            'origem:cod_local,nome',
+            ])
+            ->when(
+                ! empty($filtros['search']),
+                function ($query) use ($filtros) {
+                    $query->where(function ($q) use ($filtros) {
+                        $q->where('num_proposta', 'like', "%{$filtros['search']}%")
+                            ->orWhereHas('associado', function ($associado) use ($filtros) {
+                                $associado->where('nome', 'like', "%{$filtros['search']}%");
+                            });
+                    });
+                }
+            )
+            ->when(
+                ! empty($filtros['origem']),
+                function ($query) use ($filtros) {
+                    $query->where('cod_local', $filtros['origem']);
+                }
+            )
+            ->when(
+                ! empty($filtros['status']),
+                function ($query) use ($filtros) {
+                    $query->where('status_proposta', $filtros['status']);
+                }
+            )
+            ->orderByDesc('id_proposta')
+            ->paginate(20)
+            ->appends($filtros);
     }
 }
