@@ -1,38 +1,35 @@
 <script setup>
+import Navbar from './Navbar.vue';
+
 
 const menuitems = [
-  { label: 'Propostas', icon: 'file-lines', route: '#' },
-  { label: 'Propostas', icon: 'house', route: '#' },
-  { label: 'Propostas', icon: 'house', route: '#' },
-  { label: 'Propostas', icon: 'house', route: '#' },
-  { label: 'Propostas', icon: 'house', route: '#' },
+  { label: 'Propostas', icon: 'file-lines', route: route('proposta.index'), url: '/proposta' },
+  { label: 'Criar Proposta', icon: 'file-circle-plus', route: '' },
 ]
 
+const logoSidebar = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5czazbk9CodNkCmnH6H7ReSnnIYRvUvkq5Q&s';
 </script>
 
 <template>
-  <aside
-    class="fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
-    aria-label="Sidenav"
-    id="drawer-navigation">
-    <div class="overflow-y-auto py-5 px-3 h-full bg-white dark:bg-gray-800">
-
-      <ul class="space-y-1">
-
+  <div class="drawer-side">
+    <label for="my-drawer-3"
+      aria-label="close sidebar"
+      class="drawer-overlay">
+    </label>
+    <div class="bg-base-200 min-h-full w-60 border-r border-r-base-content/20">
+      <img :src="logoSidebar"
+        class="w-full h-25 p-1">
+      <ul class="menu w-full mt-3">
         <li v-for="item in menuitems">
-          <a href="#"
-            class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-
-            <FontAwesomeIcon :icon="['fas', item.icon]"
-              class="text-white"
-              size="lg" />
-
-            <span class="ml-3">
-              {{ item.label }}
-            </span>
-          </a>
+          <Link :href="item.route"
+            class="p-2 text-base"
+            :class="{ 'bg-primary text-white': $page.url === item.url }">
+          <FontAwesomeIcon :icon="['fas', item.icon]"
+            size="lg" />
+          {{ item.label }}
+          </Link>
         </li>
       </ul>
     </div>
-  </aside>
+  </div>
 </template>
