@@ -17,27 +17,27 @@ const tableOptionProposta = [
 
 <template>
     <section class="mt-5">
-        <Table title="Suas propostas"
-            icon="file-text">
 
+        <Table title="Suas propostas"
+            icon="file">
             <template #thead>
-                <tr class="bg-base-content/5">
-                    <th class="font-bold text-black">
+                <tr>
+                    <th>
                         Proposta
                     </th>
-                    <th class="font-bold text-black">
+                    <th>
                         Associado
                     </th>
-                    <th class="font-bold text-black">
+                    <th>
                         Praça
                     </th>
-                    <th class="font-bold text-black">
+                    <th>
                         Situação
                     </th>
-                    <th class="font-bold text-black">
+                    <th>
                         Data
                     </th>
-                    <th class="font-bold text-black flex justify-center">
+                    <th class="flex justify-center">
                         Opções
                     </th>
                 </tr>
@@ -92,6 +92,7 @@ const tableOptionProposta = [
                 </tr>
             </template>
         </Table>
+
         <Pagination :paginator="propostas" />
     </section>
 </template>

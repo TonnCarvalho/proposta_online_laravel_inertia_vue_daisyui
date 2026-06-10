@@ -14,7 +14,7 @@ const menuitems = [
       aria-label="close sidebar"
       class="drawer-overlay">
     </label>
-    <div class="bg-white min-h-full w-60 border-r border-r-base-content/20">
+    <div class="bg-base-100 min-h-full w-60 border-r border-r-base-content/20">
 
       <img :src="logo"
         class="w-full h-16 p-1">

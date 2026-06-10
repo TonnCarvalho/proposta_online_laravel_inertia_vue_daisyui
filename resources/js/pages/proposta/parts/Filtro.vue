@@ -2,6 +2,7 @@
 import Card from '@/components/card/Card.vue';
 import CardBody from '@/components/card/CardBody.vue';
 import CardHead from '@/components/card/cardHead.vue';
+import CardTitle from '@/components/card/CardTitle.vue';
 import Input from '@/components/form/Input.vue';
 import Select from '@/components/form/Select.vue';
 import { router } from '@inertiajs/vue3';
@@ -55,9 +56,10 @@ watch(
 
 <template>
     <Card>
-        <CardHead title="Filtro"
-            icon="filter" />
         <CardBody>
+            <CardTitle title="Filtro"
+                icon="filter" />
+
             <div class="grid grid-cols-1 md:grid-cols-3 items-center gap-3">
                 <Input label="Pesquisa"
                     placeholder="Nome do associado ou Nº da proposta"

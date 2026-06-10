@@ -26,7 +26,7 @@ defineProps({
             v-model="model"
             :id="name"
             :placeholder="placeholder"
-            class="input w-full"
+            class="input w-full text-base-content"
             :class="{ 'border border-error': $page.props.errors[name] }" />
 
         <div v-if="$page.props.errors[name]">

@@ -53,26 +53,26 @@ onMounted(() => {
             <img class="lg:hidden w-40 "
                 :src="logo">
         </div>
-        <div class="flex  gap-2">
-            <div>
-                <button @click="toggleTheme"
-                    class="btn btn-circle btn-ghost">
-                    <span v-if="theme === 'light'">
-                        <FontAwesomeIcon icon="sun" />
-                    </span>
-                    <span v-if="theme === 'dark'">
-                        <FontAwesomeIcon icon="moon" />
-                    </span>
-                </button>
-            </div>
+        <div class="flex gap-2">
+
+            <button @click="toggleTheme"
+                class="btn btn-circle btn-ghost">
+                <span v-if="theme === 'light'">
+                    <FontAwesomeIcon icon="sun" />
+                </span>
+                <span v-if="theme === 'dark'">
+                    <FontAwesomeIcon icon="moon" />
+                </span>
+            </button>
+
             <div class="dropdown dropdown-end">
                 <div tabindex="0"
                     role="button"
                     class="btn btn-ghost p-1">
                     <div class="w-10 rounded-full">
                         <div class="avatar avatar-placeholder">
-                            <div class="bg-neutral text-neutral-content w-10 rounded-full">
-                                <span class="text-xl">CC</span>
+                            <div class="bg-base-content text-base-100 w-10 rounded-full">
+                                <span class="text-xl ">CC</span>
                             </div>
                         </div>
 

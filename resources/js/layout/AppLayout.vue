@@ -5,7 +5,7 @@ import Sidebar from './parts/AppLayout/Sidebar.vue';
 </script>
 <template>
   <div class="antialiased">
-    
+
     <div class="drawer lg:drawer-open">
       <input id="my-drawer-3"
         type="checkbox"
