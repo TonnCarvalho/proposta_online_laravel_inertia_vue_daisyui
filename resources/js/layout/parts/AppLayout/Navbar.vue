@@ -1,5 +1,10 @@
 <script setup>
 import logo from '@/assets/images/logo.png';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
+const menuDropdown = [
+    { label: 'Perfil', icon: 'user-gear', route: '' },
+]
 </script>
 
 <template>
@@ -23,25 +28,38 @@ import logo from '@/assets/images/logo.png';
                 :src="logo">
         </div>
         <div class="flex  gap-2">
+
             <div class="dropdown dropdown-end">
                 <div tabindex="0"
                     role="button"
-                    class="btn btn-ghost btn-circle avatar">
+                    class="btn btn-ghost p-1">
                     <div class="w-10 rounded-full">
-                        <img alt="Tailwind CSS Navbar component"
-                            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                        <div class="avatar avatar-placeholder">
+                            <div class="bg-neutral text-neutral-content w-10 rounded-full">
+                                <span class="text-xl">CC</span>
+                            </div>
+                        </div>
+
                     </div>
+                    <span class="text-sm">Cleiton</span>
                 </div>
                 <ul tabindex="-1"
                     class="menu dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                    <li v-for="item in menuDropdown">
+                        <Link>
+                        <FontAwesomeIcon :icon="item.icon" />
+                        {{ item.label }}
+                        </Link>
+                    </li>
                     <li>
-                        <a class="justify-between">
-                            Perfil
+                        <a class="text-error">
+                            <FontAwesomeIcon icon="arrow-right-from-bracket" />
+                            Sair
                         </a>
                     </li>
-                    <li><a>Sair</a></li>
                 </ul>
             </div>
+
         </div>
     </div>
 </template>
