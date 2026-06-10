@@ -2,7 +2,7 @@
 import logo from '@/assets/images/logo.png';
 
 const menuitems = [
-  { label: 'Propostas', icon: 'file-lines', route: route('proposta.index'), url: '/proposta' },
+  { label: 'Propostas', icon: 'file-lines', route: route('proposta.index'), component: 'proposta/Proposta' },
   { label: 'Criar Proposta', icon: 'file-circle-plus', route: '' },
 ]
 
@@ -25,7 +25,7 @@ const menuitems = [
 
           <Link :href="item.route"
             class="p-2 text-base"
-            :class="{ 'bg-primary text-white': $page.url === item.url }">
+            :class="{ 'bg-primary text-white':  $page.component === item.component }">
           <FontAwesomeIcon :icon="['fas', item.icon]"
             size="lg" />
           {{ item.label }}
