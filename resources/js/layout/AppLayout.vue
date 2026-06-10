@@ -5,14 +5,19 @@ import Sidebar from './parts/AppLayout/Sidebar.vue';
 </script>
 <template>
   <div class="antialiased">
-    <Navbar />
 
-    <!-- Sidebar -->
-    <Sidebar />
+    <div class="drawer lg:drawer-open">
+      <input id="my-drawer-3"
+        type="checkbox"
+        class="drawer-toggle" />
+      <Sidebar />
+      <div class="drawer-content bg-base-300">
+        <Navbar />
+        <div class="p-3">
+          <slot />
+        </div>
+      </div>
 
-
-    <main class="p-4 md:ml-64 h-auto pt-20">
-      <slot />
-    </main>
+    </div>
   </div>
 </template>

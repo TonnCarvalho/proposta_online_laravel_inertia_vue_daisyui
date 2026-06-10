@@ -6,10 +6,10 @@ defineProps({
 </script>
 
 <template>
-    <div class="card-title text-neutral p-3 flex items-center gap-1
+    <div class="card-title p-3 flex items-center gap-1
     border-b border-base-content/20">
         <FontAwesomeIcon v-if="icon"
-            :icon="['fas', icon]" class="text-neutral" />
+            :icon="['fas', icon]" />
         {{ title }}
     </div>
 </template>

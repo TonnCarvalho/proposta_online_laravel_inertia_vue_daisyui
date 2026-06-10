@@ -1,33 +1,34 @@
-<script setup>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-
-const props = defineProps({
-  icon: String,
+<script setup lang="ts">
+import Card from '../card/Card.vue';
+import CardTitle from '../card/CardTitle.vue';
+defineProps({
   title: String,
+  icon: String,
 })
 </script>
 
 <template>
-  <section>
-    <div class="border border-base-content/20 rounded-t-lg card-title p-3">
-      <FontAwesomeIcon :icon="['fas', icon]" />
-      {{ title }}
+  <Card>
+    <div class=" card-title pt-6 pl-6 mb-2"
+      v-if="title">
+      <CardTitle :title="title"
+        :icon="icon" />
     </div>
 
-    <div class="overflow-x-auto border-x border-b border-base-content/20 rounded-b-lg">
+    <div class="overflow-x-auto rounded-box bg-base-100 w-full">
 
-      <table class="table">
+      <table class="table table-sm md:table-md">
 
-        <thead>
+        <thead class="text-base-content">
           <slot name="thead"></slot>
         </thead>
 
-        <tbody>
+        <tbody class="text-base-content">
           <slot name="tbody"></slot>
         </tbody>
 
       </table>
     </div>
-  </section>
+  </Card>
 
 </template>
