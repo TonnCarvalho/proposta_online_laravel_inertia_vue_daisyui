@@ -1,9 +1,10 @@
 <script setup>
+import logo from '@/assets/images/logo.png';
 </script>
 
 <template>
-    <div class="navbar bg-base-100">
-        <div class="flex-none">
+    <div class="navbar border-b border-b-base-content/20 bg-base-100">
+        <div class="flex-none lg:hidden">
             <label for="my-drawer-3"
                 class="btn btn-square btn-ghost">
                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -17,13 +18,11 @@
                 </svg>
             </label>
         </div>
-        <div class="flex-1">
-            <a class="btn btn-ghost text-xl">Sua empresa</a>
+        <div class="flex-1 ms-2">
+            <img class="lg:hidden w-40 "
+                :src="logo">
         </div>
-        <div class="flex gap-2">
-            <input type="text"
-                placeholder="Search"
-                class="input input-bordered w-24 md:w-auto" />
+        <div class="flex  gap-2">
             <div class="dropdown dropdown-end">
                 <div tabindex="0"
                     role="button"
@@ -34,15 +33,13 @@
                     </div>
                 </div>
                 <ul tabindex="-1"
-                    class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                    class="menu dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
                     <li>
                         <a class="justify-between">
-                            Profile
-                            <span class="badge">New</span>
+                            Perfil
                         </a>
                     </li>
-                    <li><a>Settings</a></li>
-                    <li><a>Logout</a></li>
+                    <li><a>Sair</a></li>
                 </ul>
             </div>
         </div>
