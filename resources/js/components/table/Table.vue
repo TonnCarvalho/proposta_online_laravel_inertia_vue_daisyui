@@ -8,7 +8,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <section>
+  <section class="bg-white">
     <div class="border border-base-content/20 rounded-t-lg card-title p-3">
       <FontAwesomeIcon :icon="['fas', icon]" />
       {{ title }}
