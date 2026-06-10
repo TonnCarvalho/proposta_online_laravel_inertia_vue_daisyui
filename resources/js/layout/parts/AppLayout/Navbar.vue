@@ -1,10 +1,36 @@
 <script setup>
 import logo from '@/assets/images/logo.png';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { ref, onMounted } from 'vue';
 
 const menuDropdown = [
     { label: 'Perfil', icon: 'user-gear', route: '' },
 ]
+const theme = ref('light');
+
+const toggleTheme = () => {
+    theme.value =
+        theme.value === 'light'
+            ? 'dark'
+            : 'light';
+
+    document.documentElement.setAttribute(
+        'data-theme',
+        theme.value
+    );
+
+    localStorage.setItem('theme', theme.value);
+};
+
+onMounted(() => {
+    theme.value =
+        localStorage.getItem('theme') || 'light';
+
+    document.documentElement.setAttribute(
+        'data-theme',
+        theme.value
+    );
+});
 </script>
 
 <template>
@@ -28,7 +54,17 @@ const menuDropdown = [
                 :src="logo">
         </div>
         <div class="flex  gap-2">
-
+            <div>
+                <button @click="toggleTheme"
+                    class="btn btn-circle btn-ghost">
+                    <span v-if="theme === 'light'">
+                        <FontAwesomeIcon icon="sun" />
+                    </span>
+                    <span v-if="theme === 'dark'">
+                        <FontAwesomeIcon icon="moon" />
+                    </span>
+                </button>
+            </div>
             <div class="dropdown dropdown-end">
                 <div tabindex="0"
                     role="button"
