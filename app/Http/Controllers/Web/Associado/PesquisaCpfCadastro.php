@@ -9,6 +9,6 @@ class PesquisaCpfCadastro extends Controller
 {
     public function index()
     {
-        return Inertia::render('associado/PesquisaCpfCadastro');
+        return Inertia::render('associado/pesquisaCpfCadastro/PesquisaCpfCadastro');
     }
 }

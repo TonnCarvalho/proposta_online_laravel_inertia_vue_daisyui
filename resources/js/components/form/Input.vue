@@ -12,6 +12,10 @@ defineProps({
     name: String,
     placeholder: String,
     icon: String | Array,
+    required: {
+        type: Boolean,
+        default: false
+    }
 })
 </script>
 
@@ -20,6 +24,10 @@ defineProps({
         <legend :for="name"
             class="block mb-1 text-sm font-semibold">
             {{ label }}
+            <span v-if="required"
+                class="text-error">
+                *
+            </span>
         </legend>
         <input :name="name"
             :type="type"
