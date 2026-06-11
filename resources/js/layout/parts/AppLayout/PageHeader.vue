@@ -9,7 +9,7 @@ defineProps({
 </script>
 <template>
     <div class="flex gap-2 mb-5">
-        <div class="bg-primary/30 p-4 rounded-lg">
+        <div class="bg-primary/30 p-4 rounded-lg" v-if="icon">
             <FontAwesomeIcon :icon="['fas', icon]" class="text-primary" size="xl" />
         </div>
         <div class="">
