@@ -15,10 +15,14 @@ defineProps({
         :icon="icon" />
     </div>
 
-    <slot name="append"></slot> 
+    <div class="pl-4">
+      <slot name="append"></slot>
+    </div>
+
+
     <div class="overflow-x-auto rounded-box bg-base-100 w-full">
       <table class="table table-sm md:table-md">
-        
+
         <thead class="text-base-content">
           <slot name="thead"></slot>
         </thead>

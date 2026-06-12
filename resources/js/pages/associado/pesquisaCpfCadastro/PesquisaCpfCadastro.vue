@@ -44,7 +44,9 @@ import PageHeader from '@/layout/parts/AppLayout/PageHeader.vue';
             icon="file"
             class="mt-3">
             <template #append>
-                12312312
+                <p class="font-medium my-2">
+                    Nome: <span class="font-normal">Cleiton Conceição de Carvalho</span>
+                </p>
             </template>
             <template #thead>
                 <tr>
