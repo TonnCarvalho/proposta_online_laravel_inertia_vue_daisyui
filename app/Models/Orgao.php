@@ -21,7 +21,7 @@ class Orgao extends Model
 
     public function associado(): HasMany
     {
-        return $this->hasMany(Associado::class, 'id_orgao');
+        return $this->hasMany(Associado::class, 'cod_orgao');
     }
 
     public function origem(): BelongsTo

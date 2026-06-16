@@ -66,7 +66,7 @@ class Associado extends Model
 
     public function orgao(): BelongsTo
     {
-        return $this->belongsTo(Orgao::class, 'id_orgao');
+        return $this->belongsTo(Orgao::class, 'cod_orgao', 'cod_orgao');
     }
 
     public function proposta(): HasMany

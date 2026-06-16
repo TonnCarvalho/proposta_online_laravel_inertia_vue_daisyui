@@ -16,7 +16,7 @@ defineProps({
     </div>
 
     <div class="pl-4">
-      <slot name="append"></slot>
+      <slot name="prepend"></slot>
     </div>
 
 
@@ -32,6 +32,10 @@ defineProps({
         </tbody>
 
       </table>
+    </div>
+
+    <div class="p-4">
+      <slot name="append"></slot>
     </div>
   </Card>
 
