@@ -21,9 +21,9 @@ const pesquisaCpf = async () => {
     try {
         loading.value = true;
 
-        const response = await fetch(`/api/associado/pesquisar?cpf=${encodeURIComponent(cpf.value)}`)
+        const response = await fetch(`/associado/pesquisar?cpf=${encodeURIComponent(cpf.value)}`)
         const data = await response.json();
-
+        
         if (!response.ok) {
             throw new Error(data.message)
         }
