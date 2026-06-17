@@ -1,5 +1,6 @@
 <script setup>
 import Table from '@/components/table/Table.vue';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 const props = defineProps({
     matriculas: Array | Object,
@@ -24,12 +25,12 @@ const props = defineProps({
 
         <template #tbody>
             <tr class="hover:bg-base-300"
-                v-for="item in matriculas">
-                <td>{{ item.nome }}</td>
-                <td>{{ item.mat }}</td>
-                <td>{{ item.origem.nome }}</td>
-                <td>{{ item.orgao.nome }}</td>
-                <td>{{ item.cargo }}</td>
+                v-for="matricula in matriculas" :key="matricula.id_associado">
+                <td>{{ matricula.nome }}</td>
+                <td>{{ matricula.mat }}</td>
+                <td>{{ matricula.origem.nome }}</td>
+                <td>{{ matricula.orgao.nome }}</td>
+                <td>{{ matricula.cargo }}</td>
                 <td>
                     <Link :href="route('proposta.index')"
                         class="btn btn-primary btn-sm btn-soft">
@@ -42,6 +43,7 @@ const props = defineProps({
         <template #append>
             <div class="">
                 <Link class="btn btn-primary">
+                    <FontAwesomeIcon icon="plus"/>
                 Nova matrículas
                 </Link>
             </div>

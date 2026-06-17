@@ -3,6 +3,7 @@ import Card from '@/components/card/Card.vue';
 import CardBody from '@/components/card/CardBody.vue';
 import CardTitle from '@/components/card/CardTitle.vue';
 import Input from '@/components/form/Input.vue';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { ref } from 'vue';
 
 const emit = defineEmits(['resultado']);
@@ -74,7 +75,11 @@ const maskCpf = (event) => {
                     <button @click="pesquisaCpf"
                         :disabled="loading"
                         class="btn btn-primary btn-block">
-                        {{ loading ? 'Pesquisando...' : 'Pesquisar' }}
+                        <FontAwesomeIcon icon="search"
+                            v-if="!loading" />
+                        <span v-if="loading"
+                            class="loading loading-spinner"></span>
+                        {{ loading ? 'Pesquisando' : 'Pesquisar' }}
                     </button>
 
                     <Link class="btn btn-soft btn-block"
