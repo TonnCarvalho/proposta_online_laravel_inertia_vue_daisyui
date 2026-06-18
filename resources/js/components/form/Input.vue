@@ -1,7 +1,7 @@
 <script setup>
 const model = defineModel();
 
-defineProps({
+const props = defineProps({
     label: String,
     error: String,
     help: String,
@@ -11,12 +11,31 @@ defineProps({
     },
     name: String,
     placeholder: String,
-    icon: String | Array,
+    icon: [String, Array],
     required: {
         type: Boolean,
         default: false
+    },
+    maxlength: {
+        type: Number,
+        default: null
+    },
+    mask: {
+        type: Function,
+        default: null
+    },
+    optional: String,
+});
+
+const handleInput = (event) => {
+    let value = event.target.value;
+
+    if (props.mask) {
+        value = props.mask(value);
     }
-})
+
+    model.value = value;
+};
 </script>
 
 <template>
@@ -29,14 +48,17 @@ defineProps({
                 *
             </span>
         </legend>
-        <input :name="name"
+
+        <input :id="name"
+            :name="name"
             :type="type"
-            v-model="model"
-            :id="name"
+            :value="model"
             :placeholder="placeholder"
+            @input="handleInput"
+            :maxlength="maxlength"
             class="input w-full text-base-content"
             :class="{ 'border border-error': $page.props.errors[name] }" />
-
+        <p class="label">{{ optional }}</p>
         <div v-if="$page.props.errors[name]">
             <p class="text-sm text-error">
                 {{ $page.props.errors[name] }}

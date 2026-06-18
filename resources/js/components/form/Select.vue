@@ -3,6 +3,10 @@
 const model = defineModel();
 defineProps({
     label: String,
+    required: {
+        type: Boolean,
+        default: false
+    },
     error: String,
     help: String,
     name: String,
@@ -22,12 +26,15 @@ defineProps({
         <legend :for="name"
             class="block mb-1 text-base-content text-sm font-semibold">
             {{ label }}
+            <span v-if="required"
+                class="text-error">
+                *
+            </span>
         </legend>
         <select class="select w-full"
             :name="name"
             v-model="model">
-            <option selected
-                value=""
+            <option value=""
                 :disabled="placeholderDisabled">
                 {{ placeholder }}
             </option>

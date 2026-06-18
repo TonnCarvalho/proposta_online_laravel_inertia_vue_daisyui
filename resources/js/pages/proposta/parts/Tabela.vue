@@ -1,7 +1,7 @@
 <script setup>
 import Table from '@/components/table/Table.vue';
 import StatusProposta from '@/components/StatusProposta.vue';
-import { formatDate, formatTime } from '@/components/Utils/dateTime';
+import { formatDate, formatTime } from '@/utils/dateTime';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import Pagination from '@/components/Pagination.vue';
 
