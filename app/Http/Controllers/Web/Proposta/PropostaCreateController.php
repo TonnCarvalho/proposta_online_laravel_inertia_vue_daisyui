@@ -3,12 +3,19 @@
 namespace App\Http\Controllers\Web\Proposta;
 
 use App\Http\Controllers\Controller;
+use App\Queries\OrigemQuery;
 use Inertia\Inertia;
 
 class PropostaCreateController extends Controller
 {
-    public function create() 
+    public function create(OrigemQuery $origemQuery)
     {
-        return Inertia::render('proposta/criar/Criar');
+        $origens = $origemQuery->select(['cod_local', 'nome'])
+            ->isActive()
+            ->get();
+
+        return Inertia::render('proposta/criar/Criar', [
+            'origens' => $origens,
+        ]);
     }
 }

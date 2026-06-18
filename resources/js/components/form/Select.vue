@@ -8,7 +8,7 @@ defineProps({
         default: false
     },
     error: String,
-    help: String,
+    optional: String,
     name: String,
     placeholder: String,
     placeholderDisabled: {
@@ -46,9 +46,9 @@ defineProps({
             </option>
 
         </select>
-        <span v-if="help"
+        <span v-if="optional"
             class="label">
-            {{ help }}
+            {{ optional }}
         </span>
     </fieldset>
 

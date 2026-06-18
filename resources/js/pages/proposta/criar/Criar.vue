@@ -4,6 +4,9 @@ import PageHeader from '@/layout/parts/AppLayout/PageHeader.vue';
 import Associado from './parts/Associado.vue';
 import { useForm } from '@inertiajs/vue3';
 
+defineProps({
+    origens: Array|Object,
+})
 const form = useForm({
     associado: {
         nome: '',
@@ -34,7 +37,7 @@ const form = useForm({
             icon="file-circle-plus" />
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
-            <Associado :associado="form.associado" />
+            <Associado :formAssociado="form.associado" :origens="origens" />
 
         </div>
     </AppLayout>

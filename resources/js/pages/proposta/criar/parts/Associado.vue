@@ -7,7 +7,8 @@ import Select from '@/components/form/Select.vue';
 import { maskCpf, maskDate, maskPhone } from '@/utils/masks';
 
 const props = defineProps({
-    associado: Object,
+    formAssociado: Object,
+    origens: Object | Array,
 })
 
 const sexo = [
@@ -28,6 +29,14 @@ const ocupacao = [
     { label: 'Pensionista (a)', value: 'pensionista' },
 ]
 
+const buscarOrgaos = async (praca) => {
+
+    try {
+        const response = await fetch(route('orgao.porPraca', praca))
+    } catch (error) {
+        
+    }
+}
 </script>
 
 <template>
@@ -37,49 +46,54 @@ const ocupacao = [
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
 
                 <Input label="Nome completo"
-                    v-model="associado.nome"
+                    v-model="formAssociado.nome"
                     :maxlength="100"
                     required />
 
                 <Input label="CPF"
-                    v-model="associado.cpf"
+                    v-model="formAssociado.cpf"
                     :mask="maskCpf"
                     :maxlength="14"
                     required />
 
                 <Select label="Praça"
+                    placeholder="Selecione"
+                    v-model="formAssociado.cod_local"
+                    :items="props.origens"
+                    :valueKey="item => item.cod_local"
+                    :labelKey="item => item.nome"
                     required />
 
                 <Input label="RG"
-                    v-model="associado.rg"
+                    v-model="formAssociado.rg"
                     :maxlength="14"
                     required />
 
                 <Input label="Órgão expedidor"
-                    v-model="associado.org_exp"
+                    v-model="formAssociado.org_exp"
                     :maxlength="10"
                     required />
 
                 <Input label="Email"
-                    v-model="associado.email"
+                    v-model="formAssociado.email"
                     type="email"
                     optional="Envio de assinatura por Email"
                     :maxlength="50"
                     required />
 
                 <Input label="Data de nascimento"
-                    v-model="associado.data_nasc"
+                    v-model="formAssociado.data_nasc"
                     :mask="maskDate"
                     :maxlength="10"
                     required />
 
                 <Input label="Naturalidade"
-                    v-model="associado.nat"
+                    v-model="formAssociado.nat"
                     :maxlength="50"
                     required />
 
                 <Select label="Sexo"
-                    v-model="associado.sexo"
+                    v-model="formAssociado.sexo"
                     :items="sexo"
                     :valueKey="item => item.value"
                     :labelKey="item => item.label"
@@ -87,23 +101,23 @@ const ocupacao = [
                     required />
 
                 <Input label="Celular contato (WhatsApp)"
-                    v-model="associado.cel"
+                    v-model="formAssociado.cel"
                     :mask="maskPhone"
                     :maxlength="15"
                     optional="Envio de assinatura por WhatsApp"
                     required />
 
                 <Input label="Nome do pai"
-                    v-model="associado.nome_pai"
+                    v-model="formAssociado.nome_pai"
                     :maxlength="100" />
 
                 <Input label="Nome da mãe"
-                    v-model="associado.nome_mae"
+                    v-model="formAssociado.nome_mae"
                     :maxlength="100"
                     required />
 
                 <Select label="Estado civil"
-                    v-model="associado.estado_civil"
+                    v-model="formAssociado.estado_civil"
                     placeholder="Selecione"
                     :items="estadoCivil"
                     :valueKey="item => item.value"
@@ -111,26 +125,28 @@ const ocupacao = [
                     required />
 
                 <Input label="Matrícula"
-                    v-model="associado.mat"
+                    v-model="formAssociado.mat"
                     :maxlength="50"
                     required />
 
                 <Select label="Órgão"
-                    v-model="associado.cod_orgao"
+                    v-model="formAssociado.cod_orgao"
+                    placeholder="Selecione"
+                    optional="Muda com a praça"
                     required />
 
                 <Input label="Setor"
-                    v-model="associado.setor"
+                    v-model="formAssociado.setor"
                     :maxlength="50"
                     required />
 
                 <Input label="Cargo"
                     :maxlength="50"
-                    v-model="associado.cargo"
+                    v-model="formAssociado.cargo"
                     required />
 
                 <Select label="Ocupação"
-                    v-model="associado.ocupacao"
+                    v-model="formAssociado.ocupacao"
                     placeholder="Selecione"
                     :items="ocupacao"
                     :valueKey="item => item.value"
@@ -138,7 +154,7 @@ const ocupacao = [
                     required />
 
                 <Input label="Data de admissão"
-                    v-model="associado.data_admissao"
+                    v-model="formAssociado.data_admissao"
                     :mask="maskDate"
                     :maxlength="10"
                     required />
