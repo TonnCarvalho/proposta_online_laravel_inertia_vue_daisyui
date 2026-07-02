@@ -72,7 +72,7 @@ watch(
     <Card>
         <CardBody>
             <CardTitle title="Dados do associado" />
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
 
                 <Select label="Praça"
                     placeholder="Selecione"
@@ -94,14 +94,6 @@ watch(
                     :mask="maskCpf"
                     :maxlength="14"
                     required />
-
-                <!-- <Select label="Praça"
-                    placeholder="Selecione"
-                    v-model="formAssociado.cod_local"
-                    :items="props.origens"
-                    :valueKey="item => item.cod_local"
-                    :labelKey="item => item.nome"
-                    required /> -->
 
                 <Input label="RG"
                     v-model="formAssociado.rg"
