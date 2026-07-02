@@ -5,6 +5,7 @@ import CardTitle from '@/components/card/CardTitle.vue';
 import Input from '@/components/form/Input.vue';
 import Select from '@/components/form/Select.vue';
 import { maskCpf, maskDate, maskPhone } from '@/utils/masks';
+import { ref, watch } from 'vue';
 
 const props = defineProps({
     formAssociado: Object,
@@ -29,14 +30,42 @@ const ocupacao = [
     { label: 'Pensionista (a)', value: 'pensionista' },
 ]
 
-const buscarOrgaos = async (praca) => {
+const orgaos = ref([]);
+const carregandoOrgaos = ref(false);
 
-    try {
-        const response = await fetch(route('orgao.porPraca', praca))
-    } catch (error) {
-        
+watch(
+    () => props.formAssociado.cod_local,
+    async (novoCodLocal) => {
+        // Sempre limpa o órgão quando trocar a praça
+        props.formAssociado.cod_orgao = '';
+        orgaos.value = [];
+
+        // Se não selecionou praça, não faz requisição
+        if (!novoCodLocal) {
+            return;
+        }
+
+        try {
+            carregandoOrgaos.value = true;
+
+            const response = await fetch(`/orgao/por-praca/${novoCodLocal}`);
+
+            if (!response.ok) {
+                throw new Error('Erro ao buscar órgãos');
+            }
+
+            const data = await response.json();
+
+            orgaos.value = data;
+        } catch (error) {
+            console.error(error);
+            orgaos.value = [];
+        } finally {
+            carregandoOrgaos.value = false;
+        }
     }
-}
+);
+
 </script>
 
 <template>
@@ -44,6 +73,16 @@ const buscarOrgaos = async (praca) => {
         <CardBody>
             <CardTitle title="Dados do associado" />
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+
+                <Select label="Praça"
+                    placeholder="Selecione"
+                    v-model="formAssociado.cod_local"
+                    :items="props.origens"
+                    :valueKey="item => item.cod_local"
+                    :labelKey="item => item.nome"
+                    required />
+
+
 
                 <Input label="Nome completo"
                     v-model="formAssociado.nome"
@@ -56,13 +95,13 @@ const buscarOrgaos = async (praca) => {
                     :maxlength="14"
                     required />
 
-                <Select label="Praça"
+                <!-- <Select label="Praça"
                     placeholder="Selecione"
                     v-model="formAssociado.cod_local"
                     :items="props.origens"
                     :valueKey="item => item.cod_local"
                     :labelKey="item => item.nome"
-                    required />
+                    required /> -->
 
                 <Input label="RG"
                     v-model="formAssociado.rg"
@@ -132,6 +171,10 @@ const buscarOrgaos = async (praca) => {
                 <Select label="Órgão"
                     v-model="formAssociado.cod_orgao"
                     placeholder="Selecione"
+                    :items="orgaos"
+                    :valueKey="item => item.cod_orgao"
+                    :labelKey="item => `${item.cod_orgao} - ${item.nome}`"
+                    :disabled="!props.formAssociado.cod_local || carregandoOrgaos"
                     optional="Muda com a praça"
                     required />
 
