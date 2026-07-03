@@ -74,16 +74,6 @@ watch(
             <CardTitle title="Dados do associado" />
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
 
-                <Select label="Praça"
-                    placeholder="Selecione"
-                    v-model="formAssociado.cod_local"
-                    :items="props.origens"
-                    :valueKey="item => item.cod_local"
-                    :labelKey="item => item.nome"
-                    required />
-
-
-
                 <Input label="Nome completo"
                     v-model="formAssociado.nome"
                     :maxlength="100"
@@ -94,6 +84,24 @@ watch(
                     :mask="maskCpf"
                     :maxlength="14"
                     required />
+                <Select label="Praça"
+                    placeholder="Selecione"
+                    v-model="formAssociado.cod_local"
+                    :items="props.origens"
+                    :valueKey="item => item.cod_local"
+                    :labelKey="item => item.nome"
+                    required />
+
+                <Select label="Órgão"
+                    v-model="formAssociado.cod_orgao"
+                    placeholder="Selecione"
+                    :items="orgaos"
+                    :valueKey="item => item.cod_orgao"
+                    :labelKey="item => `${item.cod_orgao} - ${item.nome}`"
+                    :disabled="!props.formAssociado.cod_local || carregandoOrgaos"
+                    optional="Muda com a praça"
+                    required />
+
 
                 <Input label="RG"
                     v-model="formAssociado.rg"
@@ -158,16 +166,6 @@ watch(
                 <Input label="Matrícula"
                     v-model="formAssociado.mat"
                     :maxlength="50"
-                    required />
-
-                <Select label="Órgão"
-                    v-model="formAssociado.cod_orgao"
-                    placeholder="Selecione"
-                    :items="orgaos"
-                    :valueKey="item => item.cod_orgao"
-                    :labelKey="item => `${item.cod_orgao} - ${item.nome}`"
-                    :disabled="!props.formAssociado.cod_local || carregandoOrgaos"
-                    optional="Muda com a praça"
                     required />
 
                 <Input label="Setor"
