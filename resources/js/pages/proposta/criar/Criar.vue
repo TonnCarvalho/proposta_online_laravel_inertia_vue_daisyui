@@ -7,7 +7,9 @@ import Financeiro from './parts/Financeiro.vue';
 
 defineProps({
     origens: Array|Object,
+    tipoProposta: Array,
 })
+
 const form = useForm({
     associado: {
         nome: '',
@@ -43,7 +45,7 @@ const form = useForm({
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
             <Associado :formAssociado="form.associado" :origens="origens" />
 
-            <Financeiro :formFinanceiro="form.financeiro"/>
+            <Financeiro :formFinanceiro="form.financeiro" :tipoProposta="tipoProposta"/>
 
         </div>
     </AppLayout>

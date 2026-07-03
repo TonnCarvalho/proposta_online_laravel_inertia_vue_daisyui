@@ -7,18 +7,8 @@ import Select from '@/components/form/Select.vue';
 
 const props = defineProps({
     formFinanceiro: Object,
+    tipoProposta: Array,
 })
-
-const tipoProposta = [
-    {label: 'Novo com margem', value: ''},
-    {label: 'Novo mensalidade', value: ''},
-    {label: 'Refin com margem', value: ''},
-    {label: 'Refin mensalidade', value: ''},
-    {label: 'Refin 2ª linha', value: ''},
-    {label: '2ª linha', value: ''},
-    {label: 'Reenquadramento', value: ''},
-    {label: 'Refinanciamento', value: ''},
-];
 
 </script>
 
