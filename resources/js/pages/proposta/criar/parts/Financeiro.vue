@@ -8,6 +8,7 @@ import Select from '@/components/form/Select.vue';
 const props = defineProps({
     formFinanceiro: Object,
     tipoProposta: Array,
+    fontePagamento: Array,
 })
 
 </script>
@@ -39,12 +40,11 @@ const props = defineProps({
                 <Input label="Prazo"
                     required />
 
-                <Select label="Tipo da proposta" 
-                placeholder="Selecione"
-                :items="tipoProposta"
-                :labelKey="item => item.label"
-                :valueKey="item => item.value"
-                />
+                <Select label="Tipo da proposta"
+                    placeholder="Selecione"
+                    :items="tipoProposta"
+                    :labelKey="item => item.label"
+                    :valueKey="item => item.value" />
 
                 <Input label="IOF"
                     required />
@@ -52,7 +52,11 @@ const props = defineProps({
                 <Input label="Taxa"
                     required />
 
-                <Select label="Fonte pagamento" />
+                <Select label="Fonte pagamento"
+                    placeholder="Selecione"
+                    :items="fontePagamento"
+                    :labelKey="item => item.fonte"
+                    :valueKey="item => item.value" />
 
             </div>
         </CardBody>

@@ -6,8 +6,9 @@ import { useForm } from '@inertiajs/vue3';
 import Financeiro from './parts/Financeiro.vue';
 
 defineProps({
-    origens: Array|Object,
+    origens: Array | Object,
     tipoProposta: Array,
+    fontePagamento: Array,
 })
 
 const form = useForm({
@@ -43,9 +44,12 @@ const form = useForm({
             icon="file-circle-plus" />
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
-            <Associado :formAssociado="form.associado" :origens="origens" />
+            <Associado :formAssociado="form.associado"
+                :origens="origens" />
 
-            <Financeiro :formFinanceiro="form.financeiro" :tipoProposta="tipoProposta"/>
+            <Financeiro :formFinanceiro="form.financeiro"
+                :tipoProposta="tipoProposta"
+                :fontePagamento="fontePagamento" />
 
         </div>
     </AppLayout>
