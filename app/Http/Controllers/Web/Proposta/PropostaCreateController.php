@@ -15,6 +15,7 @@ class PropostaCreateController extends Controller
         $origens = $origemQuery->select(['cod_local', 'nome'])
             ->isActive()
             ->get();
+            
         $fontePagamento = FontePagamento::select(['id', 'fonte'])
             ->get();
 

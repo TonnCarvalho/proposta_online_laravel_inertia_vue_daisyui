@@ -34,7 +34,17 @@ const form = useForm({
         data_admissao: '',
     },
     financeiro: {
-
+        cod_corretor: '',
+        data_proposta: '',
+        valor_financiado: '',
+        valor_liberado: '',
+        valor_parcela: '',
+        valor_mensalidade: '',
+        prazo: '',
+        tipo_proposta: '',
+        iof: '',
+        taxa: '',
+        fonte_pagamento: '',
     }
 })
 </script>
