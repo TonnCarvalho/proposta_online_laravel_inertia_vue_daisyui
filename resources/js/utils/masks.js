@@ -28,3 +28,18 @@ export function maskPhone(value) {
 
     return value;
 }
+
+export function maskMoney(value) {
+    value = value.replace(/\D/g, '')
+
+    if (!value) {
+        return '';
+    }
+
+    value = Number(value) / 100;
+
+    return value.toLocaleString('pt-BR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    })
+}
