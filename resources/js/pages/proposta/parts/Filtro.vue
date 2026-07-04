@@ -1,7 +1,6 @@
 <script setup>
 import Card from '@/components/card/Card.vue';
 import CardBody from '@/components/card/CardBody.vue';
-import CardHead from '@/components/card/cardHead.vue';
 import CardTitle from '@/components/card/CardTitle.vue';
 import Input from '@/components/form/Input.vue';
 import Select from '@/components/form/Select.vue';

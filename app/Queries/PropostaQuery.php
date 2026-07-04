@@ -57,7 +57,7 @@ class PropostaQuery
     public function listaProposta(
         array $filtros
     ) {
-        return Proposta::query()
+        $this->query
             ->select([
                 'id_proposta',
                 'id_associado',
@@ -68,34 +68,58 @@ class PropostaQuery
                 'data_proposta',
             ])
             ->with([
-            'associado:id_associado,nome',
-            'origem:cod_local,nome',
-            ])
-            ->when(
-                ! empty($filtros['search']),
-                function ($query) use ($filtros) {
-                    $query->where(function ($q) use ($filtros) {
-                        $q->where('num_proposta', 'like', "%{$filtros['search']}%")
-                            ->orWhereHas('associado', function ($associado) use ($filtros) {
-                                $associado->where('nome', 'like', "%{$filtros['search']}%");
-                            });
-                    });
-                }
-            )
-            ->when(
-                ! empty($filtros['origem']),
-                function ($query) use ($filtros) {
-                    $query->where('cod_local', $filtros['origem']);
-                }
-            )
-            ->when(
-                ! empty($filtros['status']),
-                function ($query) use ($filtros) {
-                    $query->where('status_proposta', $filtros['status']);
-                }
-            )
+                'associado:id_associado,nome',
+                'origem:cod_local,nome',
+            ]);
+        $this->filtroPesquisa($filtros['search'] ?? null);
+        $this->filtroOrigem($filtros['origem'] ?? null);
+        $this->filtroStatus($filtros['status'] ?? null);
+
+        return $this->query
             ->orderByDesc('id_proposta')
             ->paginate(20)
+            ->onEachSide(7)
             ->appends($filtros);
+    }
+
+    private function filtroPesquisa(?string $pesquisa): self
+    {
+        $this->query->when(
+            ! empty($pesquisa),
+            function ($query) use ($pesquisa) {
+                $query->where(function ($q) use ($pesquisa) {
+                    $q->where('num_proposta', 'like', "{$pesquisa}%")
+                        ->orWhereHas('associado', function ($associado) use ($pesquisa) {
+                            $associado->where('nome', 'like', "{$pesquisa}%");
+                        });
+                });
+            }
+        );
+
+        return $this;
+    }
+
+    private function filtroOrigem(?string $origem): self
+    {
+        $this->query->when(
+            ! empty($origem),
+            function ($query) use ($origem) {
+                $query->where('cod_local', $origem);
+            }
+        );
+
+        return $this;
+    }
+
+    private function filtroStatus(?string $status): self
+    {
+        $this->query->when(
+            ! empty($status),
+            function ($query) use ($status) {
+                $query->where('status_proposta', $status);
+            }
+        );
+
+        return $this;
     }
 }

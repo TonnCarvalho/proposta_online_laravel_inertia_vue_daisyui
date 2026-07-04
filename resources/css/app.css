@@ -10,6 +10,13 @@
         'Noto Color Emoji';
 }
 
- @plugin "daisyui" {
-   themes: light --default, dark --prefersdark;
- }
+@plugin "daisyui" {
+    themes:
+        light --default,
+        dark --prefersdark;
+}
+
+required:after {
+    @apply text-red-500;
+    content: ' *';
+}

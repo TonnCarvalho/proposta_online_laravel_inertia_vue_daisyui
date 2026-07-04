@@ -1,0 +1,36 @@
+<?php
+
+namespace App\Http\Controllers\Web\Associado;
+
+use App\Http\Controllers\Controller;
+use App\Models\Associado;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
+
+class PesquisaCpfCadastro extends Controller
+{
+    public function index()
+    {
+        return Inertia::render('associado/pesquisaCpfCadastro/PesquisaCpfCadastro');
+    }
+
+    public function pesquisarAssociado(Request $request)
+    {
+        $cpf = $request->cpf;
+
+        $matriculas = Associado::query()
+            ->select(['id_associado', 'nome', 'mat', 'cargo', 'cod_local', 'cod_orgao'])
+            ->with([
+                'origem:cod_local,nome',
+                'orgao:cod_orgao,nome',
+            ])
+            ->where('cpf', $cpf)
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Pesquisa realizada com sucesso.',
+            'data' => $matriculas,
+        ], 200);
+    }
+}
