@@ -4,6 +4,7 @@ import PageHeader from '@/layout/parts/AppLayout/PageHeader.vue';
 import Associado from './parts/Associado.vue';
 import { useForm } from '@inertiajs/vue3';
 import Financeiro from './parts/Financeiro.vue';
+import Endereco from './parts/Endereco.vue';
 
 defineProps({
     origens: Array | Object,
@@ -45,7 +46,14 @@ const form = useForm({
         iof: '',
         taxa: '',
         fonte_pagamento: '',
-    }
+    },
+    endereco: {
+        cep: '',
+        uf: '',
+        municipio: '',
+        bairro: '',
+        endereco: '',
+    },
 })
 </script>
 <template>
@@ -61,6 +69,7 @@ const form = useForm({
                 :tipoProposta="tipoProposta"
                 :fontePagamento="fontePagamento" />
 
+            <Endereco :formEndereco="form.endereco" />
         </div>
     </AppLayout>
 </template>

@@ -1,6 +1,7 @@
 <script setup>
 const model = defineModel();
 
+const emit = defineEmits(['blur'])
 const props = defineProps({
     label: String,
     error: String,
@@ -55,10 +56,13 @@ const handleInput = (event) => {
             :value="model"
             :placeholder="placeholder"
             @input="handleInput"
+            @blur="$emit('blur', $event)"
             :maxlength="maxlength"
             class="input w-full text-base-content"
             :class="{ 'border border-error': $page.props.errors[name] }" />
+
         <p class="label">{{ optional }}</p>
+
         <div v-if="$page.props.errors[name]">
             <p class="text-sm text-error">
                 {{ $page.props.errors[name] }}
