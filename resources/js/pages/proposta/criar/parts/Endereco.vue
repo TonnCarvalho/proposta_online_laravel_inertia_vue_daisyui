@@ -58,13 +58,18 @@ const buscarCep = async () => {
         <CardBody>
             <CardTitle title="Endereço do associado" />
 
-            <span v-if="erroCep" class="text-error">{{ erroCep }}</span>
+            <span v-if="erroCep"
+                class="text-error">
+                {{ erroCep }}
+            </span>
+            
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
                 <Input label="CEP"
                     v-model="formEndereco.cep"
                     @blur="buscarCep"
                     :maxlength="10"
                     required />
+
                 <Input label="Estado"
                     v-model="formEndereco.uf"
                     :maxlength="2"

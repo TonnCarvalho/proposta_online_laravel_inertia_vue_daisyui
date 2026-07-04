@@ -5,6 +5,8 @@ import Associado from './parts/Associado.vue';
 import { useForm } from '@inertiajs/vue3';
 import Financeiro from './parts/Financeiro.vue';
 import Endereco from './parts/Endereco.vue';
+import BancoContraCheque from './parts/BancoContraCheque.vue';
+import BancoPagamento from './parts/BancoPagamento.vue';
 
 defineProps({
     origens: Array | Object,
@@ -54,6 +56,18 @@ const form = useForm({
         bairro: '',
         endereco: '',
     },
+    bancoContraCheque: {
+        banco: '',
+        agencia: '',
+        conta: ''
+    },
+    bancoPagamento: {
+        chave_pix: '',
+        banco_pagamento: '',
+        agencia_pagamento: '',
+        conta_pagamento: '',
+        tipo_bancario: '',
+    },
 })
 </script>
 <template>
@@ -70,6 +84,10 @@ const form = useForm({
                 :fontePagamento="fontePagamento" />
 
             <Endereco :formEndereco="form.endereco" />
+
+            <BancoContraCheque :formBancoContraque="form.bancoContraCheque" />
+
+            <BancoPagamento :formBancoPagamento="form.bancoPagamento" />
         </div>
     </AppLayout>
 </template>
