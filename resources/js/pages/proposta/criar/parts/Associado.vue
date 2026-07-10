@@ -10,6 +10,10 @@ import { ref, watch } from 'vue';
 const props = defineProps({
     formAssociado: Object,
     origens: Object | Array,
+    errors: {
+        type: Object,
+        default: () => ({}),
+    },
 })
 
 const sexo = [
@@ -77,16 +81,20 @@ watch(
                 <Input label="Nome completo"
                     v-model="formAssociado.nome"
                     :maxlength="100"
+                    :error="errors['associado.nome']"
                     required />
 
                 <Input label="CPF"
                     v-model="formAssociado.cpf"
                     :mask="maskCpf"
                     :maxlength="14"
+                    :error="errors['associado.cpf']"
                     required />
+
                 <Select label="Praça"
                     placeholder="Selecione"
                     v-model="formAssociado.cod_local"
+                    :error="errors['associado.cod_local']"
                     :items="props.origens"
                     :valueKey="item => item.cod_local"
                     :labelKey="item => item.nome"
@@ -94,6 +102,7 @@ watch(
 
                 <Select label="Órgão"
                     v-model="formAssociado.cod_orgao"
+                    :error="errors['associado.cod_orgao']"
                     placeholder="Selecione"
                     :items="orgaos"
                     :valueKey="item => item.cod_orgao"
@@ -102,15 +111,16 @@ watch(
                     optional="Muda com a praça"
                     required />
 
-
                 <Input label="RG"
                     v-model="formAssociado.rg"
                     :maxlength="14"
+                    :error="errors['associado.rg']"
                     required />
 
                 <Input label="Órgão expedidor"
                     v-model="formAssociado.org_exp"
                     :maxlength="10"
+                    :error="errors['associado.org_exp']"
                     required />
 
                 <Input label="Email"
@@ -118,21 +128,25 @@ watch(
                     type="email"
                     optional="Envio de assinatura por Email"
                     :maxlength="50"
+                    :error="errors['associado.email']"
                     required />
 
                 <Input label="Data de nascimento"
                     v-model="formAssociado.data_nasc"
                     :mask="maskDate"
                     :maxlength="10"
+                    :error="errors['associado.data_nasc']"
                     required />
 
                 <Input label="Naturalidade"
                     v-model="formAssociado.nat"
                     :maxlength="50"
+                    :error="errors['associado.nat']"
                     required />
 
                 <Select label="Sexo"
                     v-model="formAssociado.sexo"
+                    :error="errors['associado.sexo']"
                     :items="sexo"
                     :valueKey="item => item.value"
                     :labelKey="item => item.label"
@@ -143,20 +157,24 @@ watch(
                     v-model="formAssociado.cel"
                     :mask="maskPhone"
                     :maxlength="15"
+                    :error="errors['associado.nomecel']"
                     optional="Envio de assinatura por WhatsApp"
                     required />
 
                 <Input label="Nome do pai"
                     v-model="formAssociado.nome_pai"
+                    :error="errors['associado.nome_pai']"
                     :maxlength="100" />
 
                 <Input label="Nome da mãe"
                     v-model="formAssociado.nome_mae"
                     :maxlength="100"
+                    :error="errors['associado.nome_mae']"
                     required />
 
                 <Select label="Estado civil"
                     v-model="formAssociado.estado_civil"
+                    :error="errors['associado.estado_civil']"
                     placeholder="Selecione"
                     :items="estadoCivil"
                     :valueKey="item => item.value"
@@ -166,20 +184,24 @@ watch(
                 <Input label="Matrícula"
                     v-model="formAssociado.mat"
                     :maxlength="50"
+                    :error="errors['associado.mat']"
                     required />
 
                 <Input label="Setor"
                     v-model="formAssociado.setor"
                     :maxlength="50"
+                    :error="errors['associado.setor']"
                     required />
 
                 <Input label="Cargo"
-                    :maxlength="50"
                     v-model="formAssociado.cargo"
+                    :maxlength="50"
+                    :error="errors['associado.cargo']"
                     required />
 
                 <Select label="Ocupação"
                     v-model="formAssociado.ocupacao"
+                    :error="errors['associado.ocupacao']"
                     placeholder="Selecione"
                     :items="ocupacao"
                     :valueKey="item => item.value"
@@ -190,6 +212,7 @@ watch(
                     v-model="formAssociado.data_admissao"
                     :mask="maskDate"
                     :maxlength="10"
+                    :error="errors['associado.data_admissao']"
                     required />
             </div>
         </CardBody>

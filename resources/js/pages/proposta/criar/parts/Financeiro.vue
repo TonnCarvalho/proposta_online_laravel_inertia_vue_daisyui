@@ -10,6 +10,10 @@ const props = defineProps({
     formFinanceiro: Object,
     tipoProposta: Array,
     fontePagamento: Array,
+    errors: {
+        typeof: Object,
+        default: ({}),
+    },
 })
 
 </script>
@@ -23,14 +27,17 @@ const props = defineProps({
                 <Input label="Código do corretor"
                     :maxlength="4"
                     v-model="formFinanceiro.cod_corretor"
+                    :error="errors['financeiro.cod_corretor']"
                     required />
 
                 <Input label="Data da proposta"
                     v-model="formFinanceiro.data_proposta"
+                    :error="errors['financeiro.data_proposta']"
                     required />
 
                 <Input label="Valor financiado"
                     v-model="formFinanceiro.valor_financiado"
+                    :error="errors['financeiro.valor_financiado']"
                     :maxlength="10"
                     :mask="maskMoney"
                     required />
@@ -42,12 +49,14 @@ const props = defineProps({
 
                 <Input label="Valor da parcela"
                     v-model="formFinanceiro.valor_parcela"
+                    :error="errors['financeiro.valor_parcela']"
                     :maxlength="10"
                     :mask="maskMoney"
                     required />
 
                 <Input label="Valor da mensalidade"
                     v-model="formFinanceiro.valor_mensalidade"
+                    :error="errors['financeiro.valor_mensalidade']"
                     :maxlength="10"
                     :mask="maskMoney"
                     required />
@@ -55,6 +64,7 @@ const props = defineProps({
                 <Input label="Prazo"
                     :maxlength="3"
                     v-model="formFinanceiro.prazo"
+                    :error="errors['financeiro.prazo']"
                     required />
 
                 <Select label="Tipo da proposta"
@@ -66,12 +76,14 @@ const props = defineProps({
 
                 <Input label="IOF"
                     v-model="formFinanceiro.iof"
+                    :error="errors['financeiro.iof']"
                     :maxlength="10"
                     :mask="maskMoney"
                     required />
 
                 <Input label="Taxa"
                     v-model="formFinanceiro.taxa"
+                    :error="errors['financeiro.taxa']"
                     :maxlength="4"
                     required />
 
