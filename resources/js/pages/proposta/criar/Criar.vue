@@ -7,6 +7,8 @@ import Financeiro from './parts/Financeiro.vue';
 import Endereco from './parts/Endereco.vue';
 import BancoContraCheque from './parts/BancoContraCheque.vue';
 import BancoPagamento from './parts/BancoPagamento.vue';
+import Card from '@/components/card/Card.vue';
+import CardBody from '@/components/card/CardBody.vue';
 
 defineProps({
     origens: Array | Object,
@@ -69,25 +71,70 @@ const form = useForm({
         tipo_bancario: '',
     },
 })
+
+const submit = () => {
+    form.post(route('proposta.post'), {
+        preserveScroll: true,
+
+        onSuccess: () => {
+            console.log('sucesso');
+        },
+        onError: (error) => {
+            console.log(error)
+        },
+        onFinish: () => {
+            console.log('finalizado');
+        }
+    })
+}
 </script>
 <template>
     <AppLayout>
         <PageHeader title="Nova proposta"
             icon="file-circle-plus" />
+        <form @submit.prevent="submit">
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
-            <Associado :formAssociado="form.associado"
-                :origens="origens" />
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+                <Associado :formAssociado="form.associado"
+                    :origens="origens"
+                    :errors="form.errors" />
 
-            <Financeiro :formFinanceiro="form.financeiro"
-                :tipoProposta="tipoProposta"
-                :fontePagamento="fontePagamento" />
+                <Financeiro :formFinanceiro="form.financeiro"
+                    :tipoProposta="tipoProposta"
+                    :fontePagamento="fontePagamento"
+                    :errors="form.errors" />
 
-            <Endereco :formEndereco="form.endereco" />
+                <Endereco :formEndereco="form.endereco"
+                :errors="form.errors" />
 
-            <BancoContraCheque :formBancoContraque="form.bancoContraCheque" />
+                <BancoContraCheque :formBancoContraque="form.bancoContraCheque"
+                :errors="form.errors" />
 
-            <BancoPagamento :formBancoPagamento="form.bancoPagamento" />
-        </div>
+                <BancoPagamento :formBancoPagamento="form.bancoPagamento"
+                :errors="form.errors" />
+            </div>
+
+            <Card class="mt-3 sticky bottom-0">
+                <CardBody>
+                    <div class="flex gap-3">
+
+                        <button :disabled="form.processing"
+                            type="submit"
+                            class="btn btn-primary btn-wide">
+                            <span v-if="form.processing"
+                                class="loading loading-spinner loading.sm">
+                            </span>
+                            {{ form.processing ? 'Criando proposta' : 'Criar proposta' }}
+                        </button>
+
+                        <Link :href="route('pesquisaCpfCadastro.index')"
+                            class="btn btn-soft">
+                        Voltar
+                        </Link>
+
+                    </div>
+                </CardBody>
+            </Card>
+        </form>
     </AppLayout>
 </template>
