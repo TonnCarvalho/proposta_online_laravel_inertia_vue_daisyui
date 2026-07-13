@@ -25,4 +25,9 @@ class PropostaCreateController extends Controller
             'fontePagamento' => $fontePagamento,
         ]);
     }
+
+    public function sucess()
+    {
+        return Inertia::render('proposta/criar/Sucesso');
+    }
 }
