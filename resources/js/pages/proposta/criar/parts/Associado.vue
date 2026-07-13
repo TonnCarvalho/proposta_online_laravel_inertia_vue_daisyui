@@ -157,13 +157,12 @@ watch(
                     v-model="formAssociado.cel"
                     :mask="maskPhone"
                     :maxlength="15"
-                    :error="errors['associado.nomecel']"
+                    :error="errors['associado.cel']"
                     optional="Envio de assinatura por WhatsApp"
                     required />
 
                 <Input label="Nome do pai"
                     v-model="formAssociado.nome_pai"
-                    :error="errors['associado.nome_pai']"
                     :maxlength="100" />
 
                 <Input label="Nome da mãe"

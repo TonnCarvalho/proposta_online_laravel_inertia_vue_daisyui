@@ -6,7 +6,7 @@ import { useForm } from '@inertiajs/vue3';
 import Financeiro from './parts/Financeiro.vue';
 import Endereco from './parts/Endereco.vue';
 import BancoContraCheque from './parts/BancoContraCheque.vue';
-import BancoPagamento from './parts/BancoPagamento.vue';
+import BancoRecimento from './parts/BancoRecimento.vue';
 import Card from '@/components/card/Card.vue';
 import CardBody from '@/components/card/CardBody.vue';
 
@@ -63,7 +63,7 @@ const form = useForm({
         agencia: '',
         conta: ''
     },
-    bancoPagamento: {
+    BancoRecimento: {
         chave_pix: '',
         banco_pagamento: '',
         agencia_pagamento: '',
@@ -105,13 +105,13 @@ const submit = () => {
                     :errors="form.errors" />
 
                 <Endereco :formEndereco="form.endereco"
-                :errors="form.errors" />
+                    :errors="form.errors" />
 
                 <BancoContraCheque :formBancoContraque="form.bancoContraCheque"
-                :errors="form.errors" />
+                    :errors="form.errors" />
 
-                <BancoPagamento :formBancoPagamento="form.bancoPagamento"
-                :errors="form.errors" />
+                <BancoRecimento :formBancoRecimento="form.BancoRecimento"
+                    :errors="form.errors" />
             </div>
 
             <Card class="mt-3 sticky bottom-0">

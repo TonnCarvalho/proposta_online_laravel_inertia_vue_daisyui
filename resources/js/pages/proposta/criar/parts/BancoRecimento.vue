@@ -7,7 +7,11 @@ import Select from '@/components/form/Select.vue';
 
 
 const props = defineProps({
-    formBancoPagamento: Object,
+    formBancoRecimento: Object,
+    errors: {
+        type: Object,
+        default: () => ({}),
+    },
 })
 
 const tipoConta = [
@@ -22,27 +26,30 @@ const tipoConta = [
             <CardTitle title="Conta bancária para recebimento" />
 
             <Input label="Chave Pix"
-                v-model="formBancoPagamento.chave_pix"
+                v-model="formBancoRecimento.chave_pix"
                 :maxlength="100" />
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
                 <Input label="Código do banco"
-                    v-model="formBancoPagamento.banco_pagamento"
+                    v-model="formBancoRecimento.banco_pagamento"
+                    :error="errors['bancoRecebimento.banco_pagamento']"
                     :maxlength="10"
                     required />
 
                 <Input label="Agência"
-                    v-model="formBancoPagamento.agencia_pagamento"
+                    v-model="formBancoRecimento.agencia_pagamento"
+                    :error="errors['bancoRecebimento.agencia_pagamento']"
                     :maxlength="10"
                     required />
 
                 <Input label="Conta"
-                    v-model="formBancoPagamento.conta_pagamento"
+                    v-model="formBancoRecimento.conta_pagamento"
+                    :error="errors['bancoRecebimento.conta_pagamento']"
                     :maxlength="25"
                     required />
 
                 <Select label="Tipo de Conta"
-                    v-model="formBancoPagamento.tipo_bancario"
+                    v-model="formBancoRecimento.tipo_bancario"
                     placeholder="Selecione o tipo"
                     :items="tipoConta"
                     :labelKey="item => item.label"

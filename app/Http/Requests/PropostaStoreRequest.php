@@ -65,11 +65,11 @@ class PropostaStoreRequest extends FormRequest
             'bancoContraCheque.agencia' => ['required'],
             'bancoContraCheque.conta' => ['required'],
 
-            'bancoPagamento.chave_pix' => ['required'],
-            'bancoPagamento.banco_pagamento' => ['required'],
-            'bancoPagamento.agencia_pagamento' => ['required'],
-            'bancoPagamento.conta_pagamento' => ['required'],
-            'bancoPagamento.tipo_bancario' => ['required'],
+            'bancoRecebimento.chave_pix' => ['required'],
+            'bancoRecebimento.banco_pagamento' => ['required'],
+            'bancoRecebimento.agencia_pagamento' => ['required'],
+            'bancoRecebimento.conta_pagamento' => ['required'],
+            'bancoRecebimento.tipo_bancario' => ['required'],
         ];
     }
 }
