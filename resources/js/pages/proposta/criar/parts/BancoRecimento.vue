@@ -27,6 +27,7 @@ const tipoConta = [
 
             <Input label="Chave Pix"
                 v-model="formBancoRecimento.chave_pix"
+                :error="errors['bancoRecebimento.chave_pix']"
                 :maxlength="100" />
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
