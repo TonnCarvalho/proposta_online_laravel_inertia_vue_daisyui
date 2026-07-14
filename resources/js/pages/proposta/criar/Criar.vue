@@ -17,27 +17,27 @@ defineProps({
 })
 
 const form = useForm({
-    // associado: {
-    //     nome: '',
-    //     cod_local: '',
-    //     cpf: '',
-    //     rg: '',
-    //     org_exp: '',
-    //     email: '',
-    //     data_nasc: '',
-    //     nat: '',
-    //     sexo: '',
-    //     cel: '',
-    //     nome_pai: '',
-    //     nome_mae: '',
-    //     estado_civil: '',
-    //     mat: '',
-    //     cod_orgao: '',
-    //     setor: '',
-    //     cargo: '',
-    //     ocupacao: '',
-    //     data_admissao: '',
-    // },
+    associado: {
+        nome: '',
+        cod_local: '',
+        cpf: '',
+        rg: '',
+        org_exp: '',
+        email: '',
+        data_nasc: '',
+        nat: '',
+        sexo: '',
+        cel: '',
+        nome_pai: '',
+        nome_mae: '',
+        estado_civil: '',
+        mat: '',
+        cod_orgao: '',
+        setor: '',
+        cargo: '',
+        ocupacao: '',
+        data_admissao: '',
+    },
     financeiro: {
         cod_corretor: '',
         data_proposta: '',
@@ -51,25 +51,25 @@ const form = useForm({
         taxa: '',
         fonte_pagamento: '',
     },
-    // endereco: {
-    //     cep: '',
-    //     uf: '',
-    //     municipio: '',
-    //     bairro: '',
-    //     endereco: '',
-    // },
-    // bancoContraCheque: {
-    //     banco: '',
-    //     agencia: '',
-    //     conta: ''
-    // },
-    // BancoRecimento: {
-    //     chave_pix: '',
-    //     banco_pagamento: '',
-    //     agencia_pagamento: '',
-    //     conta_pagamento: '',
-    //     tipo_bancario: '',
-    // },
+    endereco: {
+        cep: '',
+        uf: '',
+        municipio: '',
+        bairro: '',
+        endereco: '',
+    },
+    bancoContraCheque: {
+        banco: '',
+        agencia: '',
+        conta: ''
+    },
+    bancoRecebimento: {
+        chave_pix: '',
+        banco_pagamento: '',
+        agencia_pagamento: '',
+        conta_pagamento: '',
+        tipo_bancario: '',
+    },
 })
 
 const submit = () => {
@@ -95,23 +95,23 @@ const submit = () => {
         <form @submit.prevent="submit">
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
-                <!-- <Associado :formAssociado="form.associado"
+                <Associado :formAssociado="form.associado"
                     :origens="origens"
-                    :errors="form.errors" /> -->
+                    :errors="form.errors" />
 
-                 <Financeiro :formFinanceiro="form.financeiro"
+                <Financeiro :formFinanceiro="form.financeiro"
                     :tipoProposta="tipoProposta"
                     :fontePagamento="fontePagamento"
                     :errors="form.errors" />
 
-                <!--<Endereco :formEndereco="form.endereco"
+                <Endereco :formEndereco="form.endereco"
+                    :errors="form.errors" /> 
+
+                 <BancoContraCheque :formBancoContraque="form.bancoContraCheque"
                     :errors="form.errors" />
 
-                <BancoContraCheque :formBancoContraque="form.bancoContraCheque"
+                <BancoRecimento :formBancoRecebimento="form.bancoRecebimento"
                     :errors="form.errors" />
-
-                <BancoRecimento :formBancoRecimento="form.BancoRecimento"
-                    :errors="form.errors" /> -->
             </div>
 
             <Card class="mt-3 sticky bottom-0">
