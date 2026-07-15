@@ -1,5 +1,12 @@
 export function formatDate(date) {
-    return new Date(date).toLocaleDateString('pt-BR')
+    if (!date) {
+        return '';
+    }
+
+    const dateOnly = String(date).slice(0, 10);
+    const [year, month, day] = dateOnly.split('-')
+
+    return `${day}/${month}/${year}`;
 }
 
 export function formatTime(date) {

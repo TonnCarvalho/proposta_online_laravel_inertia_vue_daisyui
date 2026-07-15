@@ -1,6 +1,8 @@
 <script setup>
 import AppLayout from '@/layout/AppLayout.vue';
 import PageHeader from '@/layout/parts/AppLayout/PageHeader.vue';
+import { maskMoney } from '@/utils/masks.js';
+import { formatDate } from '@/utils/dateTime.js';
 import { useForm } from '@inertiajs/vue3';
 import Card from '@/components/card/Card.vue';
 import CardBody from '@/components/card/CardBody.vue';
@@ -31,7 +33,7 @@ const form = useForm({
         rg: proposta.associado?.rg ?? '',
         orgao_exp: proposta.associado?.orgao_exp ?? '',
         email: proposta.associado?.email ?? '',
-        data_nasc: proposta.associado?.data_nasc ?? '',
+        data_nasc: formatDate(proposta.associado?.data_nasc ?? ''),
         nat: proposta.associado?.nat ?? '',
         sexo: proposta.associado?.sexo ?? '',
         cel: proposta.associado?.cel ?? '',
@@ -43,19 +45,19 @@ const form = useForm({
         setor: proposta.associado?.setor ?? '',
         cargo: proposta.associado?.cargo ?? '',
         ocupacao: proposta.associado?.ocupacao ?? '',
-        data_admissao: proposta.associado?.data_admissao ?? '',
+        data_admissao: formatDate(String(proposta.associado?.data_admissao ?? '')),
     },
     financeiro: {
         cod_corretor: proposta?.cod_corretor ?? '',
-        data_proposta: proposta?.data_proposta ?? '',
+        data_proposta: formatDate(proposta?.data_proposta ?? ''),
         num_proposta: proposta?.num_proposta ?? '',
-        valor_financiado: proposta?.valor_financiado ?? '',
-        valor_liberado: proposta?.valor_liberado ?? '',
-        valor_parcela: proposta?.valor_parcela ?? '',
-        valor_mensalidade: proposta?.valor_mensalidade ?? '',
+        valor_financiado: maskMoney(String(proposta?.valor_financiado ?? '')),
+        valor_liberado: maskMoney(String(proposta?.valor_liberado ?? '')),
+        valor_parcela: maskMoney(String(proposta?.valor_parcela ?? '')),
+        valor_mensalidade: maskMoney(String(proposta?.valor_mensalidade ?? '')),
         prazo: proposta?.prazo ?? '',
         tipo_proposta: proposta?.tipo_proposta ?? '',
-        iof: proposta?.iof ?? '',
+        iof: maskMoney(String(proposta?.iof ?? '')),
         taxa: proposta?.taxa ?? '',
         fonte_pagamento: proposta?.fonte_pagamento ?? '',
     },
@@ -136,7 +138,9 @@ const submit = () => {
                             <span v-if="form.processing"
                                 class="loading loading-spinner loading.sm">
                             </span>
-                            {{ form.processing ? 'Editando proposta' : 'Editar proposta' }}
+                            {{ form.processing ?
+                                'Editando proposta' :
+                                'Editar proposta' }}
                         </button>
 
                         <Link :href="route('proposta.index')"

@@ -75,6 +75,7 @@ watch(
                     :maxlength="14"
                     :error="errors['associado.cpf']"
                     required />
+                    
                 <Select label="Praça"
                     placeholder="Selecione"
                     v-model="formAssociado.cod_local"
