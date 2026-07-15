@@ -8,16 +8,14 @@ import Select from '@/components/form/Select.vue';
 
 const props = defineProps({
     formBancoRecebimento: Object,
+    tipoContaAssociado: Object,
     errors: {
         type: Object,
         default: () => ({}),
     },
 })
 
-const tipoConta = [
-    { label: 'Corrente', value: 'C' },
-    { label: 'Poupança', value: 'P' },
-]
+
 </script>
 
 <template>
@@ -52,7 +50,7 @@ const tipoConta = [
                 <Select label="Tipo de Conta"
                     v-model="formBancoRecebimento.tipo_bancario"
                     placeholder="Selecione o tipo"
-                    :items="tipoConta"
+                    :items="tipoContaAssociado"
                     :labelKey="item => item.label"
                     :valueKey="item => item.value" />
             </div>

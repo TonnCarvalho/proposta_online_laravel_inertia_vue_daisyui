@@ -13,6 +13,10 @@ import BancoRecimentoForm from './parts/form/BancoRecimentoForm.vue';
 defineProps({
     origens: Array | Object,
     tipoProposta: Array,
+    sexoAssociado: Array,
+    estadoCivilAssociado: Array,
+    ocupacaoAssociado: Array,
+    tipoContaAssociado: Array,
     fontePagamento: Array,
 })
 
@@ -22,7 +26,7 @@ const form = useForm({
         cod_local: '',
         cpf: '',
         rg: '',
-        org_exp: '',
+        orgao_exp: '',
         email: '',
         data_nasc: '',
         nat: '',
@@ -87,6 +91,7 @@ const submit = () => {
         }
     })
 }
+
 </script>
 <template>
     <AppLayout>
@@ -97,6 +102,9 @@ const submit = () => {
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
                 <AssociadoForm :formAssociado="form.associado"
                     :origens="origens"
+                    :sexoAssociado="sexoAssociado"
+                    :estadoCivilAssociado="estadoCivilAssociado"
+                    :ocupacaoAssociado="ocupacaoAssociado"
                     :errors="form.errors" />
 
                 <FinanceiroForm :formFinanceiro="form.financeiro"
@@ -111,6 +119,7 @@ const submit = () => {
                     :errors="form.errors" />
 
                 <BancoRecimentoForm :formBancoRecebimento="form.bancoRecebimento"
+                    :tipoContaAssociado="tipoContaAssociado"
                     :errors="form.errors" />
             </div>
 

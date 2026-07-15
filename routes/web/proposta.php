@@ -16,5 +16,9 @@ Route::middleware('auth')->group(function () {
             ->name('proposta.post');
 
         Route::get('/sucesso', [PropostaCreateController::class, 'sucess']);
+
+        Route::get('/{id_proposta}/edit', [PropostaController::class, 'edit'])
+            ->whereNumber('id_proposta')
+            ->name('proposta.edit');
     });
 });

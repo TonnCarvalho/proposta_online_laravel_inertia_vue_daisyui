@@ -11,6 +11,7 @@ const props = defineProps({
         default: 'text'
     },
     name: String,
+    readonly: Boolean,
     placeholder: String,
     icon: [String, Array],
     required: {
@@ -51,6 +52,7 @@ const handleInput = (event) => {
         </legend>
 
         <input :id="name"
+            :readonly="readonly"
             :name="name"
             :type="type"
             :value="model"

@@ -10,29 +10,14 @@ import { ref, watch } from 'vue';
 const props = defineProps({
     formAssociado: Object,
     origens: Object | Array,
+    sexoAssociado: Array,
+    estadoCivilAssociado: Array,
+    ocupacaoAssociado: Array,
     errors: {
         type: Object,
         default: () => ({}),
     },
 })
-
-const sexo = [
-    { label: 'Masculino', value: 'M' },
-    { label: 'Feminino', value: 'F' },
-]
-
-const estadoCivil = [
-    { label: 'Solteiro (a)', value: 'solteiro' },
-    { label: 'Casado (a)', value: 'casado' },
-    { label: 'Diverciado (a)', value: 'divorciado' },
-    { label: 'Viuvo (a)', value: 'viuvo' },
-]
-
-const ocupacao = [
-    { label: 'Ativo (a)', value: 'ativo' },
-    { label: 'Aposentado (a)', value: 'aposentado' },
-    { label: 'Pensionista (a)', value: 'pensionista' },
-]
 
 const orgaos = ref([]);
 const carregandoOrgaos = ref(false);
@@ -90,7 +75,6 @@ watch(
                     :maxlength="14"
                     :error="errors['associado.cpf']"
                     required />
-
                 <Select label="Praça"
                     placeholder="Selecione"
                     v-model="formAssociado.cod_local"
@@ -118,9 +102,9 @@ watch(
                     required />
 
                 <Input label="Órgão expedidor"
-                    v-model="formAssociado.org_exp"
+                    v-model="formAssociado.orgao_exp"
                     :maxlength="10"
-                    :error="errors['associado.org_exp']"
+                    :error="errors['associado.orgao_exp']"
                     required />
 
                 <Input label="Email"
@@ -147,7 +131,7 @@ watch(
                 <Select label="Sexo"
                     v-model="formAssociado.sexo"
                     :error="errors['associado.sexo']"
-                    :items="sexo"
+                    :items="sexoAssociado"
                     :valueKey="item => item.value"
                     :labelKey="item => item.label"
                     placeholder="Selecione"
@@ -175,7 +159,7 @@ watch(
                     v-model="formAssociado.estado_civil"
                     :error="errors['associado.estado_civil']"
                     placeholder="Selecione"
-                    :items="estadoCivil"
+                    :items="estadoCivilAssociado"
                     :valueKey="item => item.value"
                     :labelKey="item => item.label"
                     required />
@@ -202,7 +186,7 @@ watch(
                     v-model="formAssociado.ocupacao"
                     :error="errors['associado.ocupacao']"
                     placeholder="Selecione"
-                    :items="ocupacao"
+                    :items="ocupacaoAssociado"
                     :valueKey="item => item.value"
                     :labelKey="item => item.label"
                     required />

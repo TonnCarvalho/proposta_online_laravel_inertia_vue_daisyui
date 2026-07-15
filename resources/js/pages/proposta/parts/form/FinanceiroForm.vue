@@ -35,6 +35,12 @@ const props = defineProps({
                     :error="errors['financeiro.data_proposta']"
                     required />
 
+                <Input label="Proposta"
+                    v-if="formFinanceiro.num_proposta"
+                    readonly
+                    v-model="formFinanceiro.num_proposta"
+                    :error="errors['financeiro.num_proposta']" />
+
                 <Input label="Valor financiado"
                     v-model="formFinanceiro.valor_financiado"
                     :error="errors['financeiro.valor_financiado']"

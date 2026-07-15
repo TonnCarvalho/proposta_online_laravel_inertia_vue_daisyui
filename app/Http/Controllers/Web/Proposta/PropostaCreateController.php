@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\Web\Proposta;
 
+use App\Enum\EstadoCivilAssociado;
+use App\Enum\OcupacaoAssociado;
+use App\Enum\SexoAssociado;
+use App\Enum\TipoContaAssociado;
 use App\Enum\TipoProposta;
 use App\Http\Controllers\Controller;
 use App\Models\FontePagamento;
@@ -22,6 +26,10 @@ class PropostaCreateController extends Controller
         return Inertia::render('proposta/Criar', [
             'origens' => $origens,
             'tipoProposta' => TipoProposta::option(),
+            'sexoAssociado' => SexoAssociado::option(),
+            'estadoCivilAssociado' => EstadoCivilAssociado::option(),
+            'ocupacaoAssociado' => OcupacaoAssociado::option(),
+            'tipoContaAssociado' => TipoContaAssociado::option(),
             'fontePagamento' => $fontePagamento,
         ]);
     }
