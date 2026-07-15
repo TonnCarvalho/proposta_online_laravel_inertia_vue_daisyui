@@ -6,14 +6,14 @@ const menuitems = [
     label: 'Propostas',
     icon: 'file-lines',
     route: route('proposta.index'),
-    component: 'proposta/Proposta'
+    component: 'proposta/Index'
   },
   {
     label: 'Criar Proposta',
     icon: 'file-circle-plus',
     route: route('pesquisaCpfCadastro.index'),
     component: 'associado/pesquisaCpfCadastro/PesquisaCpfCadastro' && 
-      'proposta/criar/Criar'
+      'proposta/Criar'
   },
 ]
 
