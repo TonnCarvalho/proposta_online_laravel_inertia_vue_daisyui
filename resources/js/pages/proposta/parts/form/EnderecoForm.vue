@@ -60,7 +60,7 @@ const buscarCep = async () => {
 <template>
     <Card>
         <CardBody>
-            <CardTitle title="Endereço do associado" />
+            <CardTitle title="Endereço do associado" class="text-primary"/>
 
             <span v-if="erroCep"
                 class="text-error">

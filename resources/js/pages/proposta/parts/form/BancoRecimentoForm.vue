@@ -21,7 +21,7 @@ const props = defineProps({
 <template>
     <Card>
         <CardBody>
-            <CardTitle title="Conta bancária para recebimento" />
+            <CardTitle title="Conta bancária para recebimento" class="text-primary" />
 
             <Input label="Chave Pix"
                 v-model="formBancoRecebimento.chave_pix"

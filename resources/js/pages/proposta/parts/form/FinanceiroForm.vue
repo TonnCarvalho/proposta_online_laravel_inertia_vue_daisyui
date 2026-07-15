@@ -21,7 +21,7 @@ const props = defineProps({
 <template>
     <Card>
         <CardBody>
-            <CardTitle title="Auxílio financeiro" />
+            <CardTitle title="Auxílio financeiro" class="text-primary"/>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
 
                 <Input label="Código do corretor"

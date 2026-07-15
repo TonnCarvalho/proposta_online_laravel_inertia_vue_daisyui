@@ -100,7 +100,7 @@ const submit = () => {
 </script>
 <template>
     <AppLayout>
-        <PageHeader :title="form.associado.nome"
+        <PageHeader :title="`${form.financeiro.num_proposta} - ${form.associado.nome}`"
             icon="file-lines" />
         <form @submit.prevent="submit">
 
