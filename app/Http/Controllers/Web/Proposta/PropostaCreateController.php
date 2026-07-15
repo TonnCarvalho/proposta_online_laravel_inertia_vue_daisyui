@@ -19,7 +19,7 @@ class PropostaCreateController extends Controller
         $fontePagamento = FontePagamento::select(['id', 'fonte'])
             ->get();
 
-        return Inertia::render('proposta/criar/Criar', [
+        return Inertia::render('proposta/Criar', [
             'origens' => $origens,
             'tipoProposta' => TipoProposta::option(),
             'fontePagamento' => $fontePagamento,
@@ -28,6 +28,6 @@ class PropostaCreateController extends Controller
 
     public function sucess()
     {
-        return Inertia::render('proposta/criar/Sucesso');
+        return Inertia::render('proposta/Sucesso');
     }
 }

@@ -27,7 +27,7 @@ class PropostaController extends Controller
         $origens = $origemQuery->select(['cod_local', 'nome'])
             ->get();
 
-        return Inertia::render('proposta/Proposta', [
+        return Inertia::render('proposta/Index', [
             'propostas' => $propostas,
             'origens' => $origens,
             'statusProposta' => StatusProposta::option(),

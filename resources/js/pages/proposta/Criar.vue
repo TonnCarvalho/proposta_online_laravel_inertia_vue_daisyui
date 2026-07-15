@@ -1,14 +1,14 @@
 <script setup>
 import AppLayout from '@/layout/AppLayout.vue';
 import PageHeader from '@/layout/parts/AppLayout/PageHeader.vue';
-import Associado from './parts/Associado.vue';
 import { useForm } from '@inertiajs/vue3';
-import Financeiro from './parts/Financeiro.vue';
-import Endereco from './parts/Endereco.vue';
-import BancoContraCheque from './parts/BancoContraCheque.vue';
-import BancoRecimento from './parts/BancoRecimento.vue';
 import Card from '@/components/card/Card.vue';
 import CardBody from '@/components/card/CardBody.vue';
+import AssociadoForm from './parts/form/AssociadoForm.vue';
+import FinanceiroForm from './parts/form/FinanceiroForm.vue';
+import EnderecoForm from './parts/form/EnderecoForm.vue';
+import BancoContraChequeForm from './parts/form/BancoContraChequeForm.vue';
+import BancoRecimentoForm from './parts/form/BancoRecimentoForm.vue';
 
 defineProps({
     origens: Array | Object,
@@ -95,22 +95,22 @@ const submit = () => {
         <form @submit.prevent="submit">
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
-                <Associado :formAssociado="form.associado"
+                <AssociadoForm :formAssociado="form.associado"
                     :origens="origens"
                     :errors="form.errors" />
 
-                <Financeiro :formFinanceiro="form.financeiro"
+                <FinanceiroForm :formFinanceiro="form.financeiro"
                     :tipoProposta="tipoProposta"
                     :fontePagamento="fontePagamento"
                     :errors="form.errors" />
 
-                <Endereco :formEndereco="form.endereco"
-                    :errors="form.errors" /> 
-
-                 <BancoContraCheque :formBancoContraque="form.bancoContraCheque"
+                <EnderecoForm :formEndereco="form.endereco"
                     :errors="form.errors" />
 
-                <BancoRecimento :formBancoRecebimento="form.bancoRecebimento"
+                <BancoContraChequeForm :formBancoContraque="form.bancoContraCheque"
+                    :errors="form.errors" />
+
+                <BancoRecimentoForm :formBancoRecebimento="form.bancoRecebimento"
                     :errors="form.errors" />
             </div>
 
