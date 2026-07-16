@@ -83,7 +83,7 @@ const form = useForm({
 })
 
 const submit = () => {
-    form.post(route('proposta.post'), {
+    form.post(route('proposta.store'), {
         preserveScroll: true,
 
         onSuccess: () => {

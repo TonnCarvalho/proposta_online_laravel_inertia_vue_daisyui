@@ -25,14 +25,18 @@ const props = defineProps({
 
         <template #tbody>
             <tr class="hover:bg-base-300"
-                v-for="matricula in matriculas" :key="matricula.id_associado">
+                v-for="matricula in matriculas"
+                :key="matricula.id_associado">
                 <td>{{ matricula.nome }}</td>
                 <td>{{ matricula.mat }}</td>
                 <td>{{ matricula.origem.nome }}</td>
                 <td>{{ matricula.orgao.nome }}</td>
                 <td>{{ matricula.cargo }}</td>
                 <td>
-                    <Link :href="route('proposta.index')"
+                    <Link :href="route('proposta.create', {
+                        tipoCadastro: 'matricula_existente',
+                        associado: matricula.id_associado
+                    })"
                         class="btn btn-primary btn-sm btn-soft">
                     Criar proposta
                     </Link>
@@ -41,9 +45,10 @@ const props = defineProps({
         </template>
 
         <template #append>
-            <div class="">
-                <Link class="btn btn-primary">
-                    <FontAwesomeIcon icon="plus"/>
+            <div>
+                <Link :href="route('proposta.create', 'nova_matricula')"
+                    class="btn btn-primary">
+                <FontAwesomeIcon icon="plus" />
                 Nova matrículas
                 </Link>
             </div>

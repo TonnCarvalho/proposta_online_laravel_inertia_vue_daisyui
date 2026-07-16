@@ -25,14 +25,14 @@ const carregandoOrgaos = ref(false);
 watch(
     () => props.formAssociado.cod_local,
     async (novoCodLocal, codLocalAnterior) => {
-        
+
         /**
          * Limpa o órgão somente quando o usuário troca a praça
          * 
          * No primeira execução, codLocalAnterior será undefined
          * Dessa forma, preservamos o cod_orgao que veio do banco.
          */
-        if(codLocalAnterior !== undefined &&
+        if (codLocalAnterior !== undefined &&
             novoCodLocal !== codLocalAnterior
         ) {
             props.formAssociado.cod_orgao = ''
@@ -57,7 +57,6 @@ watch(
 
             orgaos.value = data;
         } catch (error) {
-            console.error(error);
             orgaos.value = [];
         } finally {
             carregandoOrgaos.value = false;
@@ -73,7 +72,8 @@ watch(
 <template>
     <Card>
         <CardBody>
-            <CardTitle title="Dados do associado" class="text-primary"/>
+            <CardTitle title="Dados do associado"
+                class="text-primary" />
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
 
                 <Input label="Nome completo"
@@ -88,7 +88,7 @@ watch(
                     :maxlength="14"
                     :error="errors['associado.cpf']"
                     required />
-                    
+
                 <Select label="Praça"
                     placeholder="Selecione"
                     v-model="formAssociado.cod_local"
@@ -97,7 +97,7 @@ watch(
                     :valueKey="item => item.cod_local"
                     :labelKey="item => item.nome"
                     required />
-
+                    
                 <Select label="Órgão"
                     v-model="formAssociado.cod_orgao"
                     :error="errors['associado.cod_orgao']"

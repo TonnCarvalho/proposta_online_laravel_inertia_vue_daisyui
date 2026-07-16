@@ -2,7 +2,6 @@
 
 namespace App\Services\Proposta;
 
-use App\Models\Associado;
 use App\Models\Proposta;
 use App\Queries\PropostaQuery;
 use Illuminate\Support\Facades\DB;
@@ -18,15 +17,15 @@ class PropostaService
             ->listaProposta($filtros);
     }
 
-    public function criarCadastro(string $tipoCadastro, array $dados): Proposta
+    public function criarProposta(string $tipoCadastro, array $dados): Proposta
     {
         return DB::transaction(function () use ($tipoCadastro, $dados) {
             return match($tipoCadastro) {
-                'novo_associado' => $this->cadastrarNovoAssociado($dados),
+                'novo_associado' => $this->cadastrarNovoAssociado(),
 
-                'nova_matricula' => $this->cadastrarNovaMatricula($dados),
+                'nova_matricula' => $this->cadastrarNovaMatricula(),
 
-                'matricula_existente' => $this->cadastrarComMatriulaExistente($dados),
+                'matricula_existente' => $this->cadastrarComMatriulaExistente(),
 
                 default => throw ValidationException::withMessages([
                     'tipo' => 'Tipo de cadastrdo inválido',
@@ -92,4 +91,18 @@ class PropostaService
             'fonte_pagamento' => $dados['financeiro']["fonte_pagamento"] ?? NULL,
         ];
     }
+
+    private function cadastrarNovoAssociado()
+    {
+        dd('cadastrarNovoAssociado');
+    }
+    private function cadastrarNovaMatricula()
+    {
+        dd('cadastrarNovaMatricula');
+    }
+    private function cadastrarComMatriulaExistente()
+    {
+        dd('cadastrarComMatriulaExistente');
+    }
+
 }

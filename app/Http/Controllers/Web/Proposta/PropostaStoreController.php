@@ -12,6 +12,7 @@ class PropostaStoreController extends Controller
 {
     public function store(PropostaStoreRequest $request, PropostaService $propostaService)
     {
-        $propostaService->criar($request->validated());
+        dd('chegou'. $request);
+        $propostaService->criarProposta($request->query('tipo'),$request->validated());
     }
 }
