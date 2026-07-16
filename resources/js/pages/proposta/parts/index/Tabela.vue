@@ -47,16 +47,16 @@ const tableOptionProposta = [
                 <tr class="hover:bg-base-300"
                     v-for="item in propostas.data">
                     <td>
-                        <a :href="route('proposta.edit', item.id_proposta)"
+                        <Link :href="route('proposta.edit', item.id_proposta)"
                             class="btn btn-link p-0">
                             {{ item.num_proposta }}
-                        </a>
+                        </Link>
                     </td>
                     <td>
-                        <a :href="route('proposta.edit', item.id_proposta)"
+                        <Link :href="route('proposta.edit', item.id_proposta)"
                             class="text-primary font-semibold btn-link p-0">
                             {{ item.associado.nome }}
-                        </a>
+                        </Link>
                     </td>
                     <td>
                         {{ item.origem.nome }}

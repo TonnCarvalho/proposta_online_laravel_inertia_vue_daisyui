@@ -24,9 +24,19 @@ const carregandoOrgaos = ref(false);
 
 watch(
     () => props.formAssociado.cod_local,
-    async (novoCodLocal) => {
-        // Sempre limpa o órgão quando trocar a praça
-        props.formAssociado.cod_orgao = '';
+    async (novoCodLocal, codLocalAnterior) => {
+        
+        /**
+         * Limpa o órgão somente quando o usuário troca a praça
+         * 
+         * No primeira execução, codLocalAnterior será undefined
+         * Dessa forma, preservamos o cod_orgao que veio do banco.
+         */
+        if(codLocalAnterior !== undefined &&
+            novoCodLocal !== codLocalAnterior
+        ) {
+            props.formAssociado.cod_orgao = ''
+        }
         orgaos.value = [];
 
         // Se não selecionou praça, não faz requisição
@@ -52,6 +62,9 @@ watch(
         } finally {
             carregandoOrgaos.value = false;
         }
+    },
+    {
+        immediate: true,
     }
 );
 
@@ -93,7 +106,6 @@ watch(
                     :valueKey="item => item.cod_orgao"
                     :labelKey="item => `${item.cod_orgao} - ${item.nome}`"
                     :disabled="!props.formAssociado.cod_local || carregandoOrgaos"
-                    optional="Muda com a praça"
                     required />
 
                 <Input label="RG"

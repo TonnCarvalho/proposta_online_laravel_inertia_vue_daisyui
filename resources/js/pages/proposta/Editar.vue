@@ -59,7 +59,7 @@ const form = useForm({
         tipo_proposta: proposta?.tipo_proposta ?? '',
         iof: maskMoney(String(proposta?.iof ?? '')),
         taxa: proposta?.taxa ?? '',
-        fonte_pagamento: proposta?.fonte_pagamento ?? '',
+        fonte_pagamento: proposta?.id_fonte_pagamento ?? '',
     },
     endereco: {
         cep: proposta.associado?.cep ?? '',
