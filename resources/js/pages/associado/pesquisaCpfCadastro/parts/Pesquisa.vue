@@ -6,6 +6,7 @@ import Input from '@/components/form/Input.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { maskCpf } from '@/utils/masks';
 import { ref } from 'vue';
+import { router } from '@inertiajs/vue3';
 
 const emit = defineEmits(['resultado']);
 const cpf = ref('');
@@ -24,17 +25,23 @@ const pesquisaCpf = async () => {
         return;
     }
 
+    
     try {
         loading.value = true;
-
+        
         const response = await fetch(`
         /proposta/pesquisar?cpf=${encodeURIComponent(cpf.value)}
         `)
-
+        
+        if (!response.ok) {
+            throw new Error('response error.')
+        }
+        
         const data = await response.json();
 
-        if (!response.ok) {
-            throw new Error(data.message)
+        if(data.redirect) {
+            router.visit(data.redirect)
+            return;
         }
 
         emit('resultado', data.data);
