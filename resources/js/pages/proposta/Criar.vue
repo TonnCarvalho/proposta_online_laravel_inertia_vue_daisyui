@@ -9,6 +9,7 @@ import FinanceiroForm from './parts/form/FinanceiroForm.vue';
 import EnderecoForm from './parts/form/EnderecoForm.vue';
 import BancoContraChequeForm from './parts/form/BancoContraChequeForm.vue';
 import BancoRecimentoForm from './parts/form/BancoRecimentoForm.vue';
+import Alert from '@/components/Alert.vue';
 
 const props = defineProps({
     data: Object,
@@ -24,28 +25,28 @@ const props = defineProps({
 
 const form = useForm({
     associado: {
-        nome: props.data.nome ?? '',
-        cod_local: props.data.cod_local ?? '',
-        cpf: props.data.cpf ?? '',
-        rg: props.data.rg ?? '',
-        orgao_exp: props.data.orgao_exp ?? '',
-        email: props.data.email ?? '',
-        data_nasc: props.data.data_nasc ?? '',
-        nat: props.data.nat ?? '',
-        sexo: props.data.sexo ?? '',
-        cel: props.data.cel ?? '',
-        nome_pai: props.data.nome_pai ?? '',
-        nome_mae: props.data.nome_mae ?? '',
-        estado_civil: props.data.estado_civil ?? '',
-        mat: props.data.mat ?? '',
-        cod_orgao: props.data.cod_orgao ?? '',
-        setor: props.data.setor ?? '',
-        cargo: props.data.cargo ?? '',
-        ocupacao: props.data.ocupacao ?? '',
-        data_admissao: props.data.data_admissao ?? '',
+        nome: props.data?.nome ?? '',
+        cod_local: props.data?.cod_local ?? '',
+        cpf: props.data?.cpf ?? '',
+        rg: props.data?.rg ?? '',
+        orgao_exp: props.data?.orgao_exp ?? '',
+        email: props.data?.email ?? '',
+        data_nasc: props.data?.data_nasc ?? '',
+        nat: props.data?.nat ?? '',
+        sexo: props.data?.sexo ?? '',
+        cel: props.data?.cel ?? '',
+        nome_pai: props.data?.nome_pai ?? '',
+        nome_mae: props.data?.nome_mae ?? '',
+        estado_civil: props.data?.estado_civil ?? '',
+        mat: props.data?.mat ?? '',
+        cod_orgao: props.data?.cod_orgao ?? '',
+        setor: props.data?.setor ?? '',
+        cargo: props.data?.cargo ?? '',
+        ocupacao: props.data?.ocupacao ?? '',
+        data_admissao: props.data?.data_admissao ?? '',
     },
     financeiro: {
-        cod_corretor: props.data.cod_corretor ?? '',
+        cod_corretor: props.data?.cod_corretor ?? '',
         data_proposta: '',
         valor_financiado: '',
         valor_liberado: '',
@@ -58,23 +59,23 @@ const form = useForm({
         fonte_pagamento: '',
     },
     endereco: {
-        cep: props.data.cep ?? '',
-        uf: props.data.uf ?? '',
-        municipio: props.data.municipio ?? '',
-        bairro: props.data.bairro ?? '',
-        endereco: props.data.endereco ?? '',
+        cep: props.data?.cep ?? '',
+        uf: props.data?.uf ?? '',
+        municipio: props.data?.municipio ?? '',
+        bairro: props.data?.bairro ?? '',
+        endereco: props.data?.endereco ?? '',
     },
     bancoContraCheque: {
-        banco: props.data.banco ?? '',
-        agencia: props.data.agencia ?? '',
-        conta: props.data.conta ?? ''
+        banco: props.data?.banco ?? '',
+        agencia: props.data?.agencia ?? '',
+        conta: props.data?.conta ?? ''
     },
     bancoRecebimento: {
-        chave_pix: props.data.chave_pix ?? '',
-        banco_pagamento: props.data.banco_pagamento ?? '',
-        agencia_pagamento: props.data.agencia_pagamento ?? '',
-        conta_pagamento: props.data.conta_pagamento ?? '',
-        tipo_bancario: props.data.tipo_bancario ?? '',
+        chave_pix: props.data?.chave_pix ?? '',
+        banco_pagamento: props.data?.banco_pagamento ?? '',
+        agencia_pagamento: props.data?.agencia_pagamento ?? '',
+        conta_pagamento: props.data?.conta_pagamento ?? '',
+        tipo_bancario: props.data?.tipo_bancario ?? '',
     },
 })
 
@@ -100,8 +101,15 @@ const submit = () => {
         <PageHeader title="Nova proposta"
             icon="file-circle-plus" />
         <form @submit.prevent="submit">
-            
+
             <input :value="tipoCadastro" />
+
+            <Alert v-if="tipoCadastro === 'novo_associado'"
+                message="CPF não encontrado na base de dados"
+                subMessage="Vamos fazer um novo cadastro"
+                icon="triangle-exclamation"
+                class="alert-warning" />
+
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
                 <AssociadoForm :formAssociado="form.associado"
                     :origens="origens"
