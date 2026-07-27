@@ -24,53 +24,53 @@ class PropostaStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // 'associado.nome' => ['required', 'string', 'max:100'],
-            // 'associado.cod_local' => ['required', 'integer'],
-            // 'associado.cpf' => ['required', 'string', 'min:14', 'max:20'],
-            // 'associado.rg' => ['required', 'string', 'min:14', 'max:15'],
-            // 'associado.org_exp' => ['required', 'string', 'min:2', 'max:10'],
-            // 'associado.email' => ['required', 'email:rfc,dns', 'min:7', 'max:50'],
-            // 'associado.data_nasc' => ['required', 'string'],
-            // 'associado.nat' => ['required', 'string', 'min:3', 'max:50'],
-            // 'associado.sexo' => ['required', 'string', 'min:1', 'max:10'],
-            // 'associado.cel' => ['required', 'string', 'min:11', 'max:20'],
-            // 'associado.nome_pai' => ['nullable', 'string', 'max:100'],
-            // 'associado.nome_mae' => ['required', 'string', 'min:10', 'max:100'],
-            // 'associado.estado_civil' => ['required', 'string', 'min:1', 'max:20'],
-            // 'associado.mat' => ['required', 'string', 'min:1', 'max:50'],
-            // 'associado.cod_orgao' => ['required', 'integer'],
-            // 'associado.setor' => ['required', 'string', 'min:1', 'max:50'],
-            // 'associado.cargo' => ['required', 'string', 'min:1', 'max:50'],
-            // 'associado.ocupacao' => ['required', 'string', 'min:1', 'max:15'],
-            // 'associado.data_admissao' => ['required', 'string'],
+            'associado.nome' => ['required', 'string', 'max:100'],
+            'associado.cod_local' => ['required', 'integer'],
+            'associado.cpf' => ['required', 'string', 'min:14', 'max:20'],
+            'associado.rg' => ['required', 'string', 'min:14', 'max:15'],
+            'associado.org_exp' => ['required', 'string', 'min:2', 'max:10'],
+            'associado.email' => ['required', 'email:rfc,dns', 'min:7', 'max:50'],
+            'associado.data_nasc' => ['required', 'string'],
+            'associado.nat' => ['required', 'string', 'min:3', 'max:50'],
+            'associado.sexo' => ['required', 'string', 'min:1', 'max:10'],
+            'associado.cel' => ['required', 'string', 'min:11', 'max:20'],
+            'associado.nome_pai' => ['nullable', 'string', 'max:100'],
+            'associado.nome_mae' => ['required', 'string', 'min:10', 'max:100'],
+            'associado.estado_civil' => ['required', 'string', 'min:1', 'max:20'],
+            'associado.mat' => ['required', 'string', 'min:1', 'max:50'],
+            'associado.cod_orgao' => ['required', 'integer'],
+            'associado.setor' => ['required', 'string', 'min:1', 'max:50'],
+            'associado.cargo' => ['required', 'string', 'min:1', 'max:50'],
+            'associado.ocupacao' => ['required', 'string', 'min:1', 'max:15'],
+            'associado.data_admissao' => ['required', 'string'],
 
-            // 'financeiro.cod_corretor' => ['required', 'integer'],
-            // 'financeiro.data_proposta' => ['required', 'string'],
-            // 'financeiro.valor_financiado' => ['required', 'numeric', 'decimal:2', 'min:0.01'],
-            // 'financeiro.valor_liberado' => ['nullable', 'decimal:2', 'min:0.01'],
-            // 'financeiro.valor_parcela' => ['required', 'decimal:2', 'min:0.01'],
-            // 'financeiro.valor_mensalidade' => ['required', 'decimal:2', 'min:0.01'],
-            // 'financeiro.prazo' => ['required', 'integer'],
-            // 'financeiro.tipo_proposta' => ['nullable', 'string', 'max:50'],
-            // 'financeiro.iof' => ['required', 'decimal:2', 'min:0.01'],
-            // 'financeiro.taxa' => ['required', 'numeric:strict'],
-            // 'financeiro.fonte_pagamento' => ['nullable', 'integer'],
+            'financeiro.cod_corretor' => ['required', 'integer'],
+            'financeiro.data_proposta' => ['required', 'string'],
+            'financeiro.valor_financiado' => ['required', 'numeric', 'decimal:2', 'min:0.01'],
+            'financeiro.valor_liberado' => ['nullable', 'decimal:2', 'min:0.01'],
+            'financeiro.valor_parcela' => ['required', 'decimal:2', 'min:0.01'],
+            'financeiro.valor_mensalidade' => ['required', 'decimal:2', 'min:0.01'],
+            'financeiro.prazo' => ['required', 'integer'],
+            'financeiro.tipo_proposta' => ['nullable', 'string', 'max:50'],
+            'financeiro.iof' => ['required', 'decimal:2', 'min:0.01'],
+            'financeiro.taxa' => ['required', 'numeric:strict'],
+            'financeiro.fonte_pagamento' => ['nullable', 'integer'],
 
-            // 'endereco.cep' => ['required', 'string', 'min:1', 'max:10'],
-            // 'endereco.uf' => ['required', 'string', 'max:2'],
-            // 'endereco.municipio' => ['required', 'string', 'max:50'],
-            // 'endereco.bairro' => ['required', 'string', 'max:50'],
-            // 'endereco.endereco' => ['required', 'string', 'max:100'],
+            'endereco.cep' => ['required', 'string', 'min:1', 'max:10'],
+            'endereco.uf' => ['required', 'string', 'max:2'],
+            'endereco.municipio' => ['required', 'string', 'max:50'],
+            'endereco.bairro' => ['required', 'string', 'max:50'],
+            'endereco.endereco' => ['required', 'string', 'max:100'],
 
-            // 'bancoContraCheque.banco' => ['required', 'string', 'max:10'],
-            // 'bancoContraCheque.agencia' => ['required', 'string', 'max:10'],
-            // 'bancoContraCheque.conta' => ['required', 'string', 'max:25'],
+            'bancoContraCheque.banco' => ['required', 'string', 'max:10'],
+            'bancoContraCheque.agencia' => ['required', 'string', 'max:10'],
+            'bancoContraCheque.conta' => ['required', 'string', 'max:25'],
 
-            // 'bancoRecebimento.chave_pix' => ['nullable', 'string', 'max:255'],
-            // 'bancoRecebimento.banco_pagamento' => ['required', 'string', 'max:10'],
-            // 'bancoRecebimento.agencia_pagamento' => ['required', 'string', 'max:25'],
-            // 'bancoRecebimento.conta_pagamento' => ['required', 'string', 'max:10'],
-            // 'bancoRecebimento.tipo_bancario' => ['nullable', 'string', 'max:10'],
+            'bancoRecebimento.chave_pix' => ['nullable', 'string', 'max:255'],
+            'bancoRecebimento.banco_pagamento' => ['required', 'string', 'max:10'],
+            'bancoRecebimento.agencia_pagamento' => ['required', 'string', 'max:25'],
+            'bancoRecebimento.conta_pagamento' => ['required', 'string', 'max:10'],
+            'bancoRecebimento.tipo_bancario' => ['nullable', 'string', 'max:10'],
         ];
     }
     public function attributes(): array
@@ -128,15 +128,22 @@ class PropostaStoreRequest extends FormRequest
     public function prepareForValidation()
     {
         $associado = $this->input('associado', []);
-        $associado['data_nasc'] = $this->converterDataParaTimeStamp($associado['data_nasc'] ?? null);
-        $associado['data_admissao'] = $this->converterDataParaTimeStamp($associado['data_admissao'] ?? null);
+        $associado['data_nasc'] = $this->converterDataParTipoDate($associado['data_nasc'] ?? null);
+
+        $associado['data_admissao'] = $this->converterDataParTipoDate($associado['data_admissao'] ?? null);
 
         $financeiro = $this->input('financeiro', []);
+
         $financeiro['valor_financiado'] = $this->converterMoedaParaDecimal($financeiro['valor_financiado'] ?? null);
+
         $financeiro['valor_liberado'] = $this->converterMoedaParaDecimal($financeiro['valor_liberado'] ?? null);
+
         $financeiro['valor_parcela'] = $this->converterMoedaParaDecimal($financeiro['valor_parcela'] ?? null);
+
         $financeiro['valor_mensalidade'] = $this->converterMoedaParaDecimal($financeiro['valor_mensalidade'] ?? null);
+
         $financeiro['iof'] = $this->converterMoedaParaDecimal($financeiro['iof'] ?? null);
+
         $financeiro['data_proposta'] = $this->converterDataParaTimeStamp($financeiro['data_proposta'] ?? null);
 
         $this->merge([
@@ -145,6 +152,12 @@ class PropostaStoreRequest extends FormRequest
         ]);
     }
 
+    /**
+     * converte o formato da moeda de '1.000,00' para '1000.00'
+     *
+     * @param string|null $valor
+     * @return string|null
+     */
     private function converterMoedaParaDecimal(?string $valor): ?string
     {
         if ($valor === null || trim($valor) === '') {
@@ -168,11 +181,27 @@ class PropostaStoreRequest extends FormRequest
      */
     private function converterDataParaTimeStamp(?string $data): ?string
     {
+
         if ($data === null || trim($data) === '') {
             return $data;
         }
 
         return $data = Carbon::createFromFormat('d/m/Y', $data)
             ->format('Y-m-d H:i:s');
+    }
+
+    /**
+     * Converte a data (dd/mm/aaaa) para formato date ('yyyy-mm-dd)
+     * @param string|null $data
+     * @return string
+     */
+    private function converterDataParTipoDate(?string $data): ?string
+    {
+        if ($data === null || trim($data) === '') {
+            return $data;
+        }
+
+        return $data = Carbon::createFromFormat('d/m/Y', $data)
+            ->format('Y-m-d');
     }
 }

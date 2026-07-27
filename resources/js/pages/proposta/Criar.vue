@@ -10,7 +10,7 @@ import EnderecoForm from './parts/form/EnderecoForm.vue';
 import BancoContraChequeForm from './parts/form/BancoContraChequeForm.vue';
 import BancoRecimentoForm from './parts/form/BancoRecimentoForm.vue';
 import Alert from '@/components/Alert.vue';
-
+import { formatDate } from '@/utils/dateTime.js';
 const props = defineProps({
     data: Object,
     tipoCadastro: String,
@@ -23,6 +23,12 @@ const props = defineProps({
     fontePagamento: Array,
 })
 
+const hoje = new Date();
+const dia = String(hoje.getDate()).padStart(2, '0');
+const mes = String(hoje.getMonth() + 1).padStart(2, '0')
+const ano = hoje.getFullYear();
+const dataAtual = `${dia}/${mes}/${ano}`
+
 const form = useForm({
     associado: {
         nome: props.data?.nome ?? '',
@@ -31,7 +37,7 @@ const form = useForm({
         rg: props.data?.rg ?? '',
         orgao_exp: props.data?.orgao_exp ?? '',
         email: props.data?.email ?? '',
-        data_nasc: props.data?.data_nasc ?? '',
+        data_nasc: formatDate(props.data?.data_nasc) ?? '',
         nat: props.data?.nat ?? '',
         sexo: props.data?.sexo ?? '',
         cel: props.data?.cel ?? '',
@@ -43,11 +49,11 @@ const form = useForm({
         setor: props.data?.setor ?? '',
         cargo: props.data?.cargo ?? '',
         ocupacao: props.data?.ocupacao ?? '',
-        data_admissao: props.data?.data_admissao ?? '',
+        data_admissao: formatDate(props.data?.data_admissao) ?? '',
     },
     financeiro: {
         cod_corretor: props.data?.cod_corretor ?? '',
-        data_proposta: '',
+        data_proposta: dataAtual ?? '',
         valor_financiado: '',
         valor_liberado: '',
         valor_parcela: '',
@@ -82,12 +88,11 @@ const form = useForm({
 const submit = () => {
     form.post(route('proposta.store'), {
         preserveScroll: true,
-
         onSuccess: () => {
             console.log('sucesso');
         },
         onError: (error) => {
-            console.log(error)
+            console.log('ERROR', error)
         },
         onFinish: () => {
             console.log('finalizado');

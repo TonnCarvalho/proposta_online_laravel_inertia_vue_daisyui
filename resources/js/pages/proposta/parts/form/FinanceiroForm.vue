@@ -34,7 +34,7 @@ const props = defineProps({
                 <Input label="Data da proposta"
                     v-model="formFinanceiro.data_proposta"
                     :error="errors['financeiro.data_proposta']"
-                    readonlyw
+                    readonly
                     required />
 
                 <Input label="Proposta"
@@ -94,7 +94,7 @@ const props = defineProps({
                     :error="errors['financeiro.taxa']"
                     :maxlength="4"
                     required />
-                    
+
                 <Select label="Fonte pagamento"
                     v-model="formFinanceiro.fonte_pagamento"
                     placeholder="Selecione"
