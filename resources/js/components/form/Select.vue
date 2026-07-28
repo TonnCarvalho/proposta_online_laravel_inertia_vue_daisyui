@@ -32,6 +32,7 @@ defineProps({
             </span>
         </legend>
         <select class="select w-full"
+            :class="{ 'border border-error': error }"
             :name="name"
             v-model="model">
             <option value=""
@@ -50,6 +51,12 @@ defineProps({
             class="label">
             {{ optional }}
         </span>
+
+        <div v-if="error">
+            <p class="text-sm text-error">
+                {{ error }}
+            </p>
+        </div>
     </fieldset>
 
 </template>

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Web\Associado;
+namespace App\Http\Controllers\Web\Proposta;
 
 use App\Http\Controllers\Controller;
 use App\Models\Associado;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class PesquisaCpfCadastro extends Controller
+class PesquisaCpfCadastroController extends Controller
 {
     public function index()
     {
@@ -16,6 +16,7 @@ class PesquisaCpfCadastro extends Controller
 
     public function pesquisarAssociado(Request $request)
     {
+
         $cpf = $request->cpf;
 
         $matriculas = Associado::query()
@@ -26,6 +27,16 @@ class PesquisaCpfCadastro extends Controller
             ])
             ->where('cpf', $cpf)
             ->get();
+
+        if ($matriculas->isEmpty()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Associado não encontrado na base de dados',
+                'redirect' => route('proposta.create', [
+                    'tipoCadastro' => 'novo_associado'
+                ])
+            ]);
+        };
 
         return response()->json([
             'success' => true,

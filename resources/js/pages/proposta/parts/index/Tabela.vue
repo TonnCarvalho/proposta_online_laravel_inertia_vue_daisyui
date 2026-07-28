@@ -47,16 +47,16 @@ const tableOptionProposta = [
                 <tr class="hover:bg-base-300"
                     v-for="item in propostas.data">
                     <td>
-                        <a :href="'/proposta/' + item.id"
+                        <Link :href="route('proposta.edit', item.id_proposta)"
                             class="btn btn-link p-0">
                             {{ item.num_proposta }}
-                        </a>
+                        </Link>
                     </td>
                     <td>
-                        <a :href="'/proposta/' + item.id"
+                        <Link :href="route('proposta.edit', item.id_proposta)"
                             class="text-primary font-semibold btn-link p-0">
                             {{ item.associado.nome }}
-                        </a>
+                        </Link>
                     </td>
                     <td>
                         {{ item.origem.nome }}
@@ -80,7 +80,7 @@ const tableOptionProposta = [
                             <ul tabindex="-1"
                                 class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
                                 <li v-for="dropdown in tableOptionProposta">
-                                    <a :href="' /proposta/' + item.id">
+                                    <a :href="route('proposta.edit', item.id_proposta)">
                                         <FontAwesomeIcon :icon="dropdown.icon"
                                             :class="dropdown.colorIcon" />
                                         {{ dropdown.label }}

@@ -10,6 +10,10 @@ const props = defineProps({
     formFinanceiro: Object,
     tipoProposta: Array,
     fontePagamento: Array,
+    errors: {
+        typeof: Object,
+        default: ({}),
+    },
 })
 
 </script>
@@ -17,20 +21,31 @@ const props = defineProps({
 <template>
     <Card>
         <CardBody>
-            <CardTitle title="Auxílio financeiro" />
+            <CardTitle title="Auxílio financeiro"
+                class="text-primary" />
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
 
                 <Input label="Código do corretor"
                     :maxlength="4"
                     v-model="formFinanceiro.cod_corretor"
+                    :error="errors['financeiro.cod_corretor']"
                     required />
 
                 <Input label="Data da proposta"
                     v-model="formFinanceiro.data_proposta"
+                    :error="errors['financeiro.data_proposta']"
+                    readonly
                     required />
+
+                <Input label="Proposta"
+                    v-if="formFinanceiro.num_proposta"
+                    v-model="formFinanceiro.num_proposta"
+                    :error="errors['financeiro.num_proposta']"
+                    readonly />
 
                 <Input label="Valor financiado"
                     v-model="formFinanceiro.valor_financiado"
+                    :error="errors['financeiro.valor_financiado']"
                     :maxlength="10"
                     :mask="maskMoney"
                     required />
@@ -42,12 +57,14 @@ const props = defineProps({
 
                 <Input label="Valor da parcela"
                     v-model="formFinanceiro.valor_parcela"
+                    :error="errors['financeiro.valor_parcela']"
                     :maxlength="10"
                     :mask="maskMoney"
                     required />
 
                 <Input label="Valor da mensalidade"
                     v-model="formFinanceiro.valor_mensalidade"
+                    :error="errors['financeiro.valor_mensalidade']"
                     :maxlength="10"
                     :mask="maskMoney"
                     required />
@@ -55,6 +72,7 @@ const props = defineProps({
                 <Input label="Prazo"
                     :maxlength="3"
                     v-model="formFinanceiro.prazo"
+                    :error="errors['financeiro.prazo']"
                     required />
 
                 <Select label="Tipo da proposta"
@@ -66,12 +84,14 @@ const props = defineProps({
 
                 <Input label="IOF"
                     v-model="formFinanceiro.iof"
+                    :error="errors['financeiro.iof']"
                     :maxlength="10"
                     :mask="maskMoney"
                     required />
 
                 <Input label="Taxa"
                     v-model="formFinanceiro.taxa"
+                    :error="errors['financeiro.taxa']"
                     :maxlength="4"
                     required />
 

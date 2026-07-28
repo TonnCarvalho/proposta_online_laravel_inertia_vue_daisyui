@@ -4,7 +4,9 @@ import CardBody from '@/components/card/CardBody.vue';
 import CardTitle from '@/components/card/CardTitle.vue';
 import Input from '@/components/form/Input.vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { maskCpf } from '@/utils/masks';
 import { ref } from 'vue';
+import { router } from '@inertiajs/vue3';
 
 const emit = defineEmits(['resultado']);
 const cpf = ref('');
@@ -13,19 +15,33 @@ const error = ref('');
 
 const pesquisaCpf = async () => {
     error.value = '';
+
     if (!cpf.value) {
         error.value = 'Informe o CPF.'
         return;
     }
+    if (cpf.value.length < 14) {
+        error.value = 'CPF incompleto';
+        return;
+    }
 
+    
     try {
         loading.value = true;
-
-        const response = await fetch(`/associado/pesquisar?cpf=${encodeURIComponent(cpf.value)}`)
-        const data = await response.json();
+        
+        const response = await fetch(`
+        /proposta/pesquisar?cpf=${encodeURIComponent(cpf.value)}
+        `)
         
         if (!response.ok) {
-            throw new Error(data.message)
+            throw new Error('response error.')
+        }
+        
+        const data = await response.json();
+
+        if(data.redirect) {
+            router.visit(data.redirect)
+            return;
         }
 
         emit('resultado', data.data);
@@ -36,23 +52,6 @@ const pesquisaCpf = async () => {
         loading.value = false;
     }
 
-}
-
-const maskCpf = (event) => {
-    let value = event.target.value
-
-    //Remove tudo que não for número
-    value = value.replace(/\D/g, '')
-
-    //Limite para 11 dígitos
-    value = value.slice(0, 11)
-
-    //Aplica a máscara: 000.000.000-00
-    value = value.replace(/(\d{3})(\d)/, '$1.$2');
-    value = value.replace(/(\d{3})(\d)/, '$1.$2');
-    value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-
-    cpf.value = value;
 }
 
 </script>
@@ -67,18 +66,25 @@ const maskCpf = (event) => {
 
                 <Input label="CPF"
                     v-model="cpf"
-                    @input="maskCpf"
+                    @keyup.enter="pesquisaCpf"
+                    :mask="maskCpf"
+                    :maxlength="14"
                     placeholder="000.000.000-00"
                     required />
+                <span class="text-error">
+                    {{ error }}
+                </span>
 
                 <div class="grid grid-cols-2 gap-3 justify-items-center mt-2">
                     <button @click="pesquisaCpf"
+                        type="button"
                         :disabled="loading"
                         class="btn btn-primary btn-block">
                         <FontAwesomeIcon icon="search"
                             v-if="!loading" />
                         <span v-if="loading"
-                            class="loading loading-spinner"></span>
+                            class="loading loading-spinner">
+                        </span>
                         {{ loading ? 'Pesquisando' : 'Pesquisar' }}
                     </button>
 

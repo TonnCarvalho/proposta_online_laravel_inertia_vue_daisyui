@@ -11,6 +11,7 @@ const props = defineProps({
         default: 'text'
     },
     name: String,
+    readonly: Boolean,
     placeholder: String,
     icon: [String, Array],
     required: {
@@ -51,6 +52,7 @@ const handleInput = (event) => {
         </legend>
 
         <input :id="name"
+            :readonly="readonly"
             :name="name"
             :type="type"
             :value="model"
@@ -59,13 +61,13 @@ const handleInput = (event) => {
             @blur="$emit('blur', $event)"
             :maxlength="maxlength"
             class="input w-full text-base-content"
-            :class="{ 'border border-error': $page.props.errors[name] }" />
+            :class="{ 'border border-error': error }" />
 
         <p class="label">{{ optional }}</p>
 
-        <div v-if="$page.props.errors[name]">
+        <div v-if="error">
             <p class="text-sm text-error">
-                {{ $page.props.errors[name] }}
+                {{ error }}
             </p>
         </div>
     </fieldset>

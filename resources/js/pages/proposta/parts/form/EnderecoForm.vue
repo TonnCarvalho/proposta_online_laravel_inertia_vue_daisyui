@@ -7,6 +7,10 @@ import { ref } from 'vue';
 
 const props = defineProps({
     formEndereco: Object,
+    errors: {
+        type: Object,
+        default: () => ({}),
+    },
 })
 
 const erroCep = ref('');
@@ -56,32 +60,42 @@ const buscarCep = async () => {
 <template>
     <Card>
         <CardBody>
-            <CardTitle title="Endereço do associado" />
+            <CardTitle title="Endereço do associado" class="text-primary"/>
 
-            <span v-if="erroCep" class="text-error">{{ erroCep }}</span>
+            <span v-if="erroCep"
+                class="text-error">
+                {{ erroCep }}
+            </span>
+
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
                 <Input label="CEP"
                     v-model="formEndereco.cep"
+                    :error="errors['endereco.cep']"
                     @blur="buscarCep"
                     :maxlength="10"
                     required />
+
                 <Input label="Estado"
                     v-model="formEndereco.uf"
+                    :error="errors['endereco.uf']"
                     :maxlength="2"
                     required />
 
                 <Input label="Municípios"
                     v-model="formEndereco.municipio"
+                    :error="errors['endereco.municipio']"
                     :maxlength="50"
                     required />
 
                 <Input label="Bairro"
                     v-model="formEndereco.bairro"
+                    :error="errors['endereco.bairro']"
                     :maxlength="50"
                     required />
 
                 <Input label="Endereço"
                     v-model="formEndereco.endereco"
+                    :error="errors['endereco.endereco']"
                     :maxlength="100"
                     required />
 
