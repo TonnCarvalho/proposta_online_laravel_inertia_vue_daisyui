@@ -13,6 +13,7 @@ import Alert from '@/components/Alert.vue';
 import { formatDate } from '@/utils/dateTime.js';
 const props = defineProps({
     data: Object,
+    cpf: String,
     tipoCadastro: String,
     origens: Array | Object,
     tipoProposta: Array,
@@ -33,7 +34,7 @@ const form = useForm({
     associado: {
         nome: props.data?.nome ?? '',
         cod_local: props.data?.cod_local ?? '',
-        cpf: props.data?.cpf ?? '',
+        cpf: props.data?.cpf ?? props.cpf ?? '',
         rg: props.data?.rg ?? '',
         orgao_exp: props.data?.orgao_exp ?? '',
         email: props.data?.email ?? '',
