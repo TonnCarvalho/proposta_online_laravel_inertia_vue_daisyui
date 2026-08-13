@@ -20,12 +20,12 @@ class PropostaService
     public function criarProposta(string $tipoCadastro, array $dados): Proposta
     {
         return DB::transaction(function () use ($tipoCadastro, $dados) {
-            return match($tipoCadastro) {
+            return match ($tipoCadastro) {
                 'novo_associado' => $this->cadastrarNovoAssociado(),
 
                 'nova_matricula' => $this->cadastrarNovaMatricula(),
 
-                'matricula_existente' => $this->cadastrarComMatriulaExistente(),
+                'matricula_existente' => $this->cadastrarComMatriulaExistente($dados),
 
                 default => throw ValidationException::withMessages([
                     'tipo' => 'Tipo de cadastrdo inválido',
@@ -42,7 +42,7 @@ class PropostaService
             'cod_corretor' => $dados['financeiro']['cod_corretor'],
             'cpf' => $dados['associado']['cpf'],
             'rg' => $dados['associado']['rg'],
-            'org_exp' => $dados['associado']['org_exp'],
+            'orgao_exp' => $dados['associado']['orgao_exp'],
             'email' => $dados['associado']['email'],
             'data_nasc' => $dados['associado']['data_nasc'],
             'nat' => $dados['associado']['nat'],
@@ -100,9 +100,11 @@ class PropostaService
     {
         dd('cadastrarNovaMatricula');
     }
-    private function cadastrarComMatriulaExistente()
+    private function cadastrarComMatriulaExistente(array $dados)
     {
-        dd('cadastrarComMatriulaExistente');
+        dd(
+            $this->montarDadosAssociado($dados),
+            $this->montarDadosProposta($dados)
+        );      
     }
-
 }

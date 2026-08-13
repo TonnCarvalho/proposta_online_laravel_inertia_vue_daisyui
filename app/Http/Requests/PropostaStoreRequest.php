@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Carbon\Carbon;
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PropostaStoreRequest extends FormRequest
@@ -19,16 +18,19 @@ class PropostaStoreRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, ValidationRule|array<mixed>|string>
+     * @return array<string, array<mixed>|string>
      */
     public function rules(): array
     {
         return [
+            'tipoCadastro' => ['required', 'string'],
+            'idAssociado' => ['nullable', 'integer'],
+            
             'associado.nome' => ['required', 'string', 'max:100'],
             'associado.cod_local' => ['required', 'integer'],
             'associado.cpf' => ['required', 'string', 'min:14', 'max:20'],
-            'associado.rg' => ['required', 'string', 'min:14', 'max:15'],
-            'associado.org_exp' => ['required', 'string', 'min:2', 'max:10'],
+            'associado.rg' => ['required', 'string', 'min:11', 'max:15'],
+            'associado.orgao_exp' => ['required', 'string', 'min:2', 'max:10'],
             'associado.email' => ['required', 'email:rfc,dns', 'min:7', 'max:50'],
             'associado.data_nasc' => ['required', 'string'],
             'associado.nat' => ['required', 'string', 'min:3', 'max:50'],
@@ -53,7 +55,7 @@ class PropostaStoreRequest extends FormRequest
             'financeiro.prazo' => ['required', 'integer'],
             'financeiro.tipo_proposta' => ['nullable', 'string', 'max:50'],
             'financeiro.iof' => ['required', 'decimal:2', 'min:0.01'],
-            'financeiro.taxa' => ['required', 'numeric:strict'],
+            'financeiro.taxa' => ['required'],
             'financeiro.fonte_pagamento' => ['nullable', 'integer'],
 
             'endereco.cep' => ['required', 'string', 'min:1', 'max:10'],
@@ -80,7 +82,7 @@ class PropostaStoreRequest extends FormRequest
             'associado.cod_local' => 'praça',
             'associado.cpf' => 'cpf',
             'associado.rg' => 'rg',
-            'associado.org_exp' => 'órgão expedidor',
+            'associado.orgao_exp' => 'órgão expedidor',
             'associado.email' => 'email',
             'associado.data_nasc' => 'data de nascimento',
             'associado.nat' => 'naturalidade',

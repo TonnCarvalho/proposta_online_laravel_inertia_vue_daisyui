@@ -97,7 +97,7 @@ watch(
                     :valueKey="item => item.cod_local"
                     :labelKey="item => item.nome"
                     required />
-                    
+
                 <Select label="Órgão"
                     v-model="formAssociado.cod_orgao"
                     :error="errors['associado.cod_orgao']"

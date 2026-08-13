@@ -19,7 +19,6 @@ class PropostaCreateController extends Controller
      * 
      * Mostra os dados dos associados se já tiver registro no banco de dados.
      * Retorna a pagina para criação de proposta do associado novo ou existente.
-     *
      * @param OrigemQuery $origemQuery
      * @param string|null $tipoCadastro
      * @param integer|null $associado
@@ -42,8 +41,11 @@ class PropostaCreateController extends Controller
         }
 
         $data = null;
+        $idAssociado = null;
+
         //Se o associado existe, busca os dados pelo id do associado
         if ($associado) {
+            $idAssociado = $associado;
             $data = Associado::query()
                 ->findOrFail($associado);
         }
@@ -58,6 +60,7 @@ class PropostaCreateController extends Controller
             ->get();
 
         return Inertia::render('proposta/Criar', [
+            'idAssociado' => $idAssociado,
             'data' => $data,
             'cpf' => $cpf,
             'tipoCadastro' => $tipoCadastro,
