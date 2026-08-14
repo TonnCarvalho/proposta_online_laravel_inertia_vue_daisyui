@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from '@/layout/AppLayout.vue';
 import PageHeader from '@/layout/parts/AppLayout/PageHeader.vue';
-import { useForm } from '@inertiajs/vue3';
+import { useForm, usePage } from '@inertiajs/vue3';
 import Card from '@/components/card/Card.vue';
 import CardBody from '@/components/card/CardBody.vue';
 import AssociadoForm from './parts/form/AssociadoForm.vue';

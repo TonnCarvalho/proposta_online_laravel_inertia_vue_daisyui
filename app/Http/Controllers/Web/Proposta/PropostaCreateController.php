@@ -58,7 +58,7 @@ class PropostaCreateController extends Controller
         //Pega as formas de pagamentos e mostra no cadastro.
         $fontePagamento = FontePagamento::select(['id', 'fonte'])
             ->get();
-
+            
         return Inertia::render('proposta/Criar', [
             'idAssociado' => $idAssociado,
             'data' => $data,
