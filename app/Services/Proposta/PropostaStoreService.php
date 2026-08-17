@@ -2,6 +2,7 @@
 
 namespace App\Services\Proposta;
 
+use App\Models\Acompanhamento;
 use App\Models\Associado;
 use App\Models\Proposta;
 use Illuminate\Support\Facades\Auth;
@@ -74,6 +75,8 @@ class PropostaStoreService
     private function montarDadosProposta(array $dados): array
     {
         return [
+            'id_usuario' => Auth::user()->id_usuario,
+            'cod_local' => $dados['associado']['cod_local'],
             'cod_corretor' => $dados['financeiro']["cod_corretor"],
             'data_proposta' => $dados['financeiro']["data_proposta"],
             'valor_financiado' => $dados['financeiro']["valor_financiado"],
@@ -97,14 +100,26 @@ class PropostaStoreService
     }
     private function cadastrarComMatriulaExistente(array $dados)
     {
-        $dadosAssociado = $this->montarDadosAssociado($dados);
-        $dadosProposta = $this->montarDadosProposta($dados);
-        dd($dadosAssociado);
-        $associado = Associado::findOrFail($dadosAssociado['cod_corretor']);
         //atualizar associado.
-        Associado::update($dadosAssociado);
+        $dadosAssociado = $this->montarDadosAssociado($dados);
+
+        $associado = Associado::findOrFail($dadosAssociado['id_associado']);
+        $associado->update($dadosAssociado);
+
         //cadastrar proposta.
-        //adicionar ao acompanhamento.
-        dd($dadosAssociado, $dadosProposta);
+        $dadosProposta = $this->montarDadosProposta($dados);
+        $dadosProposta['id_associado'] = $associado->id_associado;
+
+        $dadosProposta['num_proposta'] = Proposta::max('num_proposta') + 1;
+        $proposta = Proposta::create($dadosProposta);
+
+        //adicionado ao acompanhamento
+        Acompanhamento::create([
+            'id_proposta' => $proposta->id_proposta,
+            'id_usuario' => Auth::user()->id_usuario,
+            'status_proposta' => 'em andamento',
+        ]);
+
+        return $proposta;
     }
 }

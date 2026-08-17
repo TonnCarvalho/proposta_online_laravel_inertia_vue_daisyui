@@ -4,6 +4,7 @@ use App\Http\Controllers\Web\Proposta\PesquisaCpfCadastroController;
 use App\Http\Controllers\Web\Proposta\PropostaController;
 use App\Http\Controllers\Web\Proposta\PropostaCreateController;
 use App\Http\Controllers\Web\Proposta\PropostaStoreController;
+use App\Http\Controllers\Web\Proposta\PropostaSucessoController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
@@ -20,8 +21,6 @@ Route::middleware('auth')->group(function () {
         Route::post('/criar', [PropostaStoreController::class, 'store'])
             ->name('proposta.store');
 
-        Route::get('/sucesso', [PropostaCreateController::class, 'sucess']);
-
         Route::get('/{id_proposta}/edit', [PropostaController::class, 'edit'])
             ->whereNumber('id_proposta')
             ->name('proposta.edit');
@@ -30,5 +29,8 @@ Route::middleware('auth')->group(function () {
             ->name('pesquisaCpfCadastro.index');
 
         Route::get('/pesquisar', [PesquisaCpfCadastroController::class, 'pesquisarAssociado']);
+
+        Route::get('/sucesso', [PropostaSucessoController::class, 'index'])
+            ->name('proposta.sucesso');
     });
 });

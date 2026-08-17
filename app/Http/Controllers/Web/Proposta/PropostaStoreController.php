@@ -10,9 +10,16 @@ class PropostaStoreController extends Controller
 {
     public function store(PropostaStoreRequest $request, PropostaStoreService $propostaService)
     {
-        $propostaService->criarProposta(
+        $proposta = $propostaService->criarProposta(
             $request->input('tipoCadastro'),
             $request->validated()
         );
+
+        return redirect()
+            ->route('proposta.sucesso')
+            ->with([
+                'success' => 'Proposta criado com sucesso.',
+                'idProposta' => $proposta->id_proposta
+            ]);
     }
 }
