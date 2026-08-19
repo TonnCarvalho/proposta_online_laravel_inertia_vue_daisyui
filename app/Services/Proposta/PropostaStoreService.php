@@ -15,9 +15,9 @@ class PropostaStoreService
     {
         return DB::transaction(function () use ($tipoCadastro, $dados) {
             return match ($tipoCadastro) {
-                'novo_associado' => $this->cadastrarNovoAssociado(),
+                'novo_associado' => $this->cadastrarNovoAssociado($dados),
 
-                'nova_matricula' => $this->cadastrarNovaMatricula(),
+                'nova_matricula' => $this->cadastrarNovaMatricula($dados),
 
                 'matricula_existente' => $this->cadastrarComMatriulaExistente($dados),
 
@@ -90,11 +90,34 @@ class PropostaStoreService
         ];
     }
 
-    private function cadastrarNovoAssociado()
+    private function cadastrarNovoAssociado(array $dados): array
     {
-        dd('cadastrarNovoAssociado');
+        //cadastra associado.
+        $dadosAssociado = $this->montarDadosAssociado($dados);
+
+        $associado = Associado::create($dadosAssociado);
+
+        //cadastrar proposta.
+        $dadosProposta = $this->montarDadosProposta($dados);
+
+        $dadosProposta['id_associado'] = $associado->id_associado;
+        $dadosProposta['num_proposta'] = Proposta::max('num_proposta') + 1;
+
+        $proposta = Proposta::create($dadosProposta);
+
+        //adicionado ao acompanhamento
+        Acompanhamento::create([
+            'id_proposta' => $proposta->id_proposta,
+            'id_usuario' => Auth::user()->id_usuario,
+            'status_proposta' => 'em andamento',
+        ]);
+
+        return [
+            'associado' => $associado,
+            'proposta' => $proposta
+        ];
     }
-    private function cadastrarNovaMatricula()
+    private function cadastrarNovaMatricula(array $dados)
     {
         dd('cadastrarNovaMatricula');
     }
