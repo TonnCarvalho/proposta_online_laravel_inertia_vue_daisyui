@@ -6,16 +6,24 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PropostaStoreRequest;
 use App\Models\Origem;
 use App\Services\Proposta\PropostaStoreService;
+use Illuminate\Http\RedirectResponse;
 
 class PropostaStoreController extends Controller
 {
-    public function store(PropostaStoreRequest $request, PropostaStoreService $propostaService)
-    {
+    public function store(
+        PropostaStoreRequest $request,
+        PropostaStoreService $propostaService
+    ) {
         $resultado = $propostaService->criarProposta(
             $request->input('tipoCadastro'),
             $request->validated()
         );
 
+        return $this->success($resultado);
+    }
+
+    private function success(array $resultado): RedirectResponse
+    {
         //Dados para mostrar na página de sucesso.
         $associado = $resultado['associado'];
         $proposta = $resultado['proposta'];
