@@ -4,7 +4,7 @@ import Card from '@/components/card/Card.vue';
 import CardBody from '@/components/card/CardBody.vue';
 import CardTitle from '@/components/card/CardTitle.vue';
 import AppLayout from '@/layout/AppLayout.vue';
-import { Calendar, LoaderCircle, Eye, ChevronRight, FilePlusCorner } from '@lucide/vue';
+import { Calendar, LoaderCircle,FileText, Eye, ChevronRight, FilePlusCorner } from '@lucide/vue';
 import { maskMoney } from '@/utils/masks';
 
 const props = defineProps({
@@ -14,6 +14,14 @@ const props = defineProps({
 })
 
 const oQueFazer = [
+    {
+        icone: FileText,
+        corIcone: 'text-yellow-700',
+        bgIcone: 'bg-yellow-200',
+        titulo: 'Todas propostas',
+        subTitulo: 'Voltar para lista de propostas',
+        link: route('proposta.index')
+    },
     {
         icone: Eye,
         corIcone: 'text-blue-700',
@@ -153,13 +161,12 @@ const dataAtual = `${dia}/${mes}/${ano}`
             </Card>
         </div>
 
-        <div class="mt-3">
-            <Card>
+            <Card class="mt-3">
                 <CardBody>
                     <CardTitle title="O que deseja fazer?"
                         sub-message="Escolha uma opção abaixo para continuar." />
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div class="grid grid-cols-1 xl:grid-cols-3 gap-3">
                         <Link v-for="item in oQueFazer"
                             :href="item.link">
                         <Card>
@@ -187,6 +194,6 @@ const dataAtual = `${dia}/${mes}/${ano}`
                     </div>
                 </CardBody>
             </Card>
-        </div>
+
     </AppLayout>
 </template>
