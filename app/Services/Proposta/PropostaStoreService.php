@@ -11,7 +11,7 @@ use Illuminate\Validation\ValidationException;
 
 class PropostaStoreService
 {
-    public function criarProposta(string $tipoCadastro, array $dados): Proposta
+    public function criarProposta(string $tipoCadastro, array $dados): array
     {
         return DB::transaction(function () use ($tipoCadastro, $dados) {
             return match ($tipoCadastro) {
@@ -98,7 +98,7 @@ class PropostaStoreService
     {
         dd('cadastrarNovaMatricula');
     }
-    private function cadastrarComMatriulaExistente(array $dados)
+    private function cadastrarComMatriulaExistente(array $dados): array
     {
         //atualizar associado.
         $dadosAssociado = $this->montarDadosAssociado($dados);
@@ -108,9 +108,10 @@ class PropostaStoreService
 
         //cadastrar proposta.
         $dadosProposta = $this->montarDadosProposta($dados);
-        $dadosProposta['id_associado'] = $associado->id_associado;
 
+        $dadosProposta['id_associado'] = $associado->id_associado;
         $dadosProposta['num_proposta'] = Proposta::max('num_proposta') + 1;
+
         $proposta = Proposta::create($dadosProposta);
 
         //adicionado ao acompanhamento
@@ -120,6 +121,9 @@ class PropostaStoreService
             'status_proposta' => 'em andamento',
         ]);
 
-        return $proposta;
+        return [
+            'associado' => $associado,
+            'proposta' => $proposta
+        ];
     }
 }

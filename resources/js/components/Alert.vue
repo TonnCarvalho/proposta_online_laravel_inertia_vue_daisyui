@@ -21,12 +21,14 @@ const props = defineProps({
         }">
 
         <FontAwesomeIcon v-if="icon"
-            :icon="['fas', icon]" 
-            class="text-2xl"/>
+            :icon="['fas', icon]"
+            class="text-2xl" />
         <div>
             <h3 class="text-xl font-bold">{{ message }}</h3>
-            <div class="text-xs"
-                v-if="subMessage">{{ subMessage }}</div>
+            <div v-if="subMessage"
+                class="text-xs">
+                {{ subMessage }}
+            </div>
         </div>
     </div>
 </template>

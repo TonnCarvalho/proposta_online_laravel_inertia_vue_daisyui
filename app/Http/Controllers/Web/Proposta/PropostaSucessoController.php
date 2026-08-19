@@ -9,16 +9,17 @@ class PropostaSucessoController extends Controller
 {
     public function index()
     {
-        $success = session('success', 'Proposta criado com sucesso');
-        $idProposta = session('idProposta', '14083') ?? null;
-        
-        if ($success === null) {
+        $success = session('success');
+        $dadosAssociado = session('dadosAssociado');
+        $dadosProposta = session('dadosProposta');
+
+        if (!$success) {
             return redirect()->route('proposta.index');
         }
 
         return Inertia::render('proposta/PaginaSucesso', [
-            'success' => $success,
-            'idProposta' => $idProposta
+            'dadosAssociado' => $dadosAssociado,
+            'dadosProposta' => $dadosProposta
         ]);
     }
 }
