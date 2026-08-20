@@ -51,7 +51,7 @@ const dataAtual = `${dia}/${mes}/${ano}`
 <template>
     <AppLayout class="flex justify-center items-center">
 
-        <Alert icon="circle-check"
+        <Alert icon="FileCheck"
             message="Proposta criada com sucesso!"
             sub-message="A proposta foi cadastrada e está disponível para análise."
             class="alert-success" />

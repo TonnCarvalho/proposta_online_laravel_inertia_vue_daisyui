@@ -1,7 +1,14 @@
 <script setup>
 import {
+    DollarSign,
     User,
-    FileText
+    FileText,
+    Search,
+    Users,
+    Wallet,
+    SlidersHorizontal,
+    MapPinned,
+    Landmark,
 } from '@lucide/vue'
 
 defineProps({
@@ -11,8 +18,15 @@ defineProps({
 })
 
 const icons = {
+    DollarSign,
     User,
     FileText,
+    Search,
+    Users,
+    Wallet,
+    SlidersHorizontal,
+    MapPinned,
+    Landmark,
 }
 
 </script>
@@ -24,7 +38,7 @@ const icons = {
                     size="20" />
             </div>
         </span>
-        <span>
+        <span class="text-primary">
             {{ title }}
         </span>
     </div>

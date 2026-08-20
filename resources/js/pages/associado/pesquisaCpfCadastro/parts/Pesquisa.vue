@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { maskCpf } from '@/utils/masks';
 import { ref } from 'vue';
 import { router } from '@inertiajs/vue3';
+import { Search } from '@lucide/vue';
 
 const emit = defineEmits(['resultado']);
 const cpf = ref('');
@@ -25,7 +26,6 @@ const pesquisaCpf = async () => {
         return;
     }
 
-    
     try {
         loading.value = true;
         
@@ -60,7 +60,7 @@ const pesquisaCpf = async () => {
     <Card>
         <CardBody>
             <CardTitle title="Pesquisa"
-                icon="search" />
+                icon="Search" />
 
             <div class="w-full lg:w-1/2 mx-auto">
 
@@ -80,7 +80,7 @@ const pesquisaCpf = async () => {
                         type="button"
                         :disabled="loading"
                         class="btn btn-primary btn-block">
-                        <FontAwesomeIcon icon="search"
+                        <Search size="16"
                             v-if="!loading" />
                         <span v-if="loading"
                             class="loading loading-spinner">

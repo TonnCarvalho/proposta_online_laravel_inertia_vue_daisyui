@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from '@/layout/AppLayout.vue';
 import PageHeader from '@/layout/parts/AppLayout/PageHeader.vue';
-import { maskMoney } from '@/utils/masks.js';
+import { maskMoney, maskPhone } from '@/utils/masks.js';
 import { formatDate } from '@/utils/dateTime.js';
 import { useForm } from '@inertiajs/vue3';
 import Card from '@/components/card/Card.vue';
@@ -11,6 +11,7 @@ import FinanceiroForm from './parts/form/FinanceiroForm.vue';
 import EnderecoForm from './parts/form/EnderecoForm.vue';
 import BancoContraChequeForm from './parts/form/BancoContraChequeForm.vue';
 import BancoRecimentoForm from './parts/form/BancoRecimentoForm.vue';
+import { FilePen } from '@lucide/vue';
 
 const props = defineProps({
     proposta: Object,
@@ -36,7 +37,7 @@ const form = useForm({
         data_nasc: formatDate(proposta.associado?.data_nasc ?? ''),
         nat: proposta.associado?.nat ?? '',
         sexo: proposta.associado?.sexo ?? '',
-        cel: proposta.associado?.cel ?? '',
+        cel: maskPhone(proposta.associado?.cel) ?? '',
         nome_pai: proposta.associado?.nome_pai ?? '',
         nome_mae: proposta.associado?.nome_mae ?? '',
         estado_civil: proposta.associado?.estado_civil ?? '',
@@ -135,6 +136,7 @@ const submit = () => {
                         <button :disabled="form.processing"
                             type="submit"
                             class="btn btn-primary btn-wide">
+                            <FilePen v-if="!form.processing" size="18" />
                             <span v-if="form.processing"
                                 class="loading loading-spinner loading.sm">
                             </span>

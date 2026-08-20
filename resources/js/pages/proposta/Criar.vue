@@ -12,6 +12,8 @@ import BancoRecimentoForm from './parts/form/BancoRecimentoForm.vue';
 import Alert from '@/components/Alert.vue';
 import { formatDate } from '@/utils/dateTime.js';
 import Input from '@/components/form/Input.vue';
+import { FilePlus } from '@lucide/vue';
+
 const props = defineProps({
     idAssociado: Number,
     data: Object,
@@ -113,16 +115,25 @@ const submit = () => {
     <AppLayout>
         <PageHeader title="Nova proposta"
             icon="file-circle-plus" />
+
         <form @submit.prevent="submit">
 
-            <Input name="tipo_cadastro" v-model="form.tipoCadastro" type="hidden" />
-            <Input name="idAssociado" v-model="form.idAssociado" type="hidden" />
-
             <Alert v-if="tipoCadastro === 'novo_associado'"
-                message="CPF não encontrado na base de dados"
+                message="Associado não encontrado"
                 subMessage="Vamos fazer um novo cadastro"
-                icon="triangle-exclamation"
-                class="alert-warning" />
+                icon="UserRoundPlus"
+                soft
+                class="bg-yellow-100 border-yellow-400 text-yellow-600" />
+
+            <Input name="tipo_cadastro"
+                v-model="form.tipoCadastro"
+                type="hidden"
+                class="hidden" />
+
+            <Input name="idAssociado"
+                v-model="form.idAssociado"
+                type="hidden"
+                class="hidden" />
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
                 <AssociadoForm :formAssociado="form.associado"
@@ -155,6 +166,8 @@ const submit = () => {
                         <button :disabled="form.processing"
                             type="submit"
                             class="btn btn-primary btn-wide">
+                            <FilePlus v-if="!form.processing"
+                                size="18" />
                             <span v-if="form.processing"
                                 class="loading loading-spinner loading.sm">
                             </span>

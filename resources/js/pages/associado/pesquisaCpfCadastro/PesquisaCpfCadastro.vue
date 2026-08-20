@@ -1,6 +1,4 @@
 <script setup>
-
-
 import AppLayout from '@/layout/AppLayout.vue';
 import PageHeader from '@/layout/parts/AppLayout/PageHeader.vue';
 import Pesquisa from './parts/Pesquisa.vue';
@@ -27,8 +25,10 @@ const mostrarMatriculas = (dados) => {
 
         <Alert v-if="props.flash"
             :message="props.flash?.message"
-            icon="circle-xmark"
-            class="alert-error text-white" />
+            :sub-message="props.flash?.subMessage"
+            :icon="props.flash?.icon"
+            soft
+            class="bg-red-100 text-red-500 border-red-500" />
 
         <Pesquisa @resultado="mostrarMatriculas" />
 

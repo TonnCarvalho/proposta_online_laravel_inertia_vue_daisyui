@@ -57,7 +57,7 @@ watch(
     <Card>
         <CardBody>
             <CardTitle title="Filtro"
-                icon="filter" />
+                icon="SlidersHorizontal" />
 
             <div class="grid grid-cols-1 md:grid-cols-3 items-center gap-3">
                 <Input label="Pesquisa"

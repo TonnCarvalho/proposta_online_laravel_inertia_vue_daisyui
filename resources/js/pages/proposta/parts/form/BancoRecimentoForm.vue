@@ -5,7 +5,6 @@ import CardTitle from '@/components/card/CardTitle.vue';
 import Input from '@/components/form/Input.vue';
 import Select from '@/components/form/Select.vue';
 
-
 const props = defineProps({
     formBancoRecebimento: Object,
     tipoContaAssociado: Object,
@@ -14,14 +13,14 @@ const props = defineProps({
         default: () => ({}),
     },
 })
-
-
 </script>
 
 <template>
     <Card>
         <CardBody>
-            <CardTitle title="Conta bancária para recebimento" class="text-primary" />
+            <CardTitle title="Conta bancária para recebimento"
+                icon="DollarSign"
+                class="text-primary" />
 
             <Input label="Chave Pix"
                 v-model="formBancoRecebimento.chave_pix"
