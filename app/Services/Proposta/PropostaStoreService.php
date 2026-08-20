@@ -119,7 +119,30 @@ class PropostaStoreService
     }
     private function cadastrarNovaMatricula(array $dados)
     {
-        dd('cadastrarNovaMatricula');
+        //cadastra associado.
+        $dadosAssociado = $this->montarDadosAssociado($dados);
+
+        $associado = Associado::create($dadosAssociado);
+
+        //cadastrar proposta.
+        $dadosProposta = $this->montarDadosProposta($dados);
+
+        $dadosProposta['id_associado'] = $associado->id_associado;
+        $dadosProposta['num_proposta'] = Proposta::max('num_proposta') + 1;
+
+        $proposta = Proposta::create($dadosProposta);
+
+        //adicionado ao acompanhamento
+        Acompanhamento::create([
+            'id_proposta' => $proposta->id_proposta,
+            'id_usuario' => Auth::user()->id_usuario,
+            'status_proposta' => 'em andamento',
+        ]);
+
+        return [
+            'associado' => $associado,
+            'proposta' => $proposta
+        ];
     }
     private function cadastrarComMatriulaExistente(array $dados): array
     {
