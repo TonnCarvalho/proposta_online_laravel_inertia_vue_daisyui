@@ -29,6 +29,7 @@ class PropostaCreateController extends Controller
         ?string $tipoCadastro = null,
         ?int $associado = null
     ) {
+        $cpf = session('cpf_pesquisado');
 
         $tiposPermitidos = [
             'novo_associado',
@@ -41,23 +42,25 @@ class PropostaCreateController extends Controller
             return redirect()
                 ->route('pesquisaCpfCadastro.index')
                 ->with('flash', [
-                    'message' => 'Tipo de cadastro inválido!'
+                    'message' => 'Tipo de cadastro inválido!',
+                    'subMessage' => 'Esse tipo de cadastro não é permitido',
+                    'icon' => 'Ban'
                 ]);
         }
-
-        $cpf = session('proposta.cpf_pesquisado');
 
         /**
          * NOVO ASSOCIADO
          * Neste caso precisamos obrigatoriamente do CPF
-         * que oi armazenado anteriormente na sessão.
+         * que foi armazenado anteriormente na sessão.
          */
 
         if ($tipoCadastro === 'novo_associado' && !$cpf) {
             return redirect()
                 ->route('pesquisaCpfCadastro.index')
                 ->with('flash', [
-                    'message' => 'CPF não encontrado'
+                    'message' => 'CPF não encontrado',
+                    'subMessage' => 'Precisa do CPF para continuar',
+                    'icon' => 'UserRoundX'
                 ]);
         }
 
@@ -77,7 +80,9 @@ class PropostaCreateController extends Controller
             return redirect()
                 ->route('pesquisaCpfCadastro.index')
                 ->with('flash', [
-                    'message' => 'Associado não informado!'
+                    'message' => 'Associado não informado!',
+                    'subMessage' => 'Não conseguimos encontrar o associado',
+                    'icon' => 'Ban'
                 ]);
         }
         /**

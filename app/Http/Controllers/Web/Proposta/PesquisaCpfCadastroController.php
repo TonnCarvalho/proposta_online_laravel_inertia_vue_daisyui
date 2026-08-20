@@ -29,14 +29,14 @@ class PesquisaCpfCadastroController extends Controller
             ->orderBy('id_associado', 'desc')
             ->get();
 
-        session()->forget('proposta.cpf_pesquisado');
+        session()->forget('cpf_pesquisado');
 
         if ($matriculas->isEmpty()) {
-            session('proposta.cpf_pesquisado', $cpf);
+            session()->put('cpf_pesquisado', $cpf);
 
             return response()->json([
                 'success' => true,
-                'message' => 'Associado não encontrado na base de dados',
+                'message' => 'Associado não encontrado',
                 'redirect' => route('proposta.create', [
                     'tipoCadastro' => 'novo_associado'
                 ])
