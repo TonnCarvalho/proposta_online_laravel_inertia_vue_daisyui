@@ -29,25 +29,103 @@ class PropostaCreateController extends Controller
         ?string $tipoCadastro = null,
         ?int $associado = null
     ) {
-        //Se o associado não existir, usa para preencher o input CPF
-        $cpf = session('proposta.cpf_pesquisado');
 
-        //Se não tiver cpf e associado, redireciona para pagina.
-        if (!$cpf && !$associado) {
+        $tiposPermitidos = [
+            'novo_associado',
+            'nova_matricula',
+            'matricula_existente'
+        ];
+
+        //Verifica se o tipo de cadastro é permitido.
+        if (!in_array($tipoCadastro, $tiposPermitidos)) {
             return redirect()
-                ->route('pesquisaCpfCadastro.index')->with('flash', [
-                    'message' => 'CPF não informado!'
+                ->route('pesquisaCpfCadastro.index')
+                ->with('flash', [
+                    'message' => 'Tipo de cadastro inválido!'
                 ]);
         }
 
-        $data = null;
-        $idAssociado = null;
+        $cpf = session('proposta.cpf_pesquisado');
 
-        //Se o associado existe, busca os dados pelo id do associado
+        /**
+         * NOVO ASSOCIADO
+         * Neste caso precisamos obrigatoriamente do CPF
+         * que oi armazenado anteriormente na sessão.
+         */
+
+        if ($tipoCadastro === 'novo_associado' && !$cpf) {
+            return redirect()
+                ->route('pesquisaCpfCadastro.index')
+                ->with('flash', [
+                    'message' => 'CPF não encontrado'
+                ]);
+        }
+
+        /**
+         * NOVA MATRÍCULA ou MATRÍCULA EXISTENTE
+         * Nos dois casos precisamos saber qual é
+         * o associado que foi selecionado
+         */
+
+        if (
+            in_array($tipoCadastro, [
+                'nova_matricula',
+                'matricula_existente'
+            ])
+            && !$associado
+        ) {
+            return redirect()
+                ->route('pesquisaCpfCadastro.index')
+                ->with('flash', [
+                    'message' => 'Associado não informado!'
+                ]);
+        }
+        /**
+         * Se recebeu um associado pela URL,
+         * buscamos seus dados.
+         */
+
+        $idAssociado = null;
+        $data = null;
+
         if ($associado) {
             $idAssociado = $associado;
-            $data = Associado::query()
-                ->findOrFail($associado);
+
+            $data = match ($tipoCadastro) {
+                'nova_matricula' => Associado::query()
+                    ->select([
+                        'nome',
+                        'cpf',
+                        'rg',
+                        'orgao_exp',
+                        'email',
+                        'data_nasc',
+                        'nat',
+                        'sexo',
+                        'cel',
+                        'nome_pai',
+                        'nome_mae',
+                        'estado_civil',
+                        'cep',
+                        'uf',
+                        'municipio',
+                        'bairro',
+                        'endereco',
+                        'banco',
+                        'agencia',
+                        'conta',
+                        'banco_pagamento',
+                        'agencia_pagamento',
+                        'conta_pagamento',
+                        'tipo_bancario'
+                    ])
+                    ->findOrFail($associado),
+
+                'matricula_existente' => Associado::query()
+                    ->findOrFail($associado)
+            };
+
+            $cpf = $data->cpf;
         }
 
         //Pega as praças ativas para mostrar no cadastro
