@@ -9,6 +9,7 @@ import {
     SlidersHorizontal,
     MapPinned,
     Landmark,
+    Files,
 } from '@lucide/vue'
 
 defineProps({
@@ -27,22 +28,23 @@ const icons = {
     SlidersHorizontal,
     MapPinned,
     Landmark,
+    Files,
 }
 
 </script>
 <template>
     <div class="card-title text-base-content flex">
-        <span v-if="icons[icon]">
-            <div class="bg-primary/20 text-primary p-1.5 rounded flex justify-center items-center">
-                <component :is="icons[icon]"
-                    size="20" />
-            </div>
-        </span>
+
+        <component v-if="icons[icon]"
+            :is="icons[icon]"
+            size="30"
+            class="bg-primary/20 text-primary p-1.5 rounded flex justify-center items-center" />
+
         <span class="text-primary">
             {{ title }}
         </span>
     </div>
-        <div v-if="subMessage"
+    <div v-if="subMessage"
         class="text-xs">
         {{ subMessage }}
     </div>

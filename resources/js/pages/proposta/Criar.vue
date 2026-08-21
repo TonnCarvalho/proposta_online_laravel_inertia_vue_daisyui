@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from '@/layout/AppLayout.vue';
 import PageHeader from '@/layout/parts/AppLayout/PageHeader.vue';
-import { useForm, usePage } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
 import Card from '@/components/card/Card.vue';
 import CardBody from '@/components/card/CardBody.vue';
 import AssociadoForm from './parts/form/AssociadoForm.vue';
@@ -13,6 +13,7 @@ import Alert from '@/components/Alert.vue';
 import { formatDate } from '@/utils/dateTime.js';
 import Input from '@/components/form/Input.vue';
 import { FilePlus } from '@lucide/vue';
+import DocumentosForm from './parts/form/DocumentosForm.vue';
 
 const props = defineProps({
     idAssociado: Number,
@@ -116,8 +117,6 @@ const submit = () => {
         <PageHeader title="Nova proposta"
             icon="file-circle-plus" />
 
-        <form @submit.prevent="submit">
-
             <Alert v-if="tipoCadastro === 'novo_associado'"
                 message="Associado não encontrado"
                 subMessage="Vamos fazer um novo cadastro"
@@ -125,6 +124,8 @@ const submit = () => {
                 soft
                 class="bg-yellow-100 border-yellow-400 text-yellow-600" />
 
+        <form @submit.prevent="submit">
+            
             <Input name="tipo_cadastro"
                 v-model="form.tipoCadastro"
                 type="hidden"
@@ -135,7 +136,11 @@ const submit = () => {
                 type="hidden"
                 class="hidden" />
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+            <div class="grid grid-cols-1">
+                <DocumentosForm />
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mt-3">
                 <AssociadoForm :formAssociado="form.associado"
                     :origens="origens"
                     :sexoAssociado="sexoAssociado"

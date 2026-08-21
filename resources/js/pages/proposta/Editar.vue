@@ -11,9 +11,14 @@ import FinanceiroForm from './parts/form/FinanceiroForm.vue';
 import EnderecoForm from './parts/form/EnderecoForm.vue';
 import BancoContraChequeForm from './parts/form/BancoContraChequeForm.vue';
 import BancoRecimentoForm from './parts/form/BancoRecimentoForm.vue';
+import DocumentosForm from './parts/form/DocumentosForm.vue';
 import { FilePen } from '@lucide/vue';
+import Input from '@/components/form/Input.vue';
+import Alert from '@/components/Alert.vue';
 
 const props = defineProps({
+    flash: Array,
+    idAssociado: Number,
     proposta: Object,
     origens: Array | Object,
     sexoAssociado: Array,
@@ -27,6 +32,20 @@ const props = defineProps({
 const proposta = props.proposta[0]
 
 const form = useForm({
+    idAssociado: props.idAssociado,
+    idProposta: proposta.id_proposta,
+    
+    documento: {
+        frenteDocumento: '',
+        versoDocumento: '',
+        contraCheque: '',
+        comprovanteBancario: '',
+        comprovanteResidencia: '',
+        consultaReceitaFederal: '',
+        averbacaoBeneficio: '',
+        averbacaoMensalidade: '',
+        outrosDocumentos: '',
+    },
     associado: {
         nome: proposta.associado?.nome ?? '',
         cod_local: proposta?.cod_local ?? '',
@@ -84,9 +103,8 @@ const form = useForm({
 })
 
 const submit = () => {
-    form.post(route('proposta.store'), {
+    form.put(route('proposta.update', proposta.id_proposta), {
         preserveScroll: true,
-
         onSuccess: () => {
             console.log('sucesso');
         },
@@ -103,9 +121,31 @@ const submit = () => {
     <AppLayout>
         <PageHeader :title="`${form.financeiro.num_proposta} - ${form.associado.nome}`"
             icon="file-lines" />
+
+        <Alert v-if="props.flash"
+        :message="props.flash.message"
+            :subMessage="props.flash.subMessage"
+            icon="FileCheck"
+            soft
+            class="bg-green-100 border-green-400 text-green-600" />
+
         <form @submit.prevent="submit">
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+            <Input name="idAssociado"
+                v-model="form.idAssociado"
+                type="hidden"
+                class="hidden" />
+
+            <Input name="idProposta"
+                v-model="form.idProposta"
+                type="hidden"
+                class="hidden" />
+
+            <div class="grid grid-cols-1">
+                <DocumentosForm :formDocumento="form.documento" />
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mt-3">
                 <AssociadoForm :formAssociado="form.associado"
                     :origens="origens"
                     :sexoAssociado="sexoAssociado"
@@ -136,7 +176,8 @@ const submit = () => {
                         <button :disabled="form.processing"
                             type="submit"
                             class="btn btn-primary btn-wide">
-                            <FilePen v-if="!form.processing" size="18" />
+                            <FilePen v-if="!form.processing"
+                                size="18" />
                             <span v-if="form.processing"
                                 class="loading loading-spinner loading.sm">
                             </span>
