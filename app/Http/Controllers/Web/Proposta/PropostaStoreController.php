@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Web\Proposta;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PropostaStoreRequest;
+use App\Http\Requests\PropostaRequest;
 use App\Models\Origem;
 use App\Services\Proposta\PropostaStoreService;
 use Illuminate\Http\RedirectResponse;
@@ -11,10 +11,10 @@ use Illuminate\Http\RedirectResponse;
 class PropostaStoreController extends Controller
 {
     public function store(
-        PropostaStoreRequest $request,
-        PropostaStoreService $propostaService
+        PropostaRequest $request,
+        PropostaStoreService $propostaStoreService
     ) {
-        $resultado = $propostaService->criarProposta(
+        $resultado = $propostaStoreService->criarProposta(
             $request->input('tipoCadastro'),
             $request->validated()
         );

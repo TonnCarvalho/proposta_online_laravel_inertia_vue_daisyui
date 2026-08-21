@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
-class PropostaStoreRequest extends FormRequest
+class PropostaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,19 @@ class PropostaStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tipoCadastro' => ['required', 'string'],
             'idAssociado' => ['nullable', 'integer'],
-            
+            'idProposta' => ['nullable', 'integer'],
+
+            'documento.frenteDocumento' => ['nullable', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:2048'],
+            'documento.versoDocumento' => ['nullable', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:2048'],
+            'documento.contraCheque' => ['nullable', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:2048'],
+            'documento.comprovanteBancario' => ['nullable', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:2048'],
+            'documento.comprovanteResidencia' => ['nullable', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:2048'],
+            'documento.consultaReceitaFederal' => ['nullable', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:2048'],
+            'documento.averbacaoBeneficio' => ['nullable', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:2048'],
+            'documento.averbacaoMensalidade' => ['nullable', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:2048'],
+            'documento.outrosDocumentos' => ['nullable', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:2048'],
+
             'associado.nome' => ['required', 'string', 'max:100'],
             'associado.cod_local' => ['required', 'integer'],
             'associado.cpf' => ['required', 'string', 'min:14', 'max:20'],
