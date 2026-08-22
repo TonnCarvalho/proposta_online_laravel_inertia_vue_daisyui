@@ -21,8 +21,8 @@ class PropostaUpdateController extends Controller
         return redirect()
             ->back()
             ->with('flash', [
-                'message' => 'Atualizada com sucesso.',
-                'subMessage' => 'Dados da proposta e associado foram atualizada com sucesso.'
+                'message' => 'Atualizado com sucesso.',
+                'subMessage' => 'Dados da proposta e do associado foram atualizados com sucesso.'
             ]);
     }
 }

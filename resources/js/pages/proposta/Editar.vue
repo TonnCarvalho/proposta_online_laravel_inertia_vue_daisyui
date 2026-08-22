@@ -34,7 +34,7 @@ const proposta = props.proposta[0]
 const form = useForm({
     idAssociado: props.idAssociado,
     idProposta: proposta.id_proposta,
-    
+
     documento: {
         frenteDocumento: '',
         versoDocumento: '',
@@ -104,7 +104,6 @@ const form = useForm({
 
 const submit = () => {
     form.put(route('proposta.update', proposta.id_proposta), {
-        preserveScroll: true,
         onSuccess: () => {
             console.log('sucesso');
         },
@@ -123,7 +122,7 @@ const submit = () => {
             icon="file-lines" />
 
         <Alert v-if="props.flash"
-        :message="props.flash.message"
+            :message="props.flash.message"
             :subMessage="props.flash.subMessage"
             icon="FileCheck"
             soft
