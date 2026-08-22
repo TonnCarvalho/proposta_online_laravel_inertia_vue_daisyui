@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\Proposta;
 
+use App\Action\Acompanhamento\AnaliseAcompanhamentoAction;
 use App\Enum\EstadoCivilAssociado;
 use App\Enum\OcupacaoAssociado;
 use App\Enum\SexoAssociado;
@@ -15,8 +16,12 @@ use Inertia\Inertia;
 
 class PropostaEditController extends Controller
 {
+    public function __construct(
+        private AnaliseAcompanhamentoAction $analiseAcompanhamentoAction
+    ) {}
     public function edit(Proposta $id_proposta, OrigemQuery $origemQuery)
     {
+
         $proposta = $id_proposta::query()
             ->select('*')
             ->where('id_proposta', $id_proposta->id_proposta)
@@ -24,6 +29,9 @@ class PropostaEditController extends Controller
             ->get();
 
         $idAssociado = $proposta[0]['id_associado'];
+        $idProposta = $proposta[0]['id_proposta'];
+
+        $this->analiseAcompanhamentoAction->execute($idProposta);
 
         $origens = $origemQuery->select(['cod_local', 'nome'])
             ->isActive()
