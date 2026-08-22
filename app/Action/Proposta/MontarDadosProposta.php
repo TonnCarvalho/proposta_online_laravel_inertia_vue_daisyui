@@ -12,6 +12,7 @@ class MontarDadosProposta
         return [
             'id_usuario' => Auth::user()->id_usuario,
             'id_proposta' => $dados['idProposta'],
+            'id_fonte_pagamento' => $dados['financeiro']["fonte_pagamento"] ?? NULL,
             'cod_local' => $dados['associado']['cod_local'],
             'cod_corretor' => $dados['financeiro']["cod_corretor"],
             'data_proposta' => $dados['financeiro']["data_proposta"],
@@ -22,7 +23,7 @@ class MontarDadosProposta
             'prazo' => $dados['financeiro']["prazo"],
             'tipo_proposta' => $dados['financeiro']["tipo_proposta"] ?? NULL,
             'iof' => $dados['financeiro']["iof"] ?? NULL,
-            'fonte_pagamento' => $dados['financeiro']["fonte_pagamento"] ?? NULL,
+            'taxa' => $dados['financeiro']["taxa"] ?? NULL,
         ];
     }
 }

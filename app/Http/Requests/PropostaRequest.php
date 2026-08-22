@@ -63,10 +63,10 @@ class PropostaRequest extends FormRequest
             'financeiro.valor_parcela' => ['required', 'decimal:2', 'min:0.01'],
             'financeiro.valor_mensalidade' => ['required', 'decimal:2', 'min:0.01'],
             'financeiro.prazo' => ['required', 'integer'],
-            'financeiro.tipo_proposta' => ['nullable', 'string', 'max:50'],
+            'financeiro.tipo_proposta' => ['required:', 'string', 'max:50'],
             'financeiro.iof' => ['required', 'decimal:2', 'min:0.01'],
             'financeiro.taxa' => ['required'],
-            'financeiro.fonte_pagamento' => ['nullable', 'integer'],
+            'financeiro.fonte_pagamento' => ['required', 'integer'],
 
             'endereco.cep' => ['required', 'string', 'min:1', 'max:10'],
             'endereco.uf' => ['required', 'string', 'max:2'],
