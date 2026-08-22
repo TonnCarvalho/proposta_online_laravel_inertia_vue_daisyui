@@ -2,7 +2,7 @@
 
 namespace App\Services\Proposta;
 
-use App\Action\Acompanhamento\CriarAcompanhamento;
+use App\Action\Acompanhamento\CriarAcompanhamentoAction;
 use App\Action\Proposta\MontarDadosAssociado;
 use App\Action\Proposta\MontarDadosProposta;
 use App\Models\Associado;
@@ -13,7 +13,7 @@ use Illuminate\Validation\ValidationException;
 class PropostaStoreService
 {
     public function __construct(
-        private CriarAcompanhamento $criarAcompanhamento,
+        private CriarAcompanhamentoAction $criarAcompanhamentoAction,
         private MontarDadosAssociado $montarDadosAssociado,
         private MontarDadosProposta $montarDadosProposta,
     ) {}
@@ -51,9 +51,8 @@ class PropostaStoreService
         $proposta = Proposta::create($dadosProposta);
 
         //adicionado ao acompanhamento
-        $this->criarAcompanhamento->execute(
-            $proposta->id_proposta,
-            'em andamento'
+        $this->criarAcompanhamentoAction->execute(
+            $proposta->id_proposta
         );
 
         return [
@@ -77,9 +76,8 @@ class PropostaStoreService
         $proposta = Proposta::create($dadosProposta);
 
         //adicionado ao acompanhamento
-        $this->criarAcompanhamento->execute(
+        $this->criarAcompanhamentoAction->execute(
             $proposta->id_proposta,
-            'em andamento'
         );
 
         return [
@@ -104,9 +102,8 @@ class PropostaStoreService
         $proposta = Proposta::create($dadosProposta);
 
         //adicionado ao acompanhamento
-        $this->criarAcompanhamento->execute(
+        $this->criarAcompanhamentoAction->execute(
             $proposta->id_proposta,
-            'em andamento'
         );
 
         return [
