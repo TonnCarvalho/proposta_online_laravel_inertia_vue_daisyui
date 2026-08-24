@@ -27,7 +27,7 @@ class PropostaStatusService
             ->update(['status_proposta' => $statusProposta]);
     }
 
-    public function statusEmAnalise(int $idProposta)
+    public function atualizarStatusParaEmAnalise(int $idProposta)
     {
         $statusAtual = $this->buscarStatusProposta($idProposta);
 
@@ -41,7 +41,7 @@ class PropostaStatusService
         );
     }
 
-    public function statusPendencia(int $idProposta)
+    public function atualizarStatusParaPendencia(int $idProposta)
     {
         $statusAtual = $this->buscarStatusProposta($idProposta);
 
@@ -58,7 +58,7 @@ class PropostaStatusService
         );
     }
 
-    public function pendenciaResolvida(int $idProposta)
+    public function atualizarStatusParaPendenciaResolvida(int $idProposta)
     {
         $statusAtual = $this->buscarStatusProposta($idProposta);
 
@@ -74,7 +74,7 @@ class PropostaStatusService
         );
     }
 
-    public function propostaConferida(int $idProposta)
+    public function atualizarStatusParaConferida(int $idProposta)
     {
         $statusAtual = $this->buscarStatusProposta($idProposta);
 
@@ -91,7 +91,7 @@ class PropostaStatusService
         );
     }
 
-    public function propostaAguardandoAssinatura(int $idProposta)
+    public function atualizarStatusParaAguardandoAssinatura(int $idProposta)
     {
         $statusAtual = $this->buscarStatusProposta($idProposta);
 
@@ -107,7 +107,7 @@ class PropostaStatusService
         );
     }
 
-    public function propostaAssinada(int $idProposta)
+    public function atualizarStatusParaAssinada(int $idProposta)
     {
         $statusAtual = $this->buscarStatusProposta($idProposta);
 
@@ -123,7 +123,7 @@ class PropostaStatusService
         );
     }
 
-    public function statusCCBEnviada(int $idProposta)
+    public function atualizarStatusParaCCBEnviada(int $idProposta)
     {
         $statusAtual = $this->buscarStatusProposta($idProposta);
 
@@ -139,7 +139,7 @@ class PropostaStatusService
         );
     }
 
-    public function propostaAguardandoPagamento(int $idProposta)
+    public function atualizarStatusParaAguardandoPagamento(int $idProposta)
     {
         $statusAtual = $this->buscarStatusProposta($idProposta);
 
@@ -156,7 +156,7 @@ class PropostaStatusService
         );
     }
 
-    public function propostaPaga(int $idProposta)
+    public function atualizarStatusParaPaga(int $idProposta)
     {
         $statusAtual = $this->buscarStatusProposta($idProposta);
 

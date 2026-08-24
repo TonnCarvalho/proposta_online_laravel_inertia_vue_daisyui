@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Web\Proposta;
 
-use App\Action\Acompanhamento\AnaliseAcompanhamentoAction;
 use App\Enum\EstadoCivilAssociado;
 use App\Enum\OcupacaoAssociado;
 use App\Enum\SexoAssociado;
@@ -12,12 +11,13 @@ use App\Http\Controllers\Controller;
 use App\Models\FontePagamento;
 use App\Models\Proposta;
 use App\Queries\OrigemQuery;
+use App\Services\Proposta\PropostaStatusService;
 use Inertia\Inertia;
 
 class PropostaEditController extends Controller
 {
     public function __construct(
-        private AnaliseAcompanhamentoAction $analiseAcompanhamentoAction
+        private PropostaStatusService $propostaStatusService
     ) {}
     public function edit(Proposta $id_proposta, OrigemQuery $origemQuery)
     {
@@ -31,7 +31,7 @@ class PropostaEditController extends Controller
         $idAssociado = $proposta[0]['id_associado'];
         $idProposta = $proposta[0]['id_proposta'];
 
-        $this->analiseAcompanhamentoAction->execute($idProposta);
+        $this->propostaStatusService->atualizarStatusParaEmAnalise($idProposta);
 
         $origens = $origemQuery->select(['cod_local', 'nome'])
             ->isActive()
