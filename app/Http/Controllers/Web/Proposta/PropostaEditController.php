@@ -19,12 +19,12 @@ class PropostaEditController extends Controller
     public function __construct(
         private PropostaStatusService $propostaStatusService
     ) {}
-    public function edit(Proposta $id_proposta, OrigemQuery $origemQuery)
+    public function edit(Proposta $proposta, OrigemQuery $origemQuery)
     {
 
-        $proposta = $id_proposta::query()
+        $proposta = $proposta::query()
             ->select('*')
-            ->where('id_proposta', $id_proposta->id_proposta)
+            ->where('id_proposta', $proposta->id_proposta)
             ->with('associado')
             ->get();
 

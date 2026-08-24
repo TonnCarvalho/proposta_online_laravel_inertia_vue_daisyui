@@ -23,12 +23,12 @@ Route::middleware('auth')->group(function () {
         Route::post('/criar', [PropostaStoreController::class, 'store'])
             ->name('proposta.store');
 
-        Route::get('/{id_proposta}/edit', [PropostaEditController::class, 'edit'])
-            ->whereNumber('id_proposta')
+        Route::get('/{proposta}/edit', [PropostaEditController::class, 'edit'])
+            ->whereNumber('proposta')
             ->name('proposta.edit');
 
-        Route::put('/{id_proposta}', [PropostaUpdateController::class, 'update'])
-            ->whereNumber('id_proposta')
+        Route::put('/{proposta}', [PropostaUpdateController::class, 'update'])
+            ->whereNumber('proposta')
             ->name('proposta.update');
 
         Route::get('/pesquisa', [PesquisaCpfCadastroController::class, 'index'])
