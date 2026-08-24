@@ -12,11 +12,12 @@ class PropostaUpdateService
     public function __construct(
         private MontarDadosAssociado $montarDadosAssociado,
         private MontarDadosProposta $montarDadosProposta,
-    )
+        private PropostaDocumentoService $propostaDocumentoService,
+    ) {}
+
+    public function atualizarProposta(array $dados): array
     {
-    }
-    public function atualizarProposta(array $dados): Array
-    {
+
         //atualizar associado
         $dadosAssociado = $this->montarDadosAssociado->execute($dados);
 
@@ -28,6 +29,12 @@ class PropostaUpdateService
 
         $proposta = Proposta::findOrFail($dadosProposta['id_proposta']);
         $proposta->update($dadosProposta);
+
+        //atualiza imagens/documentos
+        $this->propostaDocumentoService->salvarDocumentos(
+            $dadosProposta['id_proposta'],
+            $dados['documento']
+        );
 
         return [
             'associado' => $associado,
