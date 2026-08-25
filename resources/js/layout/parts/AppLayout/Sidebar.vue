@@ -1,20 +1,36 @@
 <script setup>
 import logo from '@/assets/images/logo.png';
+import {
+  FileText,
+  FilePlusCorner,
+  HatGlasses,
+} from '@lucide/vue';
 
+const icons = {
+  FileText,
+  FilePlusCorner,
+  HatGlasses,
+}
 const menuitems = [
   {
     label: 'Propostas',
-    icon: 'file-lines',
+    icon: 'FileText',
     route: route('proposta.index'),
     component: ['proposta/Index',
       'proposta/Editar']
   },
   {
     label: 'Criar Proposta',
-    icon: 'file-circle-plus',
+    icon: 'FilePlusCorner',
     route: route('pesquisaCpfCadastro.index'),
     component: ['associado/pesquisaCpfCadastro/PesquisaCpfCadastro',
       'proposta/Criar']
+  },
+  {
+    label: 'Acompanhamento',
+    icon: 'HatGlasses',
+    route: route('acompanhamento.index'),
+    component: ['acompanhamento']
   },
 ]
 
@@ -38,8 +54,9 @@ const menuitems = [
           <Link :href="item.route"
             class="p-2 text-base"
             :class="{ 'bg-primary text-white': item.component.includes($page.component) }">
-          <FontAwesomeIcon :icon="['fas', item.icon]"
-            size="lg" />
+          <component :is="icons[item.icon]"
+            size="23" />
+
           {{ item.label }}
           </Link>
 

@@ -5,10 +5,12 @@ namespace App\Models;
 use App\Models\Proposta;
 use App\Models\Usuario;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Attributes\WithoutTimestamps;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+#[Table('acompanhamento')]
 #[Fillable([
     'id_proposta',
     'id_usuario',
@@ -16,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
     'status_proposta',
 ])]
 #[WithoutTimestamps]
+
 class Acompanhamento extends Model
 {
     protected $primaryKey = 'id_conferencia';

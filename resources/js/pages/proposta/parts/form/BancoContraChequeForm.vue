@@ -17,8 +17,9 @@ const props = defineProps({
 <template>
     <Card>
         <CardBody>
-            <CardTitle title="Dados bancários do contra cheque" class="text-primary"/>
-
+            <CardTitle title="Dados bancários do contra cheque"
+                icon="Landmark"
+                class="text-primary" />
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
                 <Input label="Código do banco"

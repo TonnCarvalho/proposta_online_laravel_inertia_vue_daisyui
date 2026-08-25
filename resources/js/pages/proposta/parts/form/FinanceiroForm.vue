@@ -21,8 +21,11 @@ const props = defineProps({
 <template>
     <Card>
         <CardBody>
+
             <CardTitle title="Auxílio financeiro"
+                icon="Wallet"
                 class="text-primary" />
+
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
 
                 <Input label="Código do corretor"
@@ -78,6 +81,7 @@ const props = defineProps({
                 <Select label="Tipo da proposta"
                     v-model="formFinanceiro.tipo_proposta"
                     placeholder="Selecione"
+                    :error="errors['financeiro.tipo_proposta']"
                     :items="tipoProposta"
                     :labelKey="item => item.label"
                     :valueKey="item => item.value" />
@@ -97,6 +101,7 @@ const props = defineProps({
 
                 <Select label="Fonte pagamento"
                     v-model="formFinanceiro.fonte_pagamento"
+                    :error="errors['financeiro.fonte_pagamento']"
                     placeholder="Selecione"
                     :items="fontePagamento"
                     :labelKey="item => item.fonte"

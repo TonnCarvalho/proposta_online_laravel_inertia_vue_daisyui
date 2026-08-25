@@ -72,8 +72,11 @@ watch(
 <template>
     <Card>
         <CardBody>
+
             <CardTitle title="Dados do associado"
+                icon="User"
                 class="text-primary" />
+
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
 
                 <Input label="Nome completo"
@@ -97,7 +100,7 @@ watch(
                     :valueKey="item => item.cod_local"
                     :labelKey="item => item.nome"
                     required />
-                    
+
                 <Select label="Órgão"
                     v-model="formAssociado.cod_orgao"
                     :error="errors['associado.cod_orgao']"

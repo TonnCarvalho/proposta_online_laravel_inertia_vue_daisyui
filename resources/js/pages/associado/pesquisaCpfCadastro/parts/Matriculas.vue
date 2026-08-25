@@ -1,6 +1,6 @@
 <script setup>
 import Table from '@/components/table/Table.vue';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { UserPlus } from '@lucide/vue';
 
 const props = defineProps({
     matriculas: Array | Object,
@@ -9,7 +9,7 @@ const props = defineProps({
 
 <template>
     <Table title="Matrículas"
-        icon="file-lines"
+        icon="Users"
         class="mt-3">
 
         <template #thead>
@@ -46,9 +46,13 @@ const props = defineProps({
 
         <template #append>
             <div>
-                <Link :href="route('proposta.create', 'nova_matricula')"
+
+                <Link :href="route('proposta.create', {
+                    tipoCadastro: 'nova_matricula',
+                    associado: props.matriculas[0]['id_associado']
+                })"
                     class="btn btn-primary">
-                <FontAwesomeIcon icon="plus" />
+                <UserPlus size="20" />
                 Nova matrículas
                 </Link>
             </div>

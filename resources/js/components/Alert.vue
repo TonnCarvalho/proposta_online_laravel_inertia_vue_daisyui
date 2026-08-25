@@ -1,5 +1,17 @@
 <script setup>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { 
+    Ban,
+    UserRoundPlus,
+    UserRoundX,
+    FileCheck,
+} from '@lucide/vue';
+
+const icons = {
+    Ban,
+    UserRoundPlus,
+    UserRoundX,
+    FileCheck,
+}
 
 const props = defineProps({
     message: String,
@@ -20,12 +32,15 @@ const props = defineProps({
             'alert-dash': dash,
         }">
 
-        <FontAwesomeIcon v-if="icon"
-            :icon="['fas', icon]" />
+        <component v-if="icon"
+            :is="icons[icon]"
+            size="25" />
         <div>
-            <h3 class="font-bold">{{ message }}</h3>
-            <div class="text-xs"
-                v-if="subMessage">{{ subMessage }}</div>
+            <h3 class="text-lg font-bold">{{ message }}</h3>
+            <div v-if="subMessage"
+                class="text-xs">
+                {{ subMessage }}
+            </div>
         </div>
     </div>
 </template>

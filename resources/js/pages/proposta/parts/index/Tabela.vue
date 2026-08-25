@@ -19,7 +19,7 @@ const tableOptionProposta = [
     <section class="mt-5">
 
         <Table title="Suas propostas"
-            icon="file">
+            icon="FileText">
             <template #thead>
                 <tr>
                     <th>

@@ -11,8 +11,14 @@ import BancoContraChequeForm from './parts/form/BancoContraChequeForm.vue';
 import BancoRecimentoForm from './parts/form/BancoRecimentoForm.vue';
 import Alert from '@/components/Alert.vue';
 import { formatDate } from '@/utils/dateTime.js';
+import Input from '@/components/form/Input.vue';
+import { FilePlus } from '@lucide/vue';
+import DocumentosForm from './parts/form/DocumentosForm.vue';
+
 const props = defineProps({
+    idAssociado: Number,
     data: Object,
+    cpf: String,
     tipoCadastro: String,
     origens: Array | Object,
     tipoProposta: Array,
@@ -23,6 +29,7 @@ const props = defineProps({
     fontePagamento: Array,
 })
 
+//Data de hoje para criar a proposta.
 const hoje = new Date();
 const dia = String(hoje.getDate()).padStart(2, '0');
 const mes = String(hoje.getMonth() + 1).padStart(2, '0')
@@ -30,10 +37,14 @@ const ano = hoje.getFullYear();
 const dataAtual = `${dia}/${mes}/${ano}`
 
 const form = useForm({
+
+    tipoCadastro: props.tipoCadastro,
+    idAssociado: props.idAssociado,
+
     associado: {
         nome: props.data?.nome ?? '',
         cod_local: props.data?.cod_local ?? '',
-        cpf: props.data?.cpf ?? '',
+        cpf: props.data?.cpf ?? props.cpf ?? '',
         rg: props.data?.rg ?? '',
         orgao_exp: props.data?.orgao_exp ?? '',
         email: props.data?.email ?? '',
@@ -54,15 +65,15 @@ const form = useForm({
     financeiro: {
         cod_corretor: props.data?.cod_corretor ?? '',
         data_proposta: dataAtual ?? '',
-        valor_financiado: '',
-        valor_liberado: '',
-        valor_parcela: '',
-        valor_mensalidade: '',
-        prazo: '',
-        tipo_proposta: '',
-        iof: '',
-        taxa: '',
-        fonte_pagamento: '',
+        valor_financiado: '1.000,00',
+        valor_liberado: '1.000,00',
+        valor_parcela: '50,00',
+        valor_mensalidade: '79,00',
+        prazo: '60',
+        tipo_proposta: 'novo_com_margem',
+        iof: '10,00',
+        taxa: '1',
+        fonte_pagamento: '3',
     },
     endereco: {
         cep: props.data?.cep ?? '',
@@ -105,17 +116,31 @@ const submit = () => {
     <AppLayout>
         <PageHeader title="Nova proposta"
             icon="file-circle-plus" />
-        <form @submit.prevent="submit">
-
-            <input :value="tipoCadastro" />
 
             <Alert v-if="tipoCadastro === 'novo_associado'"
-                message="CPF não encontrado na base de dados"
+                message="Associado não encontrado"
                 subMessage="Vamos fazer um novo cadastro"
-                icon="triangle-exclamation"
-                class="alert-warning" />
+                icon="UserRoundPlus"
+                soft
+                class="bg-yellow-100 border-yellow-400 text-yellow-600" />
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+        <form @submit.prevent="submit">
+            
+            <Input name="tipo_cadastro"
+                v-model="form.tipoCadastro"
+                type="hidden"
+                class="hidden" />
+
+            <Input name="idAssociado"
+                v-model="form.idAssociado"
+                type="hidden"
+                class="hidden" />
+
+            <div class="grid grid-cols-1">
+                <DocumentosForm />
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mt-3">
                 <AssociadoForm :formAssociado="form.associado"
                     :origens="origens"
                     :sexoAssociado="sexoAssociado"
@@ -146,6 +171,8 @@ const submit = () => {
                         <button :disabled="form.processing"
                             type="submit"
                             class="btn btn-primary btn-wide">
+                            <FilePlus v-if="!form.processing"
+                                size="18" />
                             <span v-if="form.processing"
                                 class="loading loading-spinner loading.sm">
                             </span>

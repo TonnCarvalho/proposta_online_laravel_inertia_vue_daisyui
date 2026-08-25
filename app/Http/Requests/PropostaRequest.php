@@ -3,10 +3,9 @@
 namespace App\Http\Requests;
 
 use Carbon\Carbon;
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class PropostaStoreRequest extends FormRequest
+class PropostaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,16 +18,29 @@ class PropostaStoreRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, ValidationRule|array<mixed>|string>
+     * @return array<string, array<mixed>|string>
      */
     public function rules(): array
     {
         return [
+            'idAssociado' => ['nullable', 'integer'],
+            'idProposta' => ['nullable', 'integer'],
+
+            'documento.frenteDocumento' => ['nullable', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:2048'],
+            'documento.versoDocumento' => ['nullable', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:2048'],
+            'documento.contraCheque' => ['nullable', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:2048'],
+            'documento.comprovanteBancario' => ['nullable', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:2048'],
+            'documento.comprovanteResidencia' => ['nullable', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:2048'],
+            'documento.consultaReceitaFederal' => ['nullable', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:2048'],
+            'documento.averbacaoBeneficio' => ['nullable', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:2048'],
+            'documento.averbacaoMensalidade' => ['nullable', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:2048'],
+            'documento.outrosDocumentos' => ['nullable', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:2048'],
+
             'associado.nome' => ['required', 'string', 'max:100'],
             'associado.cod_local' => ['required', 'integer'],
             'associado.cpf' => ['required', 'string', 'min:14', 'max:20'],
-            'associado.rg' => ['required', 'string', 'min:14', 'max:15'],
-            'associado.org_exp' => ['required', 'string', 'min:2', 'max:10'],
+            'associado.rg' => ['required', 'string', 'min:11', 'max:15'],
+            'associado.orgao_exp' => ['required', 'string', 'min:2', 'max:10'],
             'associado.email' => ['required', 'email:rfc,dns', 'min:7', 'max:50'],
             'associado.data_nasc' => ['required', 'string'],
             'associado.nat' => ['required', 'string', 'min:3', 'max:50'],
@@ -51,10 +63,10 @@ class PropostaStoreRequest extends FormRequest
             'financeiro.valor_parcela' => ['required', 'decimal:2', 'min:0.01'],
             'financeiro.valor_mensalidade' => ['required', 'decimal:2', 'min:0.01'],
             'financeiro.prazo' => ['required', 'integer'],
-            'financeiro.tipo_proposta' => ['nullable', 'string', 'max:50'],
+            'financeiro.tipo_proposta' => ['required', 'string', 'max:50'],
             'financeiro.iof' => ['required', 'decimal:2', 'min:0.01'],
-            'financeiro.taxa' => ['required', 'numeric:strict'],
-            'financeiro.fonte_pagamento' => ['nullable', 'integer'],
+            'financeiro.taxa' => ['required'],
+            'financeiro.fonte_pagamento' => ['required', 'integer'],
 
             'endereco.cep' => ['required', 'string', 'min:1', 'max:10'],
             'endereco.uf' => ['required', 'string', 'max:2'],
@@ -80,7 +92,7 @@ class PropostaStoreRequest extends FormRequest
             'associado.cod_local' => 'praça',
             'associado.cpf' => 'cpf',
             'associado.rg' => 'rg',
-            'associado.org_exp' => 'órgão expedidor',
+            'associado.orgao_exp' => 'órgão expedidor',
             'associado.email' => 'email',
             'associado.data_nasc' => 'data de nascimento',
             'associado.nat' => 'naturalidade',

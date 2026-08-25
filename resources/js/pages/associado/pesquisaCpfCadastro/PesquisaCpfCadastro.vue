@@ -1,12 +1,14 @@
 <script setup>
-
-
 import AppLayout from '@/layout/AppLayout.vue';
 import PageHeader from '@/layout/parts/AppLayout/PageHeader.vue';
 import Pesquisa from './parts/Pesquisa.vue';
 import Matriculas from './parts/Matriculas.vue';
 import { ref } from 'vue';
+import Alert from '@/components/Alert.vue';
 
+const props = defineProps({
+    flash: Array,
+})
 const isRegistration = ref(false);
 const matriculas = ref([]);
 
@@ -20,6 +22,13 @@ const mostrarMatriculas = (dados) => {
         <PageHeader title="Pesquisa associado"
             icon="user"
             sub-title="Pesquise o associado e veja se ele possui matrículas" />
+
+        <Alert v-if="props.flash"
+            :message="props.flash?.message"
+            :sub-message="props.flash?.subMessage"
+            :icon="props.flash?.icon"
+            soft
+            class="bg-red-100 text-red-500 border-red-500" />
 
         <Pesquisa @resultado="mostrarMatriculas" />
 

@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 #[Fillable([
     'id_usuario',
     'id_associado',
-    'id_origem',
+    'cod_local',
     'id_fonte_pagamento',
     'cod_corretor',
     'num_proposta',
@@ -30,6 +30,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
     'recusado_motivo',
     'tipo_assinatura',
 ])]
+
 class Proposta extends Model
 {
     protected $primaryKey = 'id_proposta';
