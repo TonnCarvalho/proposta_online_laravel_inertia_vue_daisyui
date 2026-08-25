@@ -49,7 +49,7 @@ class PropostaDocumentoService
         string $nomeDocumento
     ): void {
     
-        $diretorio = "documentos_associado/{$idProposta}";
+        $diretorio = "/documentos_associado/{$idProposta}/";
 
         $extensao = $arquivo->extension();
 
@@ -58,11 +58,13 @@ class PropostaDocumentoService
             $nomeDocumento
         );
 
-        Storage::disk('local')->putFileAs(
+        //Salvar o arquivo no diretorio.
+        $arquivo->storeAs(
             $diretorio,
             "{$nomeDocumento}.{$extensao}",
             'local'
         );
+
     }
 
     private function excluirDocumentoExistente(
