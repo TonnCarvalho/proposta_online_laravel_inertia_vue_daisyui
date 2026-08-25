@@ -15,11 +15,13 @@ import DocumentosForm from './parts/form/DocumentosForm.vue';
 import { FilePen } from '@lucide/vue';
 import Input from '@/components/form/Input.vue';
 import Alert from '@/components/Alert.vue';
+import DocumentosView from './editar/DocumentosView.vue';
 
 const props = defineProps({
     flash: Array,
     idAssociado: Number,
     proposta: Object,
+    documentos: Array,
     origens: Array | Object,
     sexoAssociado: Array,
     estadoCivilAssociado: Array,
@@ -127,6 +129,8 @@ const submit = () => {
             icon="FileCheck"
             soft
             class="bg-green-100 border-green-400 text-green-600" />
+
+        <DocumentosView :documentos="props.documentos"/>
 
         <form @submit.prevent="submit">
 

@@ -38,5 +38,8 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/sucesso', [PropostaSucessoController::class, 'index'])
             ->name('proposta.sucesso');
+
+        Route::get('/proposta/{proposta}/documento/{arquivo}',[PropostaEditController::class, 'visualizarDocumento'])
+            ->name('proposta.visualizar.documento');
     });
 });
