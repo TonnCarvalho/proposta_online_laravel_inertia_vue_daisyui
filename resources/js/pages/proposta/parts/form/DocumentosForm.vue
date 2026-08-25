@@ -87,7 +87,7 @@ const inputDocument = [
                     </legend>
 
                     <input type="file"
-                        @input="formDocumento[item.name] = $event.target.files[0]"
+                        @input="formDocumento[item.name] = $event.target.files[0] ?? null"
                         class="file-input w-full"
                         :id="item.name"
                         :name="item.name"

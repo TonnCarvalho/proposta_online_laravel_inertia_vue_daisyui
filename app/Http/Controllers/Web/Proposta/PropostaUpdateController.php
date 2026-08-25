@@ -14,7 +14,7 @@ class PropostaUpdateController extends Controller
         PropostaUpdateService $propostaUpdateService
     ): RedirectResponse {
 
-        $resultado = $propostaUpdateService->atualizarProposta(
+        $propostaUpdateService->atualizarProposta(
             $request->validated()
         );
 
