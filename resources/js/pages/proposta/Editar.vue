@@ -16,6 +16,7 @@ import { FilePen } from '@lucide/vue';
 import Input from '@/components/form/Input.vue';
 import Alert from '@/components/Alert.vue';
 import DocumentosView from './editar/DocumentosView.vue';
+import { ref } from 'vue';
 
 const props = defineProps({
     flash: Array,
@@ -32,6 +33,8 @@ const props = defineProps({
 })
 
 const proposta = props.proposta[0]
+
+const imagemVersao = ref();
 
 const form = useForm({
     idAssociado: props.idAssociado,
@@ -107,14 +110,12 @@ const form = useForm({
 const submit = () => {
     form.put(route('proposta.update', proposta.id_proposta), {
         onSuccess: () => {
+            imagemVersao.value = Date.now()
             console.log('sucesso');
         },
         onError: (error) => {
             console.log(error)
         },
-        onFinish: () => {
-            console.log('finalizado');
-        }
     })
 }
 </script>
@@ -130,7 +131,9 @@ const submit = () => {
             soft
             class="bg-green-100 border-green-400 text-green-600" />
 
-        <DocumentosView :documentos="props.documentos"/>
+        <DocumentosView v-if="props.documentos[0]"
+            :documentos="props.documentos"
+            :imagemVersao="imagemVersao" />
 
         <form @submit.prevent="submit">
 

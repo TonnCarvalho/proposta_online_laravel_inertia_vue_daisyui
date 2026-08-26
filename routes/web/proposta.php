@@ -39,7 +39,13 @@ Route::middleware('auth')->group(function () {
         Route::get('/sucesso', [PropostaSucessoController::class, 'index'])
             ->name('proposta.sucesso');
 
-        Route::get('/proposta/{proposta}/documento/{arquivo}',[PropostaEditController::class, 'visualizarDocumento'])
+        Route::get('/{proposta}/documento/{arquivo}', [PropostaEditController::class, 'visualizarDocumento'])
             ->name('proposta.visualizar.documento');
+
+        Route::get('/{proposta}/download/{arquivo}', [PropostaEditController::class, 'downloadDocumento'])
+            ->name('proposta.download.documento');
+
+        Route::get('/{proposta}/deleta/{arquivo}', [PropostaEditController::class, 'deletaDocumento'])
+            ->name('proposta.deleta.documento');
     });
 });

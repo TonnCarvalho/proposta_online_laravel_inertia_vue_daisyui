@@ -2,14 +2,16 @@
 import Card from '@/components/card/Card.vue';
 import CardBody from '@/components/card/CardBody.vue';
 import CardTitle from '@/components/card/CardTitle.vue';
-import { Download, File, FileInput } from '@lucide/vue';
+import Modal from '@/components/modal/Modal.vue';
+import { Download, Trash } from '@lucide/vue';
 import { ref } from 'vue';
 
 const props = defineProps({
     documentos: {
         type: Array,
         required: true
-    }
+    },
+    imagemVersao: String,
 })
 
 const documentoSelecionado = ref(null);
@@ -22,80 +24,59 @@ function visualizarDocumento(item) {
 </script>
 <template>
 
-    <Card>
+    <Card class="mb-3">
         <CardBody>
-            <CardTitle title="Documentos do associado" />
+            <CardTitle title="Documentos" icon="FileUser" />
             <div class="grid grid-cols-1 lg:grid-cols-5 gap-3">
                 <div v-for="item in documentos"
                     :key="item.titulo">
-                    <Card v-if="item.url">
+                    <Card v-if="item.url"
+                        class="">
                         <div class="p-3">
                             <div class="font-bold">
                                 {{ item.titulo }}
                             </div>
 
-                            <button class="cursor-pointer"
+                            <button class="cursor-pointer w-full"
                                 @click="visualizarDocumento(item)">
 
                                 <img v-if="item.tipo === 'imagem'"
-                                    class="w-full h-32 object-cover"
-                                    :src="item.url"
+                                    class="w-full min-h-32 max-h-32 mx-auto object-contain"
+                                    :src="`${item.url}?v=${imagemVersao}`"
                                     :alt="item.titulo">
 
-                                <div class="app"
-                                    v-if="item.tipo === 'pdf'">
-                                    <File :size="160"
-                                        :strokeWidth="1">
-                                        <text x="5"
-                                            y="19"
-                                            font-size="7"
-                                            color="#fb2c36"
-                                            font-family="Verdana,sans-serif"
-                                            :stroke-width="1">
-                                            PDF
-                                        </text>
-                                    </File>
-                                </div>
-
+                                <img v-if="item.tipo === 'pdf'"
+                                    class="w-full min-h-32 max-h-32 mx-auto object-contain"
+                                    src="../../../assets/images/proposta/pdf.png"
+                                    :alt="item.titulo">
                             </button>
-                            <div class="mt-2 w-full">
-                                <button class="btn btn-sm btn-outline btn-primary w-full mb-3">
-                                    <FileInput size="14" />
-                                    Mudar
-                                </button>
-                                <button class="btn btn-sm btn-outline btn-secondary w-full">
+
+                            <div class="mt-2 w-full grid grid-cols-1 gap-3">
+                                <a :href="item.download"
+                                    class="btn btn-sm btn-outline btn-primary w-full">
                                     <Download size="14" />
                                     Baixar
-                                </button>
+                                </a>
+                                <a :href="item.deleta"
+                                    class="btn btn-sm btn-outline btn-secondary w-full">
+                                    <Trash size="14" />
+                                    Apagar
+                                </a>
                             </div>
+
                         </div>
-
                     </Card>
-
-
                 </div>
             </div>
         </CardBody>
     </Card>
 
+    <Modal id="ver_documento"
+        :titulo="documentoSelecionado?.titulo">
 
-
-    <dialog id="ver_documento"
-        class="modal">
-        <div class="modal-box min-w-4/5">
-            <h3 class="text-lg font-bold">
-                {{ documentoSelecionado?.titulo }}
-            </h3>
-
-            <iframe :src="documentoSelecionado?.url"
-                class="w-full h-[80vh]">
-            </iframe>
-
-        </div>
-        <form method="dialog"
-            class="modal-backdrop">
-            <button>close</button>
-        </form>
-    </dialog>
+        <iframe :src="documentoSelecionado?.url"
+            class="w-full h-[85vh]">
+        </iframe>
+    </Modal>
 
 </template>

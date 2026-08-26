@@ -10,6 +10,7 @@ import {
     MapPinned,
     Landmark,
     Files,
+    FileUser,
 } from '@lucide/vue'
 
 defineProps({
@@ -29,6 +30,7 @@ const icons = {
     MapPinned,
     Landmark,
     Files,
+    FileUser,
 }
 
 </script>

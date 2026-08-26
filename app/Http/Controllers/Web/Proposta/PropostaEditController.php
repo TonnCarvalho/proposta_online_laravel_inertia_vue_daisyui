@@ -21,6 +21,7 @@ class PropostaEditController extends Controller
     public function __construct(
         private PropostaStatusService $propostaStatusService
     ) {}
+
     public function edit(Proposta $proposta, OrigemQuery $origemQuery)
     {
 
@@ -44,6 +45,7 @@ class PropostaEditController extends Controller
 
         $diretorio = "documentos_associado/{$idProposta}";
 
+        // mostrar dados e imagem do documento
         $documentos = collect(
             Storage::disk('local')->files($diretorio)
 
@@ -72,8 +74,16 @@ class PropostaEditController extends Controller
                     'proposta' => $idProposta,
                     'arquivo' => $nomeArquivo,
                 ]),
+                'download' => route('proposta.download.documento', [
+                    'proposta' => $idProposta,
+                    'arquivo' => $nomeArquivo,
+                ]),
+                'deleta' => route('proposta.deleta.documento', [
+                    'proposta' => $idProposta,
+                    'arquivo' => $nomeArquivo,
+                ]),
                 'tipo' => $tipo,
-                'nome' => $nomeArquivo
+                'nome' => $nomeArquivo,
             ];
         });
 
@@ -95,10 +105,36 @@ class PropostaEditController extends Controller
     {
         $caminho = "documentos_associado/{$idProposta}/{$arquivo}";
 
-        if (!Storage::disk('local')->exists($caminho)) {
+        if (! Storage::disk('local')->exists($caminho)) {
             abort(404);
         }
 
         return Storage::disk('local')->response($caminho);
+    }
+
+    public function downloadDocumento(int $idProposta, string $arquivo)
+    {
+        $caminho = "documentos_associado/{$idProposta}/{$arquivo}";
+
+        if (! Storage::disk('local')->exists($caminho)) {
+            abort(404);
+        }
+
+        return Storage::disk('local')->download($caminho);
+    }
+
+    public function deletaDocumento(int $idProposta, string $arquivo)
+    {
+        $caminho = "documentos_associado/{$idProposta}/{$arquivo}";
+
+        if (! Storage::disk('local')->exists($caminho)) {
+            abort(404);
+        }
+
+        Storage::disk('local')->delete($caminho);
+
+        return redirect()->back()->with('flash', [
+            'message' => 'Documento apagar com sucesso',
+        ]);
     }
 }
