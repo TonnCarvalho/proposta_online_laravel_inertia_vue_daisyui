@@ -23,8 +23,7 @@ const props = defineProps({
         <CardBody>
 
             <CardTitle title="Auxílio financeiro"
-                icon="Wallet"
-                class="text-primary" />
+                icon="Wallet"/>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
 
