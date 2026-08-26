@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from '@/layout/AppLayout.vue';
 import PageHeader from '@/layout/parts/AppLayout/PageHeader.vue';
-import { maskMoney, maskPhone } from '@/utils/masks.js';
+import { maskMoney, maskPhone, maskTaxa } from '@/utils/masks.js';
 import { formatDate } from '@/utils/dateTime.js';
 import { useForm } from '@inertiajs/vue3';
 import Card from '@/components/card/Card.vue';
@@ -111,10 +111,8 @@ const submit = () => {
     form.put(route('proposta.update', proposta.id_proposta), {
         onSuccess: () => {
             imagemVersao.value = Date.now()
-            console.log('sucesso');
         },
         onError: (error) => {
-            console.log(error)
         },
     })
 }
@@ -143,7 +141,7 @@ const submit = () => {
                 class="hidden" />
 
             <Input name="idProposta"
-                v-model="form.idProposta"
+                v-model="proposta.id_proposta"
                 type="hidden"
                 class="hidden" />
 

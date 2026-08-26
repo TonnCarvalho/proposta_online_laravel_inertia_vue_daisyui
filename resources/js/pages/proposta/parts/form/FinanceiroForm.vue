@@ -4,7 +4,7 @@ import CardBody from '@/components/card/CardBody.vue';
 import CardTitle from '@/components/card/CardTitle.vue';
 import Input from '@/components/form/Input.vue';
 import Select from '@/components/form/Select.vue';
-import { maskMoney } from '@/utils/masks';
+import { maskMoney, maskTaxa } from '@/utils/masks';
 
 const props = defineProps({
     formFinanceiro: Object,
@@ -95,7 +95,8 @@ const props = defineProps({
                 <Input label="Taxa"
                     v-model="formFinanceiro.taxa"
                     :error="errors['financeiro.taxa']"
-                    :maxlength="4"
+                    :maxlength="5"
+                    :mask="maskTaxa"
                     required />
 
                 <Select label="Fonte pagamento"

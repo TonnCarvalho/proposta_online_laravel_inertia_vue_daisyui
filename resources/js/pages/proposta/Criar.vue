@@ -10,6 +10,7 @@ import EnderecoForm from './parts/form/EnderecoForm.vue';
 import BancoContraChequeForm from './parts/form/BancoContraChequeForm.vue';
 import BancoRecimentoForm from './parts/form/BancoRecimentoForm.vue';
 import Alert from '@/components/Alert.vue';
+import { maskPhone } from '@/utils/masks.js';
 import { formatDate } from '@/utils/dateTime.js';
 import Input from '@/components/form/Input.vue';
 import { FilePlus } from '@lucide/vue';
@@ -41,6 +42,17 @@ const form = useForm({
     tipoCadastro: props.tipoCadastro,
     idAssociado: props.idAssociado,
 
+    documento: {
+        frenteDocumento: '',
+        versoDocumento: '',
+        contraCheque: '',
+        comprovanteBancario: '',
+        comprovanteResidencia: '',
+        consultaReceitaFederal: '',
+        averbacaoBeneficio: '',
+        averbacaoMensalidade: '',
+        outrosDocumentos: '',
+    },
     associado: {
         nome: props.data?.nome ?? '',
         cod_local: props.data?.cod_local ?? '',
@@ -51,7 +63,7 @@ const form = useForm({
         data_nasc: formatDate(props.data?.data_nasc) ?? '',
         nat: props.data?.nat ?? '',
         sexo: props.data?.sexo ?? '',
-        cel: props.data?.cel ?? '',
+        cel:maskPhone(props.data?.cel) ?? '',
         nome_pai: props.data?.nome_pai ?? '',
         nome_mae: props.data?.nome_mae ?? '',
         estado_civil: props.data?.estado_civil ?? '',
@@ -65,15 +77,15 @@ const form = useForm({
     financeiro: {
         cod_corretor: props.data?.cod_corretor ?? '',
         data_proposta: dataAtual ?? '',
-        valor_financiado: '1.000,00',
-        valor_liberado: '1.000,00',
-        valor_parcela: '50,00',
-        valor_mensalidade: '79,00',
-        prazo: '60',
-        tipo_proposta: 'novo_com_margem',
-        iof: '10,00',
-        taxa: '1',
-        fonte_pagamento: '3',
+        valor_financiado: '',
+        valor_liberado: '',
+        valor_parcela: '',
+        valor_mensalidade: '',
+        prazo: '',
+        tipo_proposta: '',
+        iof: '',
+        taxa: '',
+        fonte_pagamento: '',
     },
     endereco: {
         cep: props.data?.cep ?? '',
@@ -100,13 +112,10 @@ const submit = () => {
     form.post(route('proposta.store'), {
         preserveScroll: true,
         onSuccess: () => {
-            console.log('sucesso');
         },
         onError: (error) => {
-            console.log('ERROR', error)
         },
         onFinish: () => {
-            console.log('finalizado');
         }
     })
 }
@@ -117,15 +126,15 @@ const submit = () => {
         <PageHeader title="Nova proposta"
             icon="file-circle-plus" />
 
-            <Alert v-if="tipoCadastro === 'novo_associado'"
-                message="Associado não encontrado"
-                subMessage="Vamos fazer um novo cadastro"
-                icon="UserRoundPlus"
-                soft
-                class="bg-yellow-100 border-yellow-400 text-yellow-600" />
+        <Alert v-if="tipoCadastro === 'novo_associado'"
+            message="Associado não encontrado"
+            subMessage="Vamos fazer um novo cadastro"
+            icon="UserRoundPlus"
+            soft
+            class="bg-yellow-100 border-yellow-400 text-yellow-600" />
 
         <form @submit.prevent="submit">
-            
+
             <Input name="tipo_cadastro"
                 v-model="form.tipoCadastro"
                 type="hidden"
@@ -137,7 +146,7 @@ const submit = () => {
                 class="hidden" />
 
             <div class="grid grid-cols-1">
-                <DocumentosForm />
+                <DocumentosForm :formDocumento="form.documento"/>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mt-3">
