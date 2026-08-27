@@ -3,12 +3,14 @@ import AppLayout from '@/layout/AppLayout.vue';
 import PageHeader from '@/layout/parts/AppLayout/PageHeader.vue';
 import Filtro from './parts/index/Filtro.vue';
 import Tabela from './parts/index/Tabela.vue';
+import Alert from '@/components/Alert.vue';
 
-defineProps({
-    propostas: Array|Object,
+const props = defineProps({
+    propostas: Array | Object,
     origens: Array,
     statusProposta: Array,
     filtros: Object,
+    alert: Object,
 })
 </script>
 <template>
@@ -17,7 +19,15 @@ defineProps({
             sub-title="Acompanhe suas propostas"
             icon="file-lines" />
 
-        <Filtro :origens="origens" :statusProposta="statusProposta" :filtros="filtros" />
+        <Alert v-if="alert?.message"
+            icon="Ban"
+            :message="alert?.message"
+            :subMessage="alert?.subMessage"
+            :type="alert?.type" />
+
+        <Filtro :origens="origens"
+            :statusProposta="statusProposta"
+            :filtros="filtros" />
 
         <Tabela :propostas="propostas" />
     </AppLayout>
