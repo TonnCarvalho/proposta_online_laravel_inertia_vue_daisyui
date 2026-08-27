@@ -12,18 +12,31 @@ use App\Models\FontePagamento;
 use App\Models\Proposta;
 use App\Queries\OrigemQuery;
 use App\Services\Proposta\PropostaStatusService;
+use App\Trait\AutorizacaoComRedirecionamento;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class PropostaEditController extends Controller
 {
+    use AutorizacaoComRedirecionamento;
+
     public function __construct(
         private PropostaStatusService $propostaStatusService
     ) {}
 
     public function edit(Proposta $proposta, OrigemQuery $origemQuery)
     {
+        // verifica se o usuário possui autorização para ver proposta.
+        if ($redirect = $this->handleDenied(
+            'view',
+            $proposta,
+            'proposta.index',
+            'Você não possui permissão para editar está proposta.',
+            'error'
+        )) {
+            return $redirect;
+        }
 
         $proposta = $proposta::query()
             ->select('*')
