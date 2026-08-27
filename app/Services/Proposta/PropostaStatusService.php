@@ -2,8 +2,9 @@
 
 namespace App\Services\Proposta;
 
-use App\Enum\StatusProposta as StatusProposta;
+use App\Enum\StatusProposta;
 use App\Models\Proposta;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Classe responsavel por verificar e mudar o status da proposta
@@ -27,8 +28,19 @@ class PropostaStatusService
             ->update(['status_proposta' => $statusProposta]);
     }
 
+    public function podeAlterarStatus(): bool
+    {
+        $nivel = Auth::user()->nivel;
+
+        return in_array($nivel, [20, 25]);
+    }
+
     public function atualizarStatusParaEmAnalise(int $idProposta)
     {
+        if (! $this->podeAlterarStatus()) {
+            return;
+        }
+
         $statusAtual = $this->buscarStatusProposta($idProposta);
 
         if ($statusAtual !== StatusProposta::ANDAMENTO) {
