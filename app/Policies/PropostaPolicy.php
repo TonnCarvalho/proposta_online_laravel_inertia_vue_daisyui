@@ -13,7 +13,7 @@ class PropostaPolicy
         return $this->pertenceAoCorretor($usuario, $proposta)
         || $this->administrador($usuario)
         ? Response::allow()
-        : Response::deny('Não autorizado');
+        : Response::deny('Acesso negado');
     }
 
     public function update(Usuario $usuario, Proposta $proposta): Response
