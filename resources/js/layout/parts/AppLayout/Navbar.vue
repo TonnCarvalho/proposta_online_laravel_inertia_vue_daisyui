@@ -1,7 +1,34 @@
 <script setup>
 import logo from '@/assets/images/logo.png';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { usePage } from '@inertiajs/vue3';
 import { ref, onMounted } from 'vue';
+
+const page = usePage();
+const nomeUsuario = page.props.auth.user.nome
+
+const formataNomeNavbar = (value) => {
+    if (!value) return ""
+
+    value = value.trim()
+
+    const primeiroNome = value.toLowerCase().split(" ")[0]
+
+    return primeiroNome.at(0).toUpperCase() + primeiroNome.slice(1)
+}
+const siglaNome = (value) => {
+    if (!value) return "";
+
+    value = value.trim();
+    value = value.toUpperCase()
+    value = value.split(" ")
+
+    const primeiraLetra = value[0].slice(0,1);
+    const segundaLetra = value[1]?.slice(0,1) ?? "";
+
+    return primeiraLetra + segundaLetra
+
+}
 
 const menuDropdown = [
     { label: 'Perfil', icon: 'user-gear', route: '' },
@@ -31,6 +58,7 @@ onMounted(() => {
         theme.value
     );
 });
+
 </script>
 
 <template>
@@ -69,15 +97,18 @@ onMounted(() => {
                 <div tabindex="0"
                     role="button"
                     class="btn btn-ghost p-1">
-                    <div class="w-10 rounded-full">
+                    <div class="w-10 rounded-full hidden md:block">
                         <div class="avatar avatar-placeholder">
                             <div class="bg-base-content text-base-100 w-10 rounded-full">
-                                <span class="text-xl ">CC</span>
+                                <span class="text-xl">
+                                    {{ siglaNome(nomeUsuario) }}
+                                </span>
                             </div>
                         </div>
 
                     </div>
-                    <span class="text-sm">Cleiton</span>
+                    <span class="text-sm"
+                        v-text="formataNomeNavbar(nomeUsuario)"></span>
                 </div>
                 <ul tabindex="-1"
                     class="menu dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
@@ -88,10 +119,12 @@ onMounted(() => {
                         </Link>
                     </li>
                     <li>
-                        <a class="text-error">
-                            <FontAwesomeIcon icon="arrow-right-from-bracket" />
-                            Sair
-                        </a>
+                        <Link method="post"
+                            :href="route('auth.destroy')"
+                            class="text-error">
+                        <FontAwesomeIcon icon="arrow-right-from-bracket" />
+                        Sair
+                        </Link>
                     </li>
                 </ul>
             </div>
