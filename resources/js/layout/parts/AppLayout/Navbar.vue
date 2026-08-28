@@ -99,7 +99,7 @@ onMounted(() => {
                     class="btn btn-ghost p-1">
                     <div class="w-10 rounded-full hidden md:block">
                         <div class="avatar avatar-placeholder">
-                            <div class="bg-base-content text-base-100 w-10 rounded-full">
+                            <div class="bg-primary text-base-100 w-10 rounded-full">
                                 <span class="text-xl">
                                     {{ siglaNome(nomeUsuario) }}
                                 </span>
