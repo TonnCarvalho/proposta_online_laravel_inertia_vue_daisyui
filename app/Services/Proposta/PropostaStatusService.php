@@ -28,11 +28,13 @@ class PropostaStatusService
             ->update(['status_proposta' => $statusProposta]);
     }
 
-    public function podeAlterarStatus(): bool
+    private function podeAlterarStatus(): bool
     {
         $nivel = Auth::user()->nivel;
 
-        return in_array($nivel, [20, 25]);
+        $permissaoNivel = [20, 25];
+
+        return in_array($nivel, $permissaoNivel);
     }
 
     public function atualizarStatusParaEmAnalise(int $idProposta)
