@@ -119,8 +119,7 @@ const submit = () => {
 </script>
 <template>
     <AppLayout>
-        <PageHeader :title="`${form.financeiro.num_proposta} - ${form.associado.nome}`"
-            icon="file-lines" />
+        <PageHeader :title="`${form.financeiro.num_proposta} - ${form.associado.nome}`" />
 
         <Alert v-if="props.flash"
             :message="props.flash.message"

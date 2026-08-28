@@ -123,8 +123,7 @@ const submit = () => {
 </script>
 <template>
     <AppLayout>
-        <PageHeader title="Nova proposta"
-            icon="file-circle-plus" />
+        <PageHeader title="Nova proposta" />
 
         <Alert v-if="tipoCadastro === 'novo_associado'"
             message="Associado não encontrado"

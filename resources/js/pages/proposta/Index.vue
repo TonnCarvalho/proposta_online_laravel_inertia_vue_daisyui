@@ -16,8 +16,7 @@ const props = defineProps({
 <template>
     <AppLayout>
         <PageHeader title="Propostas"
-            sub-title="Acompanhe suas propostas"
-            icon="file-lines" />
+            sub-title="Acompanhe suas propostas" />
 
         <Alert v-if="alert?.message"
             icon="Ban"
