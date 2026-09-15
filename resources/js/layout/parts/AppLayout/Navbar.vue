@@ -3,19 +3,11 @@ import logo from '@/assets/images/logo.png';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { usePage } from '@inertiajs/vue3';
 import { ref, onMounted } from 'vue';
+import primeiroNome from '@/utils/primiroNome';
 
 const page = usePage();
 const nomeUsuario = page.props.auth.user.nome
 
-const formataNomeNavbar = (value) => {
-    if (!value) return ""
-
-    value = value.trim()
-
-    const primeiroNome = value.toLowerCase().split(" ")[0]
-
-    return primeiroNome.at(0).toUpperCase() + primeiroNome.slice(1)
-}
 const siglaNome = (value) => {
     if (!value) return "";
 
@@ -23,8 +15,8 @@ const siglaNome = (value) => {
     value = value.toUpperCase()
     value = value.split(" ")
 
-    const primeiraLetra = value[0].slice(0,1);
-    const segundaLetra = value[1]?.slice(0,1) ?? "";
+    const primeiraLetra = value[0].slice(0, 1);
+    const segundaLetra = value[1]?.slice(0, 1) ?? "";
 
     return primeiraLetra + segundaLetra
 
@@ -108,7 +100,7 @@ onMounted(() => {
 
                     </div>
                     <span class="text-sm"
-                        v-text="formataNomeNavbar(nomeUsuario)"></span>
+                        v-text="primeiroNome(nomeUsuario)"></span>
                 </div>
                 <ul tabindex="-1"
                     class="menu dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">

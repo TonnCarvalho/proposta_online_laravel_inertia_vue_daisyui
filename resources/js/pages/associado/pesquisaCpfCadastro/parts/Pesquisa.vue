@@ -3,7 +3,6 @@ import Card from '@/components/card/Card.vue';
 import CardBody from '@/components/card/CardBody.vue';
 import CardTitle from '@/components/card/CardTitle.vue';
 import Input from '@/components/form/Input.vue';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { maskCpf } from '@/utils/masks';
 import { ref } from 'vue';
 import { router } from '@inertiajs/vue3';
