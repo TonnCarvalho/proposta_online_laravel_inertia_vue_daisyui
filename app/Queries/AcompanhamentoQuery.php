@@ -2,50 +2,65 @@
 
 namespace App\Queries;
 
-use App\Models\Proposta;
+use Illuminate\Support\Facades\DB;
 
 class AcompanhamentoQuery
 {
     public function propostas()
     {
-        return Proposta::query()
+        return DB::table('propostas')
+            ->join(
+                'associados',
+                'associados.id_associado',
+                '=',
+                'propostas.id_associado'
+            )
+            ->join(
+                'origem',
+                'origem.cod_local',
+                '=',
+                'propostas.cod_local'
+            )
+            ->join(
+                'orgaos',
+                function ($join) {
+                    $join->on(
+                        'orgaos.cod_orgao',
+                        '=',
+                        'associados.cod_orgao'
+                    );
+                    $join->on(
+                        'orgaos.cod_local',
+                        '=',
+                        'associados.cod_local'
+                    );
+                }
+            )
+            ->rightJoin(
+                'acompanhamento',
+                'acompanhamento.id_proposta',
+                '=',
+                'propostas.id_proposta'
+            )
+            ->leftJoin(
+                'usuarios',
+                'usuarios.id_usuario',
+                '=',
+                'acompanhamento.id_usuario'
+            )
             ->select([
-                'id_proposta',
-                'id_associado',
-                'num_proposta',
-                'status_proposta',
-                'status_assinatura',
+                'propostas.id_proposta',
+                'propostas.id_usuario',
+                'propostas.num_proposta',
+                'propostas.status_proposta',
+                'propostas.status_assinatura',
+                'associados.nome AS associado_nome',
+                'associados.cpf',
+                'origem.nome AS origem_nome',
+                'orgaos.nome AS orgaos_nome',
+                'usuarios.nome AS usuarios_nome_acompanhamento',
+                'acompanhamento.id_usuario AS acompanhamento_id_usuario'
             ])
-            ->with([
-                'associado' => function ($q) {
-                    $q->select([
-                        'id_associado',
-                        'cod_local',
-                        'cod_orgao',
-                        'nome',
-                        'cpf',
-                    ]);
-                },
-                'associado.origem' => function ($q) {
-                    $q->select([
-                        'cod_local',
-                        'nome',
-                    ]);
-                },
-                'associado.orgao' => function ($q) {
-                    $q->select([
-                        'cod_orgao',
-                        'nome',
-                    ]);
-                },
-                'ultimoAcompanhamento' => function ($q) {
-                    $q->select([
-                        'acompanhamento.id_proposta',
-                        'acompanhamento.id_conferente',
-                        'acompanhamento.data_status'
-                    ]);
-                },
-            ])
-            ->orderByDesc('num_proposta');
+            ->orderByDesc('propostas.id_proposta');
     }
 }
