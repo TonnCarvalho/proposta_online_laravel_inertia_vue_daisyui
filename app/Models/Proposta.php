@@ -37,19 +37,10 @@ class Proposta extends Model
 
     public $timestamps = false;
 
-    public function acompanhamento(): HasMany
+    public function acompanhamento(): HasOne
     {
-        return $this->hasMany(Acompanhamento::class, 'id_proposta');
+        return $this->hasOne(Acompanhamento::class, 'id_proposta');
     }
-
-public function ultimoAcompanhamento()
-{
-    return $this->hasOne(
-        Acompanhamento::class,
-        'id_proposta',
-        'id_proposta'
-    )->latestOfMany('data_status');
-}
 
     public function usuario(): BelongsTo
     {
