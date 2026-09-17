@@ -20,6 +20,7 @@ const statusMap = {
     },
     1: {
         label: 'Em andamento',
+        class: 'peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-blue-600',
         background: '#DBEAFE',
         border: '#DBEAFE',
         color: '#1E40AF',

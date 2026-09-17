@@ -27,7 +27,8 @@ const props = defineProps({
             :pracaAtiva="props.pracaAtiva"
             :filtros="filtros" />
 
-        <Tabela :propostas="props.propostas" />
+        <Tabela :propostas="props.propostas"
+        :statusProposta="statusProposta" />
 
         <Pagination :paginator="propostas" />
     </AppLayout>

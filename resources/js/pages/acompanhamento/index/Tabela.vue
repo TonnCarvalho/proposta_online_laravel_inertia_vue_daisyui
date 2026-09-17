@@ -3,19 +3,22 @@ import Table from '@/components/table/Table.vue';
 import StatusProposta from '@/components/StatusProposta.vue';
 import StatusAssinatura from '@/components/StatusAssinatura.vue';
 import primeiroNome from '@/utils/primiroNome'
-import { router, usePage } from '@inertiajs/vue3';
-import { EllipsisVertical } from '@lucide/vue';
+import { Link, usePage } from '@inertiajs/vue3';
+import { EllipsisVertical, FilePen, RefreshCcw, Sparkle, Trash } from '@lucide/vue';
+import ModalSituacao from './modalSituacao.vue';
 
 const props = defineProps({
     propostas: Object,
+    statusProposta: Array,
 })
 const page = usePage();
 
 const idUsuarioAcompanhamento = page.props.auth.user.id_usuario;
 
-const editarProposta = (idProposta) => {
-    router.visit(route('proposta.edit', idProposta))
+function modalSituacao() {
+    document.getElementById('modalSituacao').showModal();
 }
+
 
 </script>
 <template>
@@ -35,48 +38,62 @@ const editarProposta = (idProposta) => {
         </template>
 
         <template #tbody>
-            <tr class="hover:bg-base-300 cursor-pointer"
+            <tr class="hover:bg-base-300"
                 v-for="proposta in propostas.data"
-                :key="proposta.id_proposta"
-                @click="editarProposta(proposta.id_proposta)">
+                :key="proposta.id_proposta">
 
                 <td>
-                    <span class="badge"
-                        :class="{
-                            'badge-primary badge-soft': idUsuarioAcompanhamento == proposta.acompanhamento_id_usuario,
-                            'badge-soft': idUsuarioAcompanhamento != proposta.acompanhamento_id_usuario
-                        }">
-                        {{ primeiroNome(proposta?.usuarios_nome_acompanhamento) }}
-                    </span>
+                    <Link :href="route('proposta.edit', proposta.id_proposta)">
+                        <span class="badge"
+                            :class="{
+                                'badge-primary badge-soft': idUsuarioAcompanhamento == proposta.acompanhamento_id_usuario,
+                                'badge-soft': idUsuarioAcompanhamento != proposta.acompanhamento_id_usuario
+                            }">
+                            {{ primeiroNome(proposta?.usuarios_nome_acompanhamento) }}
+                        </span>
+                    </Link>
                 </td>
 
-                <td class="text-center p-2"
-                    v-text="proposta?.num_proposta">
+                <td class="text-center p-2">
+                    <Link :href="route('proposta.edit', proposta.id_proposta)">
+                        {{ proposta?.num_proposta }}
+                    </Link>
                 </td>
 
-                <td class="text-primary max-w-60 truncate p-2"
-                    v-text="proposta?.associado_nome">
+                <td class="text-primary max-w-60 truncate p-2">
+                    <Link :href="route('proposta.edit', proposta.id_proposta)">
+                        {{ proposta?.associado_nome }}
+                    </Link>
                 </td>
 
-                <td class="whitespace-nowrap p-2"
-                    v-text="proposta?.cpf">
+                <td class="whitespace-nowrap p-2">
+                    <Link :href="route('proposta.edit', proposta.id_proposta)">
+                        {{ proposta?.cpf }}
+                    </Link>
                 </td>
 
                 <td class="p-2">
-                    <StatusProposta :status="proposta?.status_proposta" />
+                    <Link :href="route('proposta.edit', proposta.id_proposta)">
+                        <StatusProposta :status="proposta?.status_proposta" />
+                    </Link>
                 </td>
 
                 <td class="p-2">
-                    <StatusAssinatura :status="proposta?.status_assinatura" />
+                    <Link :href="route('proposta.edit', proposta.id_proposta)">
+                        <StatusAssinatura :status="proposta?.status_assinatura" />
+                    </Link>
                 </td>
 
-                <td class="whitespace-nowrap p-2"
-                    v-text="proposta?.origem_nome">
+                <td class="whitespace-nowrap p-2">
+                    <Link :href="route('proposta.edit', proposta.id_proposta)">
+                        {{ proposta?.origem_nome }}
+                    </Link>
                 </td>
 
-                <td class="truncate max-w-40 p-2"
-                    :title="proposta?.orgaos_nome"
-                    v-text="proposta?.orgaos_nome">
+                <td class="truncate max-w-40 p-2">
+                    <Link :href="route('proposta.edit', proposta.id_proposta)">
+                        {{ proposta?.orgaos_nome }}
+                    </Link>
                 </td>
 
                 <td class="dropdown dropdown-end"
@@ -89,11 +106,31 @@ const editarProposta = (idProposta) => {
                     <ul tabindex="-1"
                         class="dropdown-content menu bg-base-100 rounded-box z-1 w-40 p-2 shadow-sm">
                         <li>
-                            <a>Item 1</a>
+                            <button @click="modalSituacao()"
+                                class="text-primary hover:bg-primary/10">
+                                <RefreshCcw size="15" />
+                                Situação
+                            </button>
+                        </li>
+
+                        <li>
+                            <a class="text-orange-500 hover:bg-orange-100">
+                                <FilePen size="15" />
+                                Assinatura
+                            </a>
+                        </li>
+                        <li>
+                            <a class="text-red-500  hover:bg-red-100">
+                                <Trash size="15" />
+                                Recusar
+                            </a>
                         </li>
                     </ul>
                 </td>
             </tr>
         </template>
     </Table>
+    
+    <ModalSituacao id="modalSituacao"
+        :statusProposta=statusProposta />
 </template>
