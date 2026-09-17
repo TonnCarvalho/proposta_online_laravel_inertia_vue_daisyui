@@ -3,7 +3,7 @@ import Table from '@/components/table/Table.vue';
 import StatusProposta from '@/components/StatusProposta.vue';
 import StatusAssinatura from '@/components/StatusAssinatura.vue';
 import primeiroNome from '@/utils/primiroNome'
-import { usePage } from '@inertiajs/vue3';
+import { router, usePage } from '@inertiajs/vue3';
 import { EllipsisVertical } from '@lucide/vue';
 
 const props = defineProps({
@@ -12,6 +12,10 @@ const props = defineProps({
 const page = usePage();
 
 const idUsuarioAcompanhamento = page.props.auth.user.id_usuario;
+
+const editarProposta = (idProposta) => {
+    router.visit(route('proposta.edit', idProposta))
+}
 
 </script>
 <template>
@@ -31,9 +35,10 @@ const idUsuarioAcompanhamento = page.props.auth.user.id_usuario;
         </template>
 
         <template #tbody>
-            <tr class="hover:bg-base-300"
+            <tr class="hover:bg-base-300 cursor-pointer"
                 v-for="proposta in propostas.data"
-                :key="proposta.id_proposta">
+                :key="proposta.id_proposta"
+                @click="editarProposta(proposta.id_proposta)">
 
                 <td>
                     <span class="badge"
@@ -49,9 +54,8 @@ const idUsuarioAcompanhamento = page.props.auth.user.id_usuario;
                     v-text="proposta?.num_proposta">
                 </td>
 
-                <td class="text-primary max-w-60 truncate p-2">
-                    <Link :href="route('proposta.edit', proposta?.id_proposta)"
-                        v-text="proposta?.associado_nome" class="inline-1"/>
+                <td class="text-primary max-w-60 truncate p-2"
+                    v-text="proposta?.associado_nome">
                 </td>
 
                 <td class="whitespace-nowrap p-2"
@@ -70,11 +74,13 @@ const idUsuarioAcompanhamento = page.props.auth.user.id_usuario;
                     v-text="proposta?.origem_nome">
                 </td>
 
-                <td class="truncate max-w-40 p-2" :title="proposta?.orgaos_nome"
+                <td class="truncate max-w-40 p-2"
+                    :title="proposta?.orgaos_nome"
                     v-text="proposta?.orgaos_nome">
                 </td>
 
-                <td class="dropdown dropdown-end">
+                <td class="dropdown dropdown-end"
+                    @click.stop>
                     <div tabindex="0"
                         role="button"
                         class="btn btn-sm btn-ghost">
