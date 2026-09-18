@@ -1,7 +1,6 @@
 <script setup>
 import {
     BadgeCheck,
-    CircleDashed,
     DollarSign,
     FileCheck,
     FileCheckCorner,
@@ -9,14 +8,30 @@ import {
     FileExclamationPoint,
     FileMinus,
     FilePenLine,
+    FileText,
     FileX,
     Loader,
     X,
 } from '@lucide/vue';
 
+import { ref } from 'vue';
+
 const props = defineProps({
-    id: String,
     statusProposta: Array,
+})
+
+const dialog = ref(null)
+
+function showModal() {
+    dialog.value.showModal()
+}
+
+function closeModal() {
+    dialog.value.close()
+}
+defineExpose({
+    showModal,
+    closeModal,
 })
 
 const statusSelecionado = defineModel();
@@ -40,12 +55,12 @@ const statusConfig = {
 
     3: {
         icon: FileExclamationPoint,
-        class: 'peer-checked:bg-orange-500 peer-checked:text-white peer-checked:border-orange-500',
+        class: 'peer-checked:bg-yellow-500 peer-checked:text-white peer-checked:border-yellow-500',
     },
 
     4: {
         icon: FileMinus,
-        class: 'peer-checked:bg-cyan-600 peer-checked:text-white peer-checked:border-cyan-600',
+        class: 'peer-checked:bg-cyan-500 peer-checked:text-white peer-checked:border-cyan-500',
     },
 
     5: {
@@ -64,13 +79,13 @@ const statusConfig = {
     },
 
     8: {
-        icon: 'Send',
-        class: 'peer-checked:bg-indigo-600 peer-checked:text-white peer-checked:border-indigo-600',
+        icon: FileText,
+        class: 'peer-checked:bg-gray-600 peer-checked:text-white peer-checked:border-gray-600',
     },
 
     9: {
         icon: DollarSign,
-        class: 'peer-checked:bg-lime-800 peer-checked:text-white peer-checked:border-lime-800',
+        class: 'peer-checked:bg-indigo-500 peer-checked:text-white peer-checked:border-indigo-500',
     },
 
     10: {
@@ -82,7 +97,7 @@ const statusConfig = {
 
 </script>
 <template>
-    <dialog :id="id"
+    <dialog ref="dialog"
         class="modal">
         <div class="modal-box min-w-1">
             <form method="dialog">
@@ -91,7 +106,7 @@ const statusConfig = {
                 </button>
             </form>
 
-            <h3 class="text-lg font-bold">
+            <h3 class="text-lg font-bold mb-3">
                 Mudar situação da proposta
             </h3>
 
@@ -121,8 +136,8 @@ const statusConfig = {
                 </label>
             </div>
 
-            <div class="modal-action">
-                <button class="btn btn-primary">
+            <div class="modal-action justify-start">
+                <button class="btn btn-primary btn-wide">
                     Salvar
                 </button>
                 <form method="dialog">

@@ -4,23 +4,29 @@ import StatusProposta from '@/components/StatusProposta.vue';
 import StatusAssinatura from '@/components/StatusAssinatura.vue';
 import primeiroNome from '@/utils/primiroNome'
 import { Link, usePage } from '@inertiajs/vue3';
-import { EllipsisVertical, FilePen, RefreshCcw, Sparkle, Trash } from '@lucide/vue';
+import { EllipsisVertical, FilePen, RefreshCcw, Trash } from '@lucide/vue';
 import ModalSituacao from './modalSituacao.vue';
+import { ref } from 'vue';
 
 const props = defineProps({
     propostas: Object,
     statusProposta: Array,
 })
+
 const page = usePage();
 
 const idUsuarioAcompanhamento = page.props.auth.user.id_usuario;
 
-function modalSituacao() {
-    document.getElementById('modalSituacao').showModal();
+const modalSituacao = ref(null);
+const statusSelecionado = ref(null);
+
+function abrirModalSituacao(proposta) {
+    statusSelecionado.value = proposta.status_proposta
+    modalSituacao.value.showModal();
 }
 
-
 </script>
+
 <template>
     <Table title="Propostas">
         <template #thead>
@@ -106,7 +112,7 @@ function modalSituacao() {
                     <ul tabindex="-1"
                         class="dropdown-content menu bg-base-100 rounded-box z-1 w-40 p-2 shadow-sm">
                         <li>
-                            <button @click="modalSituacao()"
+                            <button @click="abrirModalSituacao(proposta)"
                                 class="text-primary hover:bg-primary/10">
                                 <RefreshCcw size="15" />
                                 Situação
@@ -130,7 +136,8 @@ function modalSituacao() {
             </tr>
         </template>
     </Table>
-    
-    <ModalSituacao id="modalSituacao"
-        :statusProposta=statusProposta />
+
+    <ModalSituacao ref="modalSituacao"
+        :statusProposta=statusProposta
+        v-model="statusSelecionado" />
 </template>
