@@ -14,20 +14,17 @@ const statusMap = {
 
     1: {
         label: 'Não enviado',
-        background: '#FEE2E2',
-        color: '#991B1B',
+        class: 'bg-red-100 text-red-600 border-red-100',
         icon: FileXCorner,
     },
     2: {
         label: 'Aguardando assinatura',
-        background: '#DBEAFE',
-        color: '#1E40AF',
+        class: 'bg-sky-100 text-sky-600 border-sky-100',
         icon: FilePenLine,
     },
     3: {
         label: 'Assinado',
-        background: '#D1FAE5',
-        color: '#065F46',
+        class: 'bg-emerald-100 text-emerald-600 border-emerald-100',
         icon: FileCheckCorner,
     },
 }
@@ -39,12 +36,10 @@ const statusConfig = computed(() => {
 
 <template>
     <span class="badge whitespace-nowrap"
-        :style="{
-            backgroundColor: statusConfig.background,
-            color: statusConfig.color,
-        }">
+        :class="statusConfig.class">
 
-        <component :is="statusConfig.icon" :size="15"  />
+        <component :is="statusConfig.icon"
+            class="size-4" />
 
         {{ statusConfig.label }}
     </span>
