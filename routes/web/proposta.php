@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\Proposta\AtualizarStatusPropostaController;
 use App\Http\Controllers\Web\Proposta\PesquisaCpfCadastroController;
 use App\Http\Controllers\Web\Proposta\PropostaController;
 use App\Http\Controllers\Web\Proposta\PropostaCreateController;
@@ -47,5 +48,8 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/{proposta}/deleta/{arquivo}', [PropostaEditController::class, 'deletaDocumento'])
             ->name('proposta.deleta.documento');
+
+            Route::patch('/{proposta}/status', AtualizarStatusPropostaController::class)
+            ->name('proposta.status.update');
     });
 });

@@ -16,7 +16,13 @@ import {
 
 import { ref } from 'vue';
 
+import { router } from '@inertiajs/vue3';
+
 const props = defineProps({
+    propostaId: {
+        type: Number,
+        required: true,
+    },
     statusProposta: Array,
 })
 
@@ -35,7 +41,6 @@ defineExpose({
 })
 
 const statusSelecionado = defineModel();
-
 const statusConfig = {
 
     0: {
@@ -95,6 +100,22 @@ const statusConfig = {
 
 }
 
+const salvarStatus = () => {
+
+    router.patch(
+        route('proposta.status.update', props.propostaId),
+        {
+            status: statusSelecionado.value,
+        },
+        {
+            preserveScroll: true,
+
+            onSuccess: () => {
+                closeModal();
+            }
+        }
+    )
+}
 </script>
 <template>
     <dialog ref="dialog"
@@ -137,7 +158,8 @@ const statusConfig = {
             </div>
 
             <div class="modal-action justify-start">
-                <button class="btn btn-primary btn-wide">
+                <button @click="salvarStatus(statusSelecionado.value)"
+                    class="btn btn-primary btn-wide">
                     Salvar
                 </button>
                 <form method="dialog">

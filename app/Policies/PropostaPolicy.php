@@ -11,32 +11,39 @@ class PropostaPolicy
     public function view(Usuario $usuario, Proposta $proposta): Response
     {
         return $this->pertenceAoCorretor($usuario, $proposta)
-        || $this->administrador($usuario)
-        ? Response::allow()
-        : Response::deny('Acesso negado');
+            || $this->administrador($usuario)
+            ? Response::allow()
+            : Response::deny('Acesso negado');
     }
 
     public function update(Usuario $usuario, Proposta $proposta): Response
     {
         return $this->pertenceAoCorretor($usuario, $proposta)
-        || $this->administrador($usuario)
-        ? Response::allow()
-        : Response::deny('Não autorizado');
+            || $this->administrador($usuario)
+            ? Response::allow()
+            : Response::deny('Não autorizado');
     }
 
     public function delete(Usuario $usuario, Proposta $proposta): Response
     {
         return $this->pertenceAoCorretor($usuario, $proposta)
-        || $this->administrador($usuario)
-        ? Response::allow()
-        : Response::deny('Não autorizado');
+            || $this->administrador($usuario)
+            ? Response::allow()
+            : Response::deny('Não autorizado');
     }
 
     public function restore(Usuario $usuario, Proposta $proposta): Response
     {
         return $this->administrador($usuario)
-        ? Response::allow()
-        : Response::deny('Não autorizado');
+            ? Response::allow()
+            : Response::deny('Não autorizado');
+    }
+
+    public function atualizarStatus(Usuario $usuario, Proposta $proposta): Response
+    {
+        return $this->administrador($usuario)
+            ? Response::allow()
+            : Response::deny('Não autorizado');
     }
 
     private function administrador(Usuario $usuario): bool

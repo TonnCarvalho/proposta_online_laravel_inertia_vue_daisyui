@@ -18,9 +18,11 @@ const page = usePage();
 const idUsuarioAcompanhamento = page.props.auth.user.id_usuario;
 
 const modalSituacao = ref(null);
+const propostaSelecionada = ref(null);
 const statusSelecionado = ref(null);
 
 function abrirModalSituacao(proposta) {
+    propostaSelecionada.value = proposta;
     statusSelecionado.value = proposta.status_proposta
     modalSituacao.value.showModal();
 }
@@ -138,6 +140,7 @@ function abrirModalSituacao(proposta) {
     </Table>
 
     <ModalSituacao ref="modalSituacao"
-        :statusProposta=statusProposta
+        :statusProposta="statusProposta"
+        :propostaId="propostaSelecionada?.id_proposta"
         v-model="statusSelecionado" />
 </template>
