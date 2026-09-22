@@ -37,9 +37,9 @@ class Proposta extends Model
 
     public $timestamps = false;
 
-    public function acompanhamento(): BelongsTo
+    public function acompanhamento(): HasOne
     {
-        return $this->belongsTo(Acompanhamento::class, 'id_proposta');
+        return $this->hasOne(Acompanhamento::class, 'id_proposta');
     }
 
     public function usuario(): BelongsTo
@@ -71,6 +71,4 @@ class Proposta extends Model
     {
         return $this->hasMany(Refinanciamento::class, 'id_proposta');
     }
-
-
 }
