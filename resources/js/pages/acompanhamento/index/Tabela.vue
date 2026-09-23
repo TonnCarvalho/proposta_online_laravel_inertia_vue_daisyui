@@ -6,8 +6,8 @@ import primeiroNome from '@/utils/primiroNome'
 import { Link, usePage } from '@inertiajs/vue3';
 import { EllipsisVertical, FilePen, RefreshCcw, RotateCcw, Trash } from '@lucide/vue';
 import ModalSituacao from './modalSituacao.vue';
-import { ref } from 'vue';
 import ModalStatusAssinatura from './modalStatusAssinatura.vue';
+import { ref } from 'vue';
 
 const props = defineProps({
     propostas: Object,
@@ -28,13 +28,8 @@ function abrirModalSituacao(proposta) {
     modalSituacao.value.showModal();
 }
 
-const modalStatusAssinatura = ref(null);
+const modalStatusAssinatura = ref(null)
 
-function abrirModalStatusAssinatura(proposta) {
-    propostaSelecionada.value = proposta
-    statusSelecionado.value = proposta.status_assinatura
-    modalStatusAssinatura.value.showModal();
-}
 </script>
 
 <template>
@@ -130,7 +125,7 @@ function abrirModalStatusAssinatura(proposta) {
                         </li>
 
                         <li>
-                            <a @click="abrirModalStatusAssinatura(proposta)"
+                            <a @click.prevent="modalStatusAssinatura.showModal(proposta)"
                                 class="text-orange-500 hover:bg-orange-100">
                                 <FilePen />
                                 Assinatura
@@ -158,9 +153,7 @@ function abrirModalStatusAssinatura(proposta) {
         :statusProposta="statusProposta"
         :propostaId="propostaSelecionada?.id_proposta"
         v-model="statusSelecionado" />
+    
+    <ModalStatusAssinatura ref="modalStatusAssinatura" />
 
-    <ModalStatusAssinatura ref="modalStatusAssinatura"
-        :propostaId="propostaSelecionada?.id_proposta"
-        :statusAssinatura="propostaSelecionada?.status_assinatura"
-        v-model="statusSelecionado" />
 </template>

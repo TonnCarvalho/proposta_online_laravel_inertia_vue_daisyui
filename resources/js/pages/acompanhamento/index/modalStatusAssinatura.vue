@@ -1,121 +1,71 @@
 <script setup>
-
-import { FileXCorner, FilePenLine, FileCheckCorner, X } from '@lucide/vue';
-
 import { ref } from 'vue';
-import { computed } from 'vue';
-import { router } from '@inertiajs/vue3';
+import Modal2 from '@/components/modal/Modal2.vue';
+import { listaStatusAssinatura } from '@/consts/statusAssinatura'
 
-const props = defineProps({
-    propostaId: {
-        type: Number,
-    },
-    statusAssinatura: Number,
-})
+const modal = ref(null)
+const item = ref(null)
+const statusSelecionado = ref(null);
 
-const dialog = ref(null)
-
-function showModal() {
-    dialog.value.showModal()
+function showModal(dados) {
+    item.value = dados;
+    statusSelecionado.value = dados.status_assinatura
+    modal.value.showModal();
 }
 
 function closeModal() {
-    dialog.value.close()
+    modal.value.closeModal()
 }
-defineExpose({
-    showModal,
-    closeModal,
-})
 
-const statusSelecionado = defineModel();
-const statusMap = {
+defineExpose({ showModal, closeModal })
 
-    1: {
-        label: 'Não enviado',
-        class: 'bg-red-600 text-white border-red-600',
-        icon: FileXCorner,
-    },
-    2: {
-        label: 'Aguardando assinatura',
-        class: 'bg-sky-600 text-white border-sky-600',
-        icon: FilePenLine,
-    },
-    3: {
-        label: 'Assinado',
-        class: 'bg-emerald-600 text-white border-emerald-600',
-        icon: FileCheckCorner,
-    },
-
+function classeDaOpcao(status) {
+    if (statusSelecionado.value === status.id) {
+        return status.cor
+    }
+    return 'border-base-300 hover:bg-base-200'
 }
-const statusConfig = computed(() => {
-    return statusMap[props.status]
-})
 
-const salvarStatus = () => {
-
-    router.patch(
-        route('proposta.status.update', props.propostaId),
-        {
-            // status: statusSelecionado.value,
-        },
-        {
-            preserveScroll: true,
-
-            onSuccess: () => {
-                closeModal();
-            }
-        }
-    )
-}
 </script>
 <template>
-    <dialog ref="dialog"
-        class="modal">
-        <div class="modal-box min-w-1">
-            <form method="dialog">
-                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-                    <X size="15" />
-                </button>
-            </form>
 
-            <h3 class="text-lg font-bold mb-3">
-                Mudar situação da proposta {{ statusAssinatura }}
-            </h3>
+    <Modal2 ref="modal">
+        <template #header>
+            {{ item?.associado_nome }}
+        </template>
 
-            <div class="flex flex-col items-center  gap-3">
-                <label class="cursor-pointer w-1/2"
-                    v-for="status in statusMap"
-                    :key="status.label">
+        <template #content>
+            <div class="grid grid-cols- place-items-center gap-3">
+                <label v-for="status in listaStatusAssinatura"
+                    :key="status.id"
+                    class="cursor-pointer w-1/2">
 
-                    <input v-model="statusSelecionado"
-                        type="radio"
-                        :value="status"
+                    <input type="radio"
+                        v-model="statusSelecionado"
                         name="status_proposta"
+                        :value="status.id"
                         class="peer hidden">
 
                     <div class="flex items-center gap-2 rounded-lg border border-base-300 px-4 py-2 text-sm transition"
-                        :class="statusConfig[statusAssinatura]">
+                        :class="classeDaOpcao(status)">
+
                         <component :is="status.icon" />
                         {{ status.label }}
+
                     </div>
                 </label>
             </div>
+        </template>
 
+        <template #action>
+            <button class="btn btn-success btn-wide">
+                Salvar
+            </button>
 
-            <div class="modal-action justify-start">
-                <button @click="salvarStatus(statusSelecionado.value)"
-                    class="btn btn-primary btn-wide">
-                    Salvar
-                </button>
-                <form method="dialog">
-                    <button class="btn">Fechar</button>
-                </form>
-            </div>
-        </div>
+            <button class="btn btn-soft" @click="closeModal">
+                Voltar
+            </button>
+        </template>
+    </Modal2>
 
-        <form method="dialog"
-            class="modal-backdrop">
-            <button>close</button>
-        </form>
-    </dialog>
 </template>
