@@ -5,7 +5,6 @@ import { computed } from 'vue';
 const props = defineProps({
     status: {
         type: Number,
-        required: true,
     }
 })
 

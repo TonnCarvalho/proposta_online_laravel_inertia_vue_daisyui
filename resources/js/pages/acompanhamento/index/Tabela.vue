@@ -4,9 +4,10 @@ import StatusProposta from '@/components/StatusProposta.vue';
 import StatusAssinatura from '@/components/StatusAssinatura.vue';
 import primeiroNome from '@/utils/primiroNome'
 import { Link, usePage } from '@inertiajs/vue3';
-import { EllipsisVertical, FilePen, RefreshCcw, Trash } from '@lucide/vue';
+import { EllipsisVertical, FilePen, RefreshCcw, RotateCcw, Trash } from '@lucide/vue';
 import ModalSituacao from './modalSituacao.vue';
 import { ref } from 'vue';
+import ModalStatusAssinatura from './modalStatusAssinatura.vue';
 
 const props = defineProps({
     propostas: Object,
@@ -27,6 +28,13 @@ function abrirModalSituacao(proposta) {
     modalSituacao.value.showModal();
 }
 
+const modalStatusAssinatura = ref(null);
+
+function abrirModalStatusAssinatura(proposta) {
+    propostaSelecionada.value = proposta
+    statusSelecionado.value = proposta.status_assinatura
+    modalStatusAssinatura.value.showModal();
+}
 </script>
 
 <template>
@@ -116,21 +124,28 @@ function abrirModalSituacao(proposta) {
                         <li>
                             <button @click="abrirModalSituacao(proposta)"
                                 class="text-primary hover:bg-primary/10">
-                                <RefreshCcw size="15" />
+                                <RefreshCcw />
                                 Situação
                             </button>
                         </li>
 
                         <li>
-                            <a class="text-orange-500 hover:bg-orange-100">
-                                <FilePen size="15" />
+                            <a @click="abrirModalStatusAssinatura(proposta)"
+                                class="text-orange-500 hover:bg-orange-100">
+                                <FilePen />
                                 Assinatura
                             </a>
                         </li>
-                        <li>
+                        <li v-if="proposta.status_recusado == 0">
                             <a class="text-red-500  hover:bg-red-100">
-                                <Trash size="15" />
+                                <Trash />
                                 Recusar
+                            </a>
+                        </li>
+                        <li v-if="proposta.status_recusado == 1">
+                            <a class="text-green-500  hover:bg-green-100">
+                                <RotateCcw />
+                                Reativar
                             </a>
                         </li>
                     </ul>
@@ -142,5 +157,10 @@ function abrirModalSituacao(proposta) {
     <ModalSituacao ref="modalSituacao"
         :statusProposta="statusProposta"
         :propostaId="propostaSelecionada?.id_proposta"
+        v-model="statusSelecionado" />
+
+    <ModalStatusAssinatura ref="modalStatusAssinatura"
+        :propostaId="propostaSelecionada?.id_proposta"
+        :statusAssinatura="propostaSelecionada?.status_assinatura"
         v-model="statusSelecionado" />
 </template>

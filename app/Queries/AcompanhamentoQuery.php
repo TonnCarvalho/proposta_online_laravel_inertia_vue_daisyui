@@ -54,6 +54,7 @@ class AcompanhamentoQuery
                 'propostas.num_proposta',
                 'propostas.status_proposta',
                 'propostas.status_assinatura',
+                'propostas.status_recusado',
                 'associados.nome AS associado_nome',
                 'associados.cpf',
                 'origem.nome AS origem_nome',

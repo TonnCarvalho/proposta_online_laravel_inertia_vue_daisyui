@@ -21,7 +21,6 @@ import { router } from '@inertiajs/vue3';
 const props = defineProps({
     propostaId: {
         type: Number,
-        required: true,
     },
     statusProposta: Array,
 })
@@ -131,7 +130,7 @@ const salvarStatus = () => {
                 Mudar situação da proposta
             </h3>
 
-            <div class="flex flex-wrap gap-3">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
                 <label v-for="status in statusProposta"
                     :key="status.value"
                     class="cursor-pointer">
