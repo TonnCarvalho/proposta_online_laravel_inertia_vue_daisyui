@@ -26,7 +26,7 @@ const modalStatusAssinatura = ref(null)
 <template>
     <Table title="Propostas">
         <template #thead>
-            <tr>
+            <tr class="relative">
                 <td>Conferente</td>
                 <td>Proposta</td>
                 <td>Associado</td>
@@ -35,7 +35,7 @@ const modalStatusAssinatura = ref(null)
                 <td>Assinatura</td>
                 <td>Praça</td>
                 <td>Órgão</td>
-                <td>Ação</td>
+                <td class="sticky right-0 bg-base-100">Ação</td>
             </tr>
         </template>
 
@@ -98,7 +98,7 @@ const modalStatusAssinatura = ref(null)
                     </Link>
                 </td>
 
-                <td class="dropdown dropdown-end"
+                <td class="dropdown dropdown-left sticky right-0 bg-base-100"
                     @click.stop>
                     <div tabindex="0"
                         role="button"
