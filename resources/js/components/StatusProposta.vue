@@ -1,6 +1,17 @@
 <script setup>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { BadgeCheck, DollarSign, FileCheck, FileCheckCorner, FileClock, FileExclamationPoint, FileMinus, FilePenLine, FileText, FileX, Loader } from '@lucide/vue';
+import {
+    BadgeCheck,
+    DollarSign,
+    FileCheck,
+    FileCheckCorner,
+    FileClock,
+    FileExclamationPoint,
+    FileMinus,
+    FilePenLine,
+    FileText,
+    FileX,
+    Loader
+} from '@lucide/vue';
 import { computed } from 'vue';
 
 const props = defineProps({
@@ -9,9 +20,12 @@ const props = defineProps({
         required: true,
     }
 })
+/**
+ * Esse arquivo é usado para mostrar os status da proposta nos componentes de View
+ * Usado em tabelas.
+ */
 
-//Configuração do status.
-const statusMap = {
+const statusProposta = {
     0: {
         label: 'Recusada',
         class: 'bg-red-100 text-red-600 border-red-100',
@@ -70,7 +84,7 @@ const statusMap = {
 }
 
 const statusConfig = computed(() => {
-    return statusMap[props.status] || {
+    return statusProposta[props.status] || {
         label: 'Desconhecido',
         background: '#E5E7EB',
         border: '#E5E7EB',

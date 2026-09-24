@@ -29,10 +29,9 @@ defineExpose({ showModal, closeModal })
             </h3>
             <slot name="content"></slot>
 
-            <div class="modal-action justify-start">
+            <div class="modal-action">
                 <slot name="action"></slot>
             </div>
-
         </div>
 
         <form method="dialog"
