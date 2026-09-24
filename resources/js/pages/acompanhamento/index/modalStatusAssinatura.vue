@@ -100,9 +100,12 @@ function salvarStatus() {
             <button @click.prevent="salvarStatus()"
                 :disabled="formProcessing"
                 class="btn btn-success w-1/3">
+
                 {{ formProcessing ? 'Salvando' : 'Salvar' }}
+                
                 <span v-if="formProcessing"
-                    class="loading loading-spinner loading-sm"></span>
+                    class="loading loading-spinner loading-sm">
+                </span>
             </button>
         </template>
     </Modal2>

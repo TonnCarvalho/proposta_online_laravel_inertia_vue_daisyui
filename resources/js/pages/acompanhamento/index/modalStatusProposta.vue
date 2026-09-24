@@ -9,6 +9,8 @@ const dadosProposta = ref(null)
 const statusSelecionado = ref(null)
 const propostaId = ref(null)
 
+const formProcessing = ref(false);
+
 function showModal(dados) {
     dadosProposta.value = dados
     statusSelecionado.value = dados.status_proposta
@@ -27,7 +29,8 @@ function classeDaOpcao(status) {
     }
     return 'border-base-300 hover:bg-base-200'
 }
-const salvarStatus = () => {
+
+function salvarStatus() {
     router.patch(
         route('proposta.status.update', propostaId.value),
         {
@@ -35,13 +38,19 @@ const salvarStatus = () => {
         },
         {
             preserveScroll: true,
-
+            onStart: () => {
+                formProcessing.value = true
+            },
             onSuccess: () => {
                 closeModal();
+            },
+            onFinish: () => {
+                formProcessing.value = false
             }
         }
     )
 }
+
 </script>
 <template>
     <Modal2 ref="dialog">
@@ -84,12 +93,19 @@ const salvarStatus = () => {
 
         <template #action>
             <button class="btn btn-soft"
-                @click="closeModal">
+                @click="closeModal"
+                :disabled="formProcessing">
                 Cancelar
             </button>
             <button @click.prevent="salvarStatus()"
+                :disabled="formProcessing"
                 class="btn btn-success w-1/3">
-                Salvar
+
+                {{ formProcessing ? 'Salvando' : 'Salvar' }}
+                
+                <span v-if="formProcessing"
+                    class="loading loading-spinner loading-sm">
+                </span>
             </button>
         </template>
     </Modal2>
