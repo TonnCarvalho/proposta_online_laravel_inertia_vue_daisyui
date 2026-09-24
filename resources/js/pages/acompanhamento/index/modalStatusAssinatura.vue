@@ -3,18 +3,18 @@ import { ref } from 'vue';
 import Modal2 from '@/components/modal/Modal2.vue';
 import { listaStatusAssinatura } from '@/consts/statusAssinatura'
 
-const modal = ref(null)
+const dialog = ref(null)
 const item = ref(null)
 const statusSelecionado = ref(null);
 
 function showModal(dados) {
     item.value = dados;
     statusSelecionado.value = dados.status_assinatura
-    modal.value.showModal();
+    dialog.value.showModal();
 }
 
 function closeModal() {
-    modal.value.closeModal()
+    dialog.value.closeModal()
 }
 
 defineExpose({ showModal, closeModal })
@@ -29,16 +29,23 @@ function classeDaOpcao(status) {
 </script>
 <template>
 
-    <Modal2 ref="modal">
+    <Modal2 ref="dialog">
         <template #header>
-            {{ item?.associado_nome }}
+            Status da assinatura
         </template>
 
         <template #content>
-            <div class="grid grid-cols- place-items-center gap-3">
+            <div class="text-neutral-500">
+                <span class="font-semibold">Associado:</span> {{ item?.associado_nome }}
+            </div>
+            <div class="text-neutral-500">
+                <span class="font-semibold">Nª Proposta:</span> {{ item?.num_proposta }}
+            </div>
+            
+            <div class="grid grid-cols-1 place-items-center gap-3 mt-3">
                 <label v-for="status in listaStatusAssinatura"
                     :key="status.id"
-                    class="cursor-pointer w-1/2">
+                    class="cursor-pointer w-2/3">
 
                     <input type="radio"
                         v-model="statusSelecionado"
@@ -58,12 +65,12 @@ function classeDaOpcao(status) {
         </template>
 
         <template #action>
-            <button class="btn btn-success btn-wide">
-                Salvar
+            <button class="btn btn-soft"
+                @click="closeModal">
+                Cancelar
             </button>
-
-            <button class="btn btn-soft" @click="closeModal">
-                Voltar
+            <button class="btn btn-success w-1/3">
+                Salvar
             </button>
         </template>
     </Modal2>
