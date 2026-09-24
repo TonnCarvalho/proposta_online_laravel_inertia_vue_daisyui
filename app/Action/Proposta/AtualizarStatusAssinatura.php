@@ -2,18 +2,17 @@
 
 namespace App\Action\Proposta;
 
-use App\Enum\StatusProposta;
+use App\Enum\StatusAssinatura;
 use App\Models\Proposta;
 
-class AtualizarStatusProposta
+class AtualizarStatusAssinatura
 {
     public function execute(
         Proposta $proposta,
-        StatusProposta $statusProposta,
+        StatusAssinatura $statusAssinatura
     ): Proposta {
-
         $proposta->update([
-            'status_proposta' => $statusProposta->value,
+            'status_assinatura' => $statusAssinatura->value
         ]);
 
         return $proposta->refresh();
