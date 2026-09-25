@@ -1,7 +1,7 @@
 <script setup>
 import { ref, } from 'vue';
 import { router } from '@inertiajs/vue3';
-import Modal2 from '@/components/modal/Modal2.vue';
+import Modal from '@/components/modal/Modal.vue';
 import { listaStatusAssinatura } from '@/consts/statusAssinatura'
 
 const dialog = ref(null)
@@ -56,7 +56,7 @@ function salvarStatus() {
 </script>
 <template>
 
-    <Modal2 ref="dialog">
+    <Modal ref="dialog">
         <template #header>
             Status da assinatura
         </template>
@@ -110,6 +110,6 @@ function salvarStatus() {
                 </span>
             </button>
         </template>
-    </Modal2>
+    </Modal>
 
 </template>

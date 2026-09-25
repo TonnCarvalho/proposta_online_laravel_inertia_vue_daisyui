@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { router } from '@inertiajs/vue3';
-import Modal2 from '@/components/modal/Modal2.vue';
+import Modal from '@/components/modal/Modal.vue';
 import { listaStatusProposta } from '@/consts/statusProposta';
 
 const dialog = ref(null)
@@ -53,7 +53,7 @@ function salvarStatus() {
 
 </script>
 <template>
-    <Modal2 ref="dialog">
+    <Modal ref="dialog">
 
         <template #header>
             Status da proposta
@@ -102,11 +102,11 @@ function salvarStatus() {
                 class="btn btn-success w-1/3">
 
                 {{ formProcessing ? 'Salvando' : 'Salvar' }}
-                
+
                 <span v-if="formProcessing"
                     class="loading loading-spinner loading-sm">
                 </span>
             </button>
         </template>
-    </Modal2>
+    </Modal>
 </template>
