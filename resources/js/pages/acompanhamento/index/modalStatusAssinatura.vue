@@ -63,10 +63,12 @@ function salvarStatus() {
 
         <template #content>
             <div class="text-neutral-500">
-                <span class="font-semibold">Associado:</span> {{ dadosProposta?.associado_nome }}
+                <span class="font-semibold">Associado:</span> 
+                {{ dadosProposta?.associado_nome }}
             </div>
             <div class="text-neutral-500">
-                <span class="font-semibold">Nª Proposta:</span> {{ dadosProposta?.num_proposta }}
+                <span class="font-semibold">Nª Proposta:</span> 
+                {{ dadosProposta?.num_proposta }}
             </div>
 
             <div class="grid grid-cols-1 place-items-center gap-3 mt-3">
@@ -102,7 +104,7 @@ function salvarStatus() {
                 class="btn btn-success w-1/3">
 
                 {{ formProcessing ? 'Salvando' : 'Salvar' }}
-                
+
                 <span v-if="formProcessing"
                     class="loading loading-spinner loading-sm">
                 </span>

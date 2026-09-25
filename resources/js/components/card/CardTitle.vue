@@ -36,11 +36,11 @@ const icons = {
 </script>
 <template>
     <div class="card-title text-base-content flex">
-
-        <component v-if="icons[icon]"
-            :is="icons[icon]"
-            size="30"
-            class="bg-primary/20 text-primary p-1.5 rounded flex justify-center items-center" />
+        <div v-if="icons[icon]"
+            class="bg-primary/20 text-primary rounded p-1 flex justify-center items-center">
+            <component :is="icons[icon]"
+                class="" />
+        </div>
 
         <span class="text-primary">
             {{ title }}

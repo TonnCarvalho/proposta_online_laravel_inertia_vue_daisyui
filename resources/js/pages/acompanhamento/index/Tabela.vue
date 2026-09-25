@@ -5,8 +5,8 @@ import StatusAssinatura from '@/components/StatusAssinatura.vue';
 import primeiroNome from '@/utils/primiroNome'
 import { Link, usePage } from '@inertiajs/vue3';
 import { EllipsisVertical, FilePen, RefreshCcw, RotateCcw, Trash } from '@lucide/vue';
-import ModalStatusProposta from './modalStatusProposta.vue';
-import ModalStatusAssinatura from './modalStatusAssinatura.vue';
+import ModalStatusProposta from './ModalStatusProposta.vue';
+import ModalStatusAssinatura from './ModalStatusAssinatura.vue';
 import { ref } from 'vue';
 
 const props = defineProps({
@@ -98,8 +98,7 @@ const modalStatusAssinatura = ref(null)
                     </Link>
                 </td>
 
-                <td class="dropdown dropdown-left sticky right-0 bg-base-100"
-                    @click.stop>
+                <td class="dropdown dropdown-left sticky right-0 bg-base-100">
                     <div tabindex="0"
                         role="button"
                         class="btn btn-sm btn-ghost">
@@ -108,7 +107,7 @@ const modalStatusAssinatura = ref(null)
                     <ul tabindex="-1"
                         class="dropdown-content menu bg-base-100 rounded-box z-1 w-40 p-2 shadow-sm">
                         <li>
-                            <button @click.prevent="modalStatusProposta.showModal(proposta)"
+                            <button @click="modalStatusProposta.showModal(proposta)"
                                 class="text-primary hover:bg-primary/10">
                                 <RefreshCcw />
                                 Situação
@@ -116,23 +115,23 @@ const modalStatusAssinatura = ref(null)
                         </li>
 
                         <li>
-                            <a @click.prevent="modalStatusAssinatura.showModal(proposta)"
+                            <button @click="modalStatusAssinatura.showModal(proposta)"
                                 class="text-orange-500 hover:bg-orange-100">
                                 <FilePen />
                                 Assinatura
-                            </a>
+                            </button>
                         </li>
                         <li v-if="proposta.status_recusado == 0">
-                            <a class="text-red-500  hover:bg-red-100">
+                            <button class="text-red-500  hover:bg-red-100">
                                 <Trash />
                                 Recusar
-                            </a>
+                            </button>
                         </li>
                         <li v-if="proposta.status_recusado == 1">
-                            <a class="text-green-500  hover:bg-green-100">
+                            <button class="text-green-500  hover:bg-green-100">
                                 <RotateCcw />
                                 Reativar
-                            </a>
+                            </button>
                         </li>
                     </ul>
                 </td>
@@ -143,5 +142,7 @@ const modalStatusAssinatura = ref(null)
     <ModalStatusProposta ref="modalStatusProposta" />
 
     <ModalStatusAssinatura ref="modalStatusAssinatura" />
+
+    
 
 </template>
