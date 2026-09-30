@@ -9,6 +9,7 @@ use App\Http\Controllers\Web\Proposta\PropostaEditController;
 use App\Http\Controllers\Web\Proposta\PropostaStoreController;
 use App\Http\Controllers\Web\Proposta\PropostaSucessoController;
 use App\Http\Controllers\Web\Proposta\PropostaUpdateController;
+use App\Http\Controllers\Web\Proposta\RecusarPropostaController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
@@ -55,5 +56,8 @@ Route::middleware('auth')->group(function () {
 
         Route::patch('/{proposta}/status-assinatura', AtualizarStatusAssinaturaController::class)
             ->name('proposta.statusAssinaura.update');
+
+        Route::patch('/{proposta}/recusar-proposta', RecusarPropostaController::class)
+            ->name('proposta.status.recusar');
     });
 });

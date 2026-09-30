@@ -24,7 +24,7 @@ class PropostaPolicy
             : Response::deny('Não autorizado');
     }
 
-    public function delete(Usuario $usuario, Proposta $proposta): Response
+    public function recusarProposta(Usuario $usuario, Proposta $proposta): Response
     {
         return $this->pertenceAoCorretor($usuario, $proposta)
             || $this->administrador($usuario)

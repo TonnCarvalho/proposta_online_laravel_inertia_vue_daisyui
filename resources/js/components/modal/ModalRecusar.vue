@@ -13,11 +13,18 @@ function closeModal() {
 
 defineExpose({ showModal, closeModal })
 
+defineProps({
+    tamanho: {
+        type: String,
+        default: 'min-w-1',
+    },
+})
+
 </script>
 <template>
     <dialog ref="dialog"
         class="modal">
-        <div class="modal-box min-w-1">
+        <div class="modal-box" :class="tamanho">
             <form method="dialog">
                 <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                     x
@@ -27,6 +34,7 @@ defineExpose({ showModal, closeModal })
             <h3 class="text-lg font-bold mb-3">
                 <slot name="header"></slot>
             </h3>
+            
             <slot name="content"></slot>
 
             <div class="modal-action">

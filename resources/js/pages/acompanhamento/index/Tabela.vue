@@ -8,6 +8,7 @@ import { EllipsisVertical, FilePen, RefreshCcw, RotateCcw, Trash } from '@lucide
 import ModalStatusProposta from './ModalStatusProposta.vue';
 import ModalStatusAssinatura from './ModalStatusAssinatura.vue';
 import { ref } from 'vue';
+import ModalRecusarProposta from './ModalRecusarProposta.vue';
 
 const props = defineProps({
     propostas: Object,
@@ -20,6 +21,7 @@ const idUsuarioAcompanhamento = page.props.auth.user.id_usuario;
 
 const modalStatusProposta = ref(null)
 const modalStatusAssinatura = ref(null)
+const modalRecusarProposta = ref(null);
 
 </script>
 
@@ -121,13 +123,14 @@ const modalStatusAssinatura = ref(null)
                                 Assinatura
                             </button>
                         </li>
-                        <li v-if="proposta.status_recusado == 0">
-                            <button class="text-red-500  hover:bg-red-100">
+                        <li v-if="proposta.status_proposta != 0">
+                            <button @click="modalRecusarProposta.showModal(proposta)"
+                            class="text-red-500  hover:bg-red-100">
                                 <Trash />
                                 Recusar
                             </button>
                         </li>
-                        <li v-if="proposta.status_recusado == 1">
+                        <li v-if="proposta.status_proposta == 0">
                             <button class="text-green-500  hover:bg-green-100">
                                 <RotateCcw />
                                 Reativar
@@ -143,6 +146,6 @@ const modalStatusAssinatura = ref(null)
 
     <ModalStatusAssinatura ref="modalStatusAssinatura" />
 
-    
+    <ModalRecusarProposta ref="modalRecusarProposta"/>
 
 </template>
