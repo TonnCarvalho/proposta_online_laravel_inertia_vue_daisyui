@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { router } from '@inertiajs/vue3';
 import Modal from '@/components/modal/Modal.vue';
 import { listaStatusProposta } from '@/consts/statusProposta';
-
+import { RefreshCcw } from '@lucide/vue';
 const dialog = ref(null)
 const dadosProposta = ref(null)
 const statusSelecionado = ref(null)
@@ -56,7 +56,12 @@ function salvarStatus() {
     <Modal ref="dialog">
 
         <template #header>
-            Status da proposta
+            <div class="flex items-center gap-3">
+                <span class="p-2 rounded-full bg-primary/15 text-primary">
+                    <RefreshCcw />
+                </span>
+                Recusar Proposta
+            </div>
         </template>
 
         <template #content>

@@ -1,6 +1,7 @@
 <script setup>
 import Modal from '@/components/modal/Modal.vue';
 import { router } from '@inertiajs/vue3';
+import { FileText, Trash, User2 } from '@lucide/vue';
 import { ref } from 'vue';
 
 const dialog = ref(null)
@@ -19,7 +20,7 @@ function closeModal() {
     dialog.value.closeModal()
 }
 
-defineExpose({ showModal })
+defineExpose({ showModal, closeModal })
 
 function recusarProposta() {
     router.patch(
@@ -38,40 +39,40 @@ function recusarProposta() {
                 formProcessing.value = false
                 motivo.value = ''
             }
-        }
-
-
-    )
+        })
 }
 </script>
 
 <template>
     <Modal ref="dialog">
         <template #header>
-            <div class="text-error">
-                Deseja recusar a proposta?
+            <div class="flex items-center gap-3">
+                <span class="p-2 rounded-full bg-error/15 text-error">
+                    <Trash />
+                </span>
+                Recusar Proposta
             </div>
         </template>
         <template #content>
-            <fieldset class="fieldset">
-                <legend class="block mb-1 text-sm font-semibold">
-                    Associado
-                </legend>
-                <input type="text"
-                    :value="dadosProposta?.associado_nome"
-                    class="input input-sm input-ghost w-full"
-                    readonly />
+            <div class="p-3 rounded-lg bg-error/15 text-error-content mt-5">
+                <div class="flex items-center gap-3">
+                    <User2 />
+                    Associado:
+                    <span class="text-neutral font-semibold">
+                        {{ dadosProposta?.associado_nome }}
+                    </span>
+                </div>
+                <div class="divider divider-error"></div>
+                <div class="flex items-center gap-3">
+                    <FileText />
+                    Nº Proposta:
+                    <span class="text-neutral font-semibold">
+                        {{ dadosProposta?.num_proposta }}
+                    </span>
+                </div>
+            </div>
 
-                <legend class="block mb-1 text-sm font-semibold">
-                    Nª Proposta
-                </legend>
-                <input type="text"
-                    :value="dadosProposta?.num_proposta"
-                    class="input input-sm input-ghost w-full"
-                    readonly />
-            </fieldset>
-
-            <fieldset class="fieldset">
+            <fieldset class="fieldset mt-5">
                 <legend class="block mb-1 text-sm font-semibold">
                     Informe o motivo <span class="text-error">*</span>
                 </legend>
@@ -87,7 +88,7 @@ function recusarProposta() {
                 class="btn btn-soft">
                 Volta
             </button>
-            
+
             <button @click="recusarProposta"
                 :disabled="formProcessing"
                 class="btn btn-error w-1/3">

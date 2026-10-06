@@ -3,6 +3,7 @@ import { ref, } from 'vue';
 import { router } from '@inertiajs/vue3';
 import Modal from '@/components/modal/Modal.vue';
 import { listaStatusAssinatura } from '@/consts/statusAssinatura'
+import { FilePen } from '@lucide/vue';
 
 const dialog = ref(null)
 const dadosProposta = ref(null)
@@ -50,24 +51,27 @@ function salvarStatus() {
             }
         }
     )
-
 }
 
 </script>
 <template>
-
     <Modal ref="dialog">
         <template #header>
-            Status da assinatura
+            <div class="flex items-center gap-3">
+                <span class="p-2 rounded-full bg-orange-100 text-orange-500">
+                    <FilePen />
+                </span>
+                Status da assinatura
+            </div>
         </template>
 
         <template #content>
             <div class="text-neutral-500">
-                <span class="font-semibold">Associado:</span> 
+                <span class="font-semibold">Associado:</span>
                 {{ dadosProposta?.associado_nome }}
             </div>
             <div class="text-neutral-500">
-                <span class="font-semibold">Nª Proposta:</span> 
+                <span class="font-semibold">Nª Proposta:</span>
                 {{ dadosProposta?.num_proposta }}
             </div>
 
