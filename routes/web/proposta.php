@@ -9,6 +9,7 @@ use App\Http\Controllers\Web\Proposta\PropostaEditController;
 use App\Http\Controllers\Web\Proposta\PropostaStoreController;
 use App\Http\Controllers\Web\Proposta\PropostaSucessoController;
 use App\Http\Controllers\Web\Proposta\PropostaUpdateController;
+use App\Http\Controllers\Web\Proposta\ReativarPropostaController;
 use App\Http\Controllers\Web\Proposta\RecusarPropostaController;
 use Illuminate\Support\Facades\Route;
 
@@ -59,5 +60,8 @@ Route::middleware('auth')->group(function () {
 
         Route::patch('/{proposta}/recusar-proposta', RecusarPropostaController::class)
             ->name('proposta.status.recusar');
+
+        Route::patch('/{proposta}/reativar-proposta', ReativarPropostaController::class)
+            ->name('proposta.status.reativar');
     });
 });

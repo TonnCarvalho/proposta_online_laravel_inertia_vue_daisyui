@@ -9,6 +9,7 @@ import ModalStatusProposta from './ModalStatusProposta.vue';
 import ModalStatusAssinatura from './ModalStatusAssinatura.vue';
 import { ref } from 'vue';
 import ModalRecusarProposta from './ModalRecusarProposta.vue';
+import ModalReativarProposta from './ModalReativarProposta.vue';
 
 const props = defineProps({
     propostas: Object,
@@ -22,6 +23,7 @@ const idUsuarioAcompanhamento = page.props.auth.user.id_usuario;
 const modalStatusProposta = ref(null)
 const modalStatusAssinatura = ref(null)
 const modalRecusarProposta = ref(null);
+const modalReativarProposta = ref(null)
 
 </script>
 
@@ -108,7 +110,7 @@ const modalRecusarProposta = ref(null);
                     </div>
                     <ul tabindex="-1"
                         class="dropdown-content menu bg-base-100 rounded-box z-1 w-40 p-2 shadow-sm">
-                        <li>
+                        <li v-if="proposta.status_proposta != 0">
                             <button @click="modalStatusProposta.showModal(proposta)"
                                 class="text-primary hover:bg-primary/10">
                                 <RefreshCcw />
@@ -116,22 +118,25 @@ const modalRecusarProposta = ref(null);
                             </button>
                         </li>
 
-                        <li>
+                        <li v-if="proposta.status_proposta != 0">
                             <button @click="modalStatusAssinatura.showModal(proposta)"
                                 class="text-orange-500 hover:bg-orange-100">
                                 <FilePen />
                                 Assinatura
                             </button>
                         </li>
+
                         <li v-if="proposta.status_proposta != 0">
                             <button @click="modalRecusarProposta.showModal(proposta)"
-                            class="text-red-500  hover:bg-red-100">
+                                class="text-red-500  hover:bg-red-100">
                                 <Trash />
                                 Recusar
                             </button>
                         </li>
+
                         <li v-if="proposta.status_proposta == 0">
-                            <button class="text-green-500  hover:bg-green-100">
+                            <button @click="modalReativarProposta.showModal(proposta)"
+                            class="text-green-500  hover:bg-green-100">
                                 <RotateCcw />
                                 Reativar
                             </button>
@@ -146,6 +151,8 @@ const modalRecusarProposta = ref(null);
 
     <ModalStatusAssinatura ref="modalStatusAssinatura" />
 
-    <ModalRecusarProposta ref="modalRecusarProposta"/>
+    <ModalRecusarProposta ref="modalRecusarProposta" />
+
+    <ModalReativarProposta ref="modalReativarProposta" />
 
 </template>
