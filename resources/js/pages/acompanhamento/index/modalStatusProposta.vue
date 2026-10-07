@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { router } from '@inertiajs/vue3';
 import Modal from '@/components/modal/Modal.vue';
 import { listaStatusProposta } from '@/consts/statusProposta';
-import { RefreshCcw } from '@lucide/vue';
+import { FileText, RefreshCcw, User2 } from '@lucide/vue';
 const dialog = ref(null)
 const dadosProposta = ref(null)
 const statusSelecionado = ref(null)
@@ -60,18 +60,27 @@ function salvarStatus() {
                 <span class="p-2 rounded-full bg-primary/15 text-primary">
                     <RefreshCcw />
                 </span>
-                Recusar Proposta
+                Mudar status da proposta
             </div>
         </template>
 
         <template #content>
-            <div class="text-neutral-500">
-                <span class="font-semibold">Associado:</span>
-                {{ dadosProposta?.associado_nome }}
-            </div>
-            <div class="text-neutral-500">
-                <span class="font-semibold">Nª Proposta:</span>
-                {{ dadosProposta?.num_proposta }}
+            <div class="p-3 rounded-lg bg-primary/15 text-primary mt-5">
+                <div class="flex items-center gap-3">
+                    <User2 />
+                    Associado:
+                    <span class="font-bold">
+                        {{ dadosProposta?.associado_nome }}
+                    </span>
+                </div>
+                <div class="divider divider-primary my-0"></div>
+                <div class="flex items-center gap-3">
+                    <FileText />
+                    Nº Proposta:
+                    <span class="font-bold">
+                        {{ dadosProposta?.num_proposta }}
+                    </span>
+                </div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mt-3">

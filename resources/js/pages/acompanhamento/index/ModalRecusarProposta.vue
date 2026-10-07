@@ -58,15 +58,15 @@ function recusarProposta() {
                 <div class="flex items-center gap-3">
                     <User2 />
                     Associado:
-                    <span class="text-neutral font-semibold">
+                    <span class="font-bold">
                         {{ dadosProposta?.associado_nome }}
                     </span>
                 </div>
-                <div class="divider divider-error"></div>
+                <div class="divider divider-error my-0"></div>
                 <div class="flex items-center gap-3">
                     <FileText />
                     Nº Proposta:
-                    <span class="text-neutral font-semibold">
+                    <span class="font-bold">
                         {{ dadosProposta?.num_proposta }}
                     </span>
                 </div>
@@ -77,7 +77,7 @@ function recusarProposta() {
                     Informe o motivo <span class="text-error">*</span>
                 </legend>
                 <textarea v-model="motivo"
-                    class="textarea h-24 w-full"
+                    class="textarea h-24 w-full border-red-500 focus:outline-red-500"
                     placeholder="Motivo"></textarea>
             </fieldset>
         </template>

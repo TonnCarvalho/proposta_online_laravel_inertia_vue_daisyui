@@ -57,26 +57,27 @@ function reativarProposta() {
                     <div class="flex items-center gap-3">
                         <User2 />
                         Associado:
-                        <span class="text-neutral font-semibold">
+                        <span class="font-bold">
                             {{ dadosProposta?.associado_nome }}
                         </span>
                     </div>
-                    <div class="divider divider-success"></div>
+                    <div class="divider divider-success my-0"></div>
                     <div class="flex items-center gap-3">
                         <FileText />
                         Nº Proposta:
-                        <span class="text-neutral font-semibold">
+                        <span class="font-bold">
                             {{ dadosProposta?.num_proposta }}
                         </span>
                     </div>
                 </div>
 
                 <div role="alert"
-                    class="alert bg-primary/15 text-primary alert-soft mt-5">
+                    class="alert bg-primary/15 text-primary alert-soft border-primary mt-5">
                     <Info />
                     <span class="text-base-content">
                         Está proposta voltará para o status
                         <span class="text-primary">Em Andamento</span>
+                        e assinatura <span class="text-red-500">Não enviado</span>
                     </span>
                 </div>
             </template>

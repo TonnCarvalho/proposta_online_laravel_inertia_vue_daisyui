@@ -66,13 +66,22 @@ function salvarStatus() {
         </template>
 
         <template #content>
-            <div class="text-neutral-500">
-                <span class="font-semibold">Associado:</span>
-                {{ dadosProposta?.associado_nome }}
-            </div>
-            <div class="text-neutral-500">
-                <span class="font-semibold">Nª Proposta:</span>
-                {{ dadosProposta?.num_proposta }}
+            <div class="p-3 rounded-lg bg-orange-100 text-orange-500 mt-5">
+                <div class="flex items-center gap-3">
+                    <User2 />
+                    Associado:
+                    <span class="font-bold">
+                        {{ dadosProposta?.associado_nome }}
+                    </span>
+                </div>
+                <div class="divider divider-warning my-0"></div>
+                <div class="flex items-center gap-3">
+                    <FileText />
+                    Nº Proposta:
+                    <span class="font-bold">
+                        {{ dadosProposta?.num_proposta }}
+                    </span>
+                </div>
             </div>
 
             <div class="grid grid-cols-1 place-items-center gap-3 mt-3">
