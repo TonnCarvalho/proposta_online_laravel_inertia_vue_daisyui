@@ -19,8 +19,7 @@ const props = defineProps({
     <Card>
         <CardBody>
             <CardTitle title="Conta bancária para recebimento"
-                icon="DollarSign"
-                class="text-primary" />
+                icon="DollarSign" />
 
             <Input label="Chave Pix"
                 v-model="formBancoRecebimento.chave_pix"

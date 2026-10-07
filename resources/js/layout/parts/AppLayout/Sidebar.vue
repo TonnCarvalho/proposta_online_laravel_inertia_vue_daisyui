@@ -30,7 +30,7 @@ const menuitems = [
     label: 'Acompanhamento',
     icon: 'HatGlasses',
     route: route('acompanhamento.index'),
-    component: ['acompanhamento']
+    component: ['acompanhamento/Index']
   },
 ]
 
@@ -53,7 +53,7 @@ const menuitems = [
 
           <Link :href="item.route"
             class="p-2 text-base"
-            :class="{ 'bg-primary text-white': item.component.includes($page.component) }">
+            :class="{ 'bg-primary/15 text-primary': item.component.includes($page.component) }">
           <component :is="icons[item.icon]"
             size="23" />
 

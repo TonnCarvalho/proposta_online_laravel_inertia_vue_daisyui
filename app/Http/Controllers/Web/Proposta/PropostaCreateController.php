@@ -16,9 +16,9 @@ use Inertia\Inertia;
 class PropostaCreateController extends Controller
 {
     /**
-     * 
      * Mostra os dados dos associados se já tiver registro no banco de dados.
      * Retorna a pagina para criação de proposta do associado novo ou existente.
+     * Define a regra do tipo da proposta a ser criada.
      * @param OrigemQuery $origemQuery
      * @param string|null $tipoCadastro
      * @param integer|null $associado

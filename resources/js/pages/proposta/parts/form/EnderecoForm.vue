@@ -61,8 +61,7 @@ const buscarCep = async () => {
     <Card>
         <CardBody>
             <CardTitle title="Endereço do associado"
-                icon="MapPinned"
-                class="text-primary" />
+                icon="MapPinned"/>
 
             <span v-if="erroCep"
                 class="text-error">

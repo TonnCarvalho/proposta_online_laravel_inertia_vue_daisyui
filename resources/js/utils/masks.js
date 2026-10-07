@@ -43,3 +43,16 @@ export function maskMoney(value) {
         maximumFractionDigits: 2,
     })
 }
+
+export function maskTaxa(value) {
+    value = value.replace(/\D/g, '')
+
+    if (!value) {
+        return '';
+    }
+
+    value = value.slice(0, 3);
+    value = value.replace(/(\d{1})(\d)/, '$1.$2');
+
+    return value
+}

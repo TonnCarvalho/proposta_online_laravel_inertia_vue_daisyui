@@ -20,7 +20,6 @@ const mostrarMatriculas = (dados) => {
 <template>
     <AppLayout>
         <PageHeader title="Pesquisa associado"
-            icon="user"
             sub-title="Pesquise o associado e veja se ele possui matrículas" />
 
         <Alert v-if="props.flash"

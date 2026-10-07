@@ -1,7 +1,7 @@
 <script setup>
 import AppLayout from '@/layout/AppLayout.vue';
 import PageHeader from '@/layout/parts/AppLayout/PageHeader.vue';
-import { maskMoney, maskPhone } from '@/utils/masks.js';
+import { maskMoney, maskPhone, maskTaxa } from '@/utils/masks.js';
 import { formatDate } from '@/utils/dateTime.js';
 import { useForm } from '@inertiajs/vue3';
 import Card from '@/components/card/Card.vue';
@@ -15,11 +15,14 @@ import DocumentosForm from './parts/form/DocumentosForm.vue';
 import { FilePen } from '@lucide/vue';
 import Input from '@/components/form/Input.vue';
 import Alert from '@/components/Alert.vue';
+import DocumentosView from './editar/DocumentosView.vue';
+import { ref } from 'vue';
 
 const props = defineProps({
     flash: Array,
     idAssociado: Number,
     proposta: Object,
+    documentos: Array,
     origens: Array | Object,
     sexoAssociado: Array,
     estadoCivilAssociado: Array,
@@ -30,6 +33,8 @@ const props = defineProps({
 })
 
 const proposta = props.proposta[0]
+
+const imagemVersao = ref();
 
 const form = useForm({
     idAssociado: props.idAssociado,
@@ -105,21 +110,16 @@ const form = useForm({
 const submit = () => {
     form.put(route('proposta.update', proposta.id_proposta), {
         onSuccess: () => {
-            console.log('sucesso');
+            imagemVersao.value = Date.now()
         },
         onError: (error) => {
-            console.log(error)
         },
-        onFinish: () => {
-            console.log('finalizado');
-        }
     })
 }
 </script>
 <template>
     <AppLayout>
-        <PageHeader :title="`${form.financeiro.num_proposta} - ${form.associado.nome}`"
-            icon="file-lines" />
+        <PageHeader :title="`${form.financeiro.num_proposta} - ${form.associado.nome}`" />
 
         <Alert v-if="props.flash"
             :message="props.flash.message"
@@ -127,6 +127,10 @@ const submit = () => {
             icon="FileCheck"
             soft
             class="bg-green-100 border-green-400 text-green-600" />
+
+        <DocumentosView v-if="props.documentos[0]"
+            :documentos="props.documentos"
+            :imagemVersao="imagemVersao" />
 
         <form @submit.prevent="submit">
 
@@ -136,7 +140,7 @@ const submit = () => {
                 class="hidden" />
 
             <Input name="idProposta"
-                v-model="form.idProposta"
+                v-model="proposta.id_proposta"
                 type="hidden"
                 class="hidden" />
 

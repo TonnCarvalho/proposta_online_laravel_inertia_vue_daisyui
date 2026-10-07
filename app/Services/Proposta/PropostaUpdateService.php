@@ -17,7 +17,6 @@ class PropostaUpdateService
 
     public function atualizarProposta(array $dados): array
     {
-
         //atualizar associado
         $dadosAssociado = $this->montarDadosAssociado->execute($dados);
 

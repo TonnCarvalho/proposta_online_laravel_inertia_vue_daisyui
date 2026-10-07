@@ -30,8 +30,7 @@ class OrigemQuery
 
     public function isActive(): Builder
     {
-        return $this->query->where('inativo', 0 );
-
+        return $this->query->where('inativo', 0);
     }
 
     public function get(): Collection
@@ -41,8 +40,16 @@ class OrigemQuery
 
     public function with(array $relations): self
     {
-         $this->query->with($relations);
-         
-         return $this;
+        $this->query->with($relations);
+
+        return $this;
+    }
+
+    public function pracasAtivas(): self
+    {
+        $this->query->select(['cod_local', 'nome'])
+            ->where('inativo', '=', 0);
+
+        return $this;
     }
 }

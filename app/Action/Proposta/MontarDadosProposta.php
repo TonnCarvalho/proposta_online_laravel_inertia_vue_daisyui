@@ -11,19 +11,19 @@ class MontarDadosProposta
     {
         return [
             'id_usuario' => Auth::user()->id_usuario,
-            'id_proposta' => $dados['idProposta'],
-            'id_fonte_pagamento' => $dados['financeiro']["fonte_pagamento"] ?? NULL,
+            'id_proposta' => $dados['idProposta'] ?? null,
+            'id_fonte_pagamento' => $dados['financeiro']["fonte_pagamento"] ?? null,
             'cod_local' => $dados['associado']['cod_local'],
             'cod_corretor' => $dados['financeiro']["cod_corretor"],
             'data_proposta' => $dados['financeiro']["data_proposta"],
             'valor_financiado' => $dados['financeiro']["valor_financiado"],
-            'valor_liberado' => $dados['financeiro']["valor_liberado"] ?? NULL,
+            'valor_liberado' => $dados['financeiro']["valor_liberado"] ?? null,
             'valor_parcela' => $dados['financeiro']["valor_parcela"],
             'valor_mensalidade' => $dados['financeiro']["valor_mensalidade"],
             'prazo' => $dados['financeiro']["prazo"],
-            'tipo_proposta' => $dados['financeiro']["tipo_proposta"] ?? NULL,
-            'iof' => $dados['financeiro']["iof"] ?? NULL,
-            'taxa' => $dados['financeiro']["taxa"] ?? NULL,
+            'tipo_proposta' => $dados['financeiro']["tipo_proposta"] ?? null,
+            'iof' => $dados['financeiro']["iof"] ?? null,
+            'taxa' => $dados['financeiro']["taxa"] ?? null,
         ];
     }
 }

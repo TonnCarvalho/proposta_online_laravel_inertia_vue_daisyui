@@ -11,7 +11,7 @@ import Sidebar from './parts/AppLayout/Sidebar.vue';
         type="checkbox"
         class="drawer-toggle" />
       <Sidebar />
-      <div class="drawer-content bg-base-300">
+      <div class="drawer-content bg-base-200">
         <Navbar />
         <div class="p-3">
           <slot />

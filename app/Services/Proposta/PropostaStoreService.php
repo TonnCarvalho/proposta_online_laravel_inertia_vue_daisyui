@@ -16,15 +16,16 @@ class PropostaStoreService
         private CriarAcompanhamentoAction $criarAcompanhamentoAction,
         private MontarDadosAssociado $montarDadosAssociado,
         private MontarDadosProposta $montarDadosProposta,
+        private PropostaDocumentoService $propostaDocumentoService,
     ) {}
 
     public function criarProposta(string $tipoCadastro, array $dados): array
     {
         return DB::transaction(function () use ($tipoCadastro, $dados) {
             return match ($tipoCadastro) {
-                'novo_associado' => $this->cadastrarNovoAssociado($dados),
 
-                'nova_matricula' => $this->cadastrarNovaMatricula($dados),
+                'nova_matricula',
+                'novo_associado' => $this->cadastrarNovaMatriculaOuNovoAssociado($dados),
 
                 'matricula_existente' => $this->cadastrarComMatriulaExistente($dados),
 
@@ -35,14 +36,14 @@ class PropostaStoreService
         });
     }
 
-    private function cadastrarNovoAssociado(array $dados): array
+    private function cadastrarNovaMatriculaOuNovoAssociado(array $dados)
     {
-        //cadastra associado.
+        // cadastra associado.
         $dadosAssociado = $this->montarDadosAssociado->execute($dados);
 
         $associado = Associado::create($dadosAssociado);
 
-        //cadastrar proposta.
+        // cadastrar proposta.
         $dadosProposta = $this->montarDadosProposta->execute($dados);
 
         $dadosProposta['id_associado'] = $associado->id_associado;
@@ -50,50 +51,31 @@ class PropostaStoreService
 
         $proposta = Proposta::create($dadosProposta);
 
-        //adicionado ao acompanhamento
-        $this->criarAcompanhamentoAction->execute(
-            $proposta->id_proposta
+        // adiciona os documentos
+        $this->propostaDocumentoService->salvarDocumentos(
+            $proposta->id_proposta,
+            $dados['documento']
         );
-
-        return [
-            'associado' => $associado,
-            'proposta' => $proposta
-        ];
-    }
-    private function cadastrarNovaMatricula(array $dados)
-    {
-        //cadastra associado.
-        $dadosAssociado = $this->montarDadosAssociado->execute($dados);
-
-        $associado = Associado::create($dadosAssociado);
-
-        //cadastrar proposta.
-        $dadosProposta = $this->montarDadosProposta->execute($dados);
-
-        $dadosProposta['id_associado'] = $associado->id_associado;
-        $dadosProposta['num_proposta'] = Proposta::max('num_proposta') + 1;
-
-        $proposta = Proposta::create($dadosProposta);
-
-        //adicionado ao acompanhamento
+        // adicionado ao acompanhamento
         $this->criarAcompanhamentoAction->execute(
             $proposta->id_proposta,
         );
 
         return [
             'associado' => $associado,
-            'proposta' => $proposta
+            'proposta' => $proposta,
         ];
     }
+
     private function cadastrarComMatriulaExistente(array $dados): array
     {
-        //atualizar associado.
+        // atualizar associado.
         $dadosAssociado = $this->montarDadosAssociado->execute($dados);
 
         $associado = Associado::findOrFail($dadosAssociado['id_associado']);
         $associado->update($dadosAssociado);
 
-        //cadastrar proposta.
+        // cadastrar proposta.
         $dadosProposta = $this->montarDadosProposta->execute($dados);
 
         $dadosProposta['id_associado'] = $associado->id_associado;
@@ -101,14 +83,14 @@ class PropostaStoreService
 
         $proposta = Proposta::create($dadosProposta);
 
-        //adicionado ao acompanhamento
+        // adicionado ao acompanhamento
         $this->criarAcompanhamentoAction->execute(
             $proposta->id_proposta,
         );
 
         return [
             'associado' => $associado,
-            'proposta' => $proposta
+            'proposta' => $proposta,
         ];
     }
 }
