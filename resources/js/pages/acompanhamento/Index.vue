@@ -20,8 +20,6 @@ const props = defineProps({
         <PageHeader title="Acompanhamento"
             sub-title="Acompanhe e gerencie todas as propostas." />
 
-        <!-- TAB -->
-
         <Filtro :statusProposta="props.statusProposta"
             :tipoProposta="props.tipoProposta"
             :pracaAtiva="props.pracaAtiva"

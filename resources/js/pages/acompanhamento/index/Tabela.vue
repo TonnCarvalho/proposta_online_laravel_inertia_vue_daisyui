@@ -126,7 +126,8 @@ const modalReativarProposta = ref(null)
                             </button>
                         </li>
 
-                        <li v-if="proposta.status_proposta != 0">
+                        <li v-if="proposta.status_proposta != 0 &&
+                            proposta.status_proposta < 10">
                             <button @click="modalRecusarProposta.showModal(proposta)"
                                 class="text-red-500  hover:bg-red-100">
                                 <Trash />
@@ -136,7 +137,7 @@ const modalReativarProposta = ref(null)
 
                         <li v-if="proposta.status_proposta == 0">
                             <button @click="modalReativarProposta.showModal(proposta)"
-                            class="text-green-500  hover:bg-green-100">
+                                class="text-green-500  hover:bg-green-100">
                                 <RotateCcw />
                                 Reativar
                             </button>
