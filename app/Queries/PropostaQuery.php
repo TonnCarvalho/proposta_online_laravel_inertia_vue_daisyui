@@ -122,4 +122,84 @@ class PropostaQuery
 
         return $this;
     }
+
+    public function dadosPropostaParaDocumento(int $propostaId)
+    {
+        return $this->query
+            ->select([
+                'id_proposta',
+                'id_associado',
+                'cod_corretor',
+                'id_fonte_pagamento',
+                'cod_local',
+                'num_proposta',
+                'data_proposta',
+                'valor_financiado',
+                'valor_liberado',
+                'valor_parcela',
+                'valor_mensalidade',
+                'iof',
+                'taxa',
+                'prazo',
+                'status_proposta',
+                'status_assinatura',
+                'status_refin',
+                'tipo_proposta'
+            ])
+            ->with([
+                'associado' => fn($q) => $q->select([
+                    'id_associado',
+                    'nome',
+                    'cpf',
+                    'rg',
+                    'data_nasc',
+                    'mat',
+                    'estado_civil',
+                    'sexo',
+                    'orgao_exp',
+                    'nome_mae',
+                    'nome_pai',
+                    'nat',
+                    'tel',
+                    'cel',
+                    'email',
+                    'endereco',
+                    'bairro',
+                    'municipio',
+                    'uf',
+                    'cep',
+                    'setor',
+                    'cod_orgao',
+                    'cargo',
+                    'data_admissao',
+                    'banco',
+                    'agencia',
+                    'conta'
+                ]),
+                'associado.orgao' => fn($q) => $q->select([
+                    'id_orgao',
+                    'cod_local',
+                    'cod_orgao',
+                    'nome',
+                ]),
+                'origem' => fn($q) => $q->select([
+                    'cod_local',
+                    'nome'
+                ]),
+                'refinanciamento' => fn($q) => $q->select([
+                    'num_contrato1',
+                    'num_contrato2',
+                    'num_contrato3',
+                    'saldo_devedor1',
+                    'saldo_devedor2',
+                    'saldo_devedor3',
+                    'valor_parcela1',
+                    'valor_parcela2',
+                    'valor_parcela3',
+                ])
+
+            ])
+            ->where('id_proposta', '=', $propostaId)
+            ->firstOrFail();
+    }
 }

@@ -24,9 +24,9 @@
                     </Link>
                 </td>
 
-                <td>
+                <td class="text-center">
                     <button @click="modalConfirmaEnvio.showModal(proposta)"
-                        class="btn btn-sm btn-primary btn-soft btn-circle">
+                        class="btn btn-sm btn-primary btn-circle">
                         <ArrowUpCircle />
                     </button>
                 </td>

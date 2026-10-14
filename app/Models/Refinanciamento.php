@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Attributes\WithoutTimestamps;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -21,11 +22,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
     'saldo_devedor3',
     'valor_parcela3',
 ])]
+#[Table('refin', 'id_refin')]
 #[WithoutTimestamps]
 class Refinanciamento extends Model
 {
 
-    protected $primaryKey = 'id_refin';
+    // protected $primaryKey = 'id_refin';
 
     public function usuario():BelongsTo
     {

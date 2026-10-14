@@ -20,9 +20,10 @@ function closeModal() {
 }
 defineExpose({ showModal, closeModal })
 
-function reativarProposta() {
-    router.patch(
-        route('proposta.status.reativar', propostaId.value), {
+function enviarParaClickSign() {
+    router.post(
+        route('clicksign.enviar.proposta'), {
+        propostaId: propostaId.value
     },
         {
             preserveScroll: true,
@@ -79,7 +80,7 @@ function reativarProposta() {
                     Voltar
                 </button>
 
-                <button @click="reativarProposta"
+                <button @click="enviarParaClickSign"
                     :disabled="formProcessing"
                     class="btn btn-primary w-1/3">
                     {{ formProcessing ? 'Enviando' : 'Enviar' }}
