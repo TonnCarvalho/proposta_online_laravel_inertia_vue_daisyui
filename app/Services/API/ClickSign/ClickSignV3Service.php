@@ -6,6 +6,9 @@ use DateTime;
 use Exception;
 use RuntimeException;
 
+/**
+ * Só as requisições HTTP à API, sem regra de negócio
+ */
 class ClickSignV3Service
 {
     private string $appEnv;
@@ -229,7 +232,7 @@ class ClickSignV3Service
     /**
      * Informa quem é o contratado e o contratante.
      */
-    public function createQualification(string $role, string $documentId, string $signersId, string $envelopeId)
+    public function createQualification(string $role, string $documentId, $signerId, string $envelopeId)
     {
         $data_qualify = [
             "data" => [
@@ -248,7 +251,7 @@ class ClickSignV3Service
                     "signer" => [
                         "data" => [
                             "type" => "signers",
-                            "id" => $signersId,
+                            "id" => $signerId,
                         ],
                     ],
                 ],
@@ -283,7 +286,7 @@ class ClickSignV3Service
     /**
      * Cria o tipo de autenticação (selfie, whatsapp)
      */
-    public function createAuthentication(string $documentId, string $signersId, string $envelopeId, string|array $auth)
+    public function createAuthentication(string $documentId, $signerId, string $envelopeId, string|array $auth)
     {
         $data_authentication = [
             "data" => [
@@ -302,7 +305,7 @@ class ClickSignV3Service
                     "signer" => [
                         "data" => [
                             "type" => "signers",
-                            "id" => "$signersId"
+                            "id" => "$signerId"
                         ],
                     ],
                 ],
@@ -378,6 +381,11 @@ class ClickSignV3Service
         if ($err) {
             echo "cURL Error #:" . $err;
         }
+    }
+
+    public function deleteEnvelope()
+    {
+        return 'recusado';
     }
 
     private function parseResponse(object $curl, null|string $content = null): array|string
