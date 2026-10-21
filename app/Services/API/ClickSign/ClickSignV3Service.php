@@ -3,6 +3,7 @@
 namespace App\Services\API\ClickSign;
 
 use DateTime;
+use Exception;
 use RuntimeException;
 
 /**
@@ -60,11 +61,7 @@ class ClickSignV3Service
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
             CURLOPT_POSTFIELDS => json_encode($dataEnvelope),
-            CURLOPT_HTTPHEADER => [
-                "Authorization: $this->apiKey",
-                "Content-type: application/vnd.api+json",
-                "accept: application/json"
-            ],
+            CURLOPT_HTTPHEADER => $this->headers()
         ]);
         $data = $this->parseResponse($curl, 'createEnvelope');
         return $data['data']['id'];
@@ -106,11 +103,7 @@ class ClickSignV3Service
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "PATCH",
             CURLOPT_POSTFIELDS => json_encode($dataEnvelope),
-            CURLOPT_HTTPHEADER => [
-                "Authorization: $this->apiKey",
-                "Content-type: application/vnd.api+json",
-                "accept: application/json"
-            ],
+            CURLOPT_HTTPHEADER => $this->headers()
         ]);
 
         $data = $this->parseResponse($curl, 'runningEnvelope');
@@ -197,11 +190,7 @@ class ClickSignV3Service
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
             CURLOPT_POSTFIELDS => json_encode($data_signers),
-            CURLOPT_HTTPHEADER => [
-                "Authorization: $this->apiKey",
-                "Content-type: application/vnd.api+json",
-                "accept: application/json"
-            ],
+            CURLOPT_HTTPHEADER => $this->headers()
         ]);
 
         $data = $this->parseResponse($curl, 'createSigners');
@@ -248,11 +237,7 @@ class ClickSignV3Service
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
             CURLOPT_POSTFIELDS => json_encode($data_qualify),
-            CURLOPT_HTTPHEADER => [
-                "Authorization: $this->apiKey",
-                "Content-type: application/vnd.api+json",
-                "accept: application/json"
-            ],
+            CURLOPT_HTTPHEADER => $this->headers()
         ]);
 
         $data = $this->parseResponse($curl, 'createQualification');
@@ -300,11 +285,7 @@ class ClickSignV3Service
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
             CURLOPT_POSTFIELDS => json_encode($data_authentication),
-            CURLOPT_HTTPHEADER => [
-                "Authorization: $this->apiKey",
-                "Content-type: application/vnd.api+json",
-                "accept: application/json"
-            ],
+            CURLOPT_HTTPHEADER => $this->headers()
         ]);
 
         $data = $this->parseResponse($curl, 'createAuthentication');
@@ -338,11 +319,7 @@ class ClickSignV3Service
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
             CURLOPT_POSTFIELDS => json_encode($data_notification),
-            CURLOPT_HTTPHEADER => [
-                "Authorization: $this->apiKey",
-                "Content-type: application/vnd.api+json",
-                "accept: application/json"
-            ],
+            CURLOPT_HTTPHEADER => $this->headers()
         ]);
 
         $data = $this->parseResponse($curl, 'notificationSigners');
@@ -360,15 +337,20 @@ class ClickSignV3Service
             CURLOPT_TIMEOUT => 30,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "DELETE",
-            CURLOPT_HTTPHEADER => [
-                "Authorization: $this->apiKey",
-                "accept: application/json"
-            ],
+            CURLOPT_HTTPHEADER => $this->headers()
         ]);
 
         $this->parseResponse($curl, 'deleteEnvelope');
     }
 
+    private function headers(): array
+    {
+        return [
+            "Authorization: {$this->apiKey}",
+            "Content-type: application/vnd.api+json",
+            "accept: application/json",
+        ];
+    }
     private function parseResponse(\CurlHandle $curl, ?string $content = null): array
     {
         $response  = curl_exec($curl);
@@ -377,17 +359,14 @@ class ClickSignV3Service
         curl_close($curl);
 
         if ($response === false) {
-            throw new RuntimeException("Erro cURL {$content}: {$curlError}");
+            throw new Exception("Erro cURL {$content}: {$curlError}");
         }
 
         $data = json_decode($response, true) ?? [];
 
         if ($httpCode < 200 || $httpCode >= 300) {
-            $erros = collect($data['errors'] ?? [])
-                ->map(fn($e) => ($e['source']['pointer'] ?? '') . ' ' . ($e['detail'] ?? ''))
-                ->implode(' | ');
-
-            throw new RuntimeException("Erro Clicksign {$content} ({$httpCode}): " . ($erros ?: $response));
+            $erro = $data['errors'][0]['detail'] ?? 'Erro desconhecido';
+            throw new Exception("Erro Clicksign {$content} ({$httpCode}): {$erro}");
         }
 
         return $data;
