@@ -67,8 +67,8 @@ class Proposta extends Model
         return $this->hasOne(Pendencia::class, 'id_pendencia');
     }
 
-    public function refinanciamento(): HasMany
+    public function refinanciamento(): HasOne
     {
-        return $this->hasMany(Refinanciamento::class, 'id_proposta');
+        return $this->hasOne(Refinanciamento::class, 'id_proposta');
     }
 }

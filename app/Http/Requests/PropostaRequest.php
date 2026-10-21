@@ -140,6 +140,9 @@ class PropostaRequest extends FormRequest
     public function prepareForValidation()
     {
         $associado = $this->input('associado', []);
+
+        $associado['cel'] = $this->converterTelefoneParaDigitos($associado['cel'] ?? null);
+
         $associado['data_nasc'] = $this->converterDataParTipoDate($associado['data_nasc'] ?? null);
 
         $associado['data_admissao'] = $this->converterDataParTipoDate($associado['data_admissao'] ?? null);
@@ -162,6 +165,21 @@ class PropostaRequest extends FormRequest
             'associado' => $associado,
             'financeiro' => $financeiro,
         ]);
+    }
+
+    /**
+     * Remove a máscara do telefone: '(71) 98745-4321' para '987454321'
+     *
+     * @param string|null $telefone
+     * @return string|null
+     */
+    private function converterTelefoneParaDigitos(?string $telefone): ?string
+    {
+        if ($telefone === null || trim($telefone) === '') {
+            return $telefone;
+        }
+
+        return preg_replace('/\D/', '', $telefone);
     }
 
     /**

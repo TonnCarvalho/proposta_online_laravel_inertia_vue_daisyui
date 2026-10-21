@@ -3,7 +3,6 @@
 namespace App\Services\API\ClickSign;
 
 use DateTime;
-use Exception;
 use RuntimeException;
 
 /**
@@ -11,22 +10,16 @@ use RuntimeException;
  */
 class ClickSignV3Service
 {
-    private string $appEnv;
     private string $apiKey;
     private string $apiUrl;
 
     public function __construct()
     {
-        // Ambiente (local | produção)
-        $this->appEnv = $_ENV['APP_ENV'] ?? 'local';
-
         //API URL conforme ambiente
-        $this->apiUrl = $this->appEnv === 'production'
-            ? 'https://app.clicksign.com/api/v3'
-            : 'https://sandbox.clicksign.com/api/v3';
+        $this->apiUrl = config('services.clicksign.url');
 
         // Credencial
-        $this->apiKey = $_ENV['CLICKSIGN_API_KEY'];
+        $this->apiKey = config('services.clicksign.api_key');
     }
 
     /**
@@ -73,13 +66,8 @@ class ClickSignV3Service
                 "accept: application/json"
             ],
         ]);
-
-        try {
-            $data = $this->parseResponse($curl, 'createEnvelope');
-            return $data['data']['id'];
-        } catch (Exception $e) {
-            return $e->getMessage();
-        }
+        $data = $this->parseResponse($curl, 'createEnvelope');
+        return $data['data']['id'];
     }
 
     /**
@@ -168,17 +156,12 @@ class ClickSignV3Service
             ]
         ]);
 
-        try {
-            $data = $this->parseResponse($curl, 'createDocumentTemplate');
-            return $data['data']['id'];
-        } catch (Exception $e) {
-            return $e->getMessage();
-        }
+        $response = $this->parseResponse($curl, 'createDocumentTemplate');
+        return $response['data']['id'];
     }
 
     /**
      * Cria os assinantes do documento.
-     * @return signerId
      */
     public function createSigners(string $envelopeId, string $name, string $email, string $phone_number)
     {
@@ -191,9 +174,9 @@ class ClickSignV3Service
                     "location_required_enabled" => false,
                     "refusable" => true,
                     "communicate_events" => [
-                        "signature_request" => "whatsapp", //whatsapp, email
+                        "signature_request" => "whatsapp",
                         "signature_reminder" => "email",
-                        "document_signed" => "whatsapp" //whatsapp, email
+                        "document_signed" => "whatsapp"
                     ],
                     "name" => "$name",
                     "email" => "$email",
@@ -221,12 +204,8 @@ class ClickSignV3Service
             ],
         ]);
 
-        try {
-            $data = $this->parseResponse($curl, 'createSigners');
-            return $data['data']['id'];
-        } catch (Exception $e) {
-            return $e->getMessage();
-        }
+        $data = $this->parseResponse($curl, 'createSigners');
+        return $data['data']['id'];
     }
 
     /**
@@ -275,12 +254,9 @@ class ClickSignV3Service
                 "accept: application/json"
             ],
         ]);
-        try {
-            $data = $this->parseResponse($curl, 'createQualification');
-            return $data;
-        } catch (Exception $e) {
-            return $e->getMessage();
-        }
+
+        $data = $this->parseResponse($curl, 'createQualification');
+        return $data;
     }
 
     /**
@@ -288,6 +264,7 @@ class ClickSignV3Service
      */
     public function createAuthentication(string $documentId, $signerId, string $envelopeId, string|array $auth)
     {
+
         $data_authentication = [
             "data" => [
                 "type" => "requirements",
@@ -330,12 +307,8 @@ class ClickSignV3Service
             ],
         ]);
 
-        try {
-            $data = $this->parseResponse($curl, 'createAuthentication');
-            return $data;
-        } catch (Exception $e) {
-            return $e->getMessage();
-        }
+        $data = $this->parseResponse($curl, 'createAuthentication');
+        return $data;
     }
 
     /**
@@ -372,39 +345,49 @@ class ClickSignV3Service
             ],
         ]);
 
-        curl_exec($curl);
-
-        $err = curl_error($curl);
-
-        curl_close($curl);
-
-        if ($err) {
-            echo "cURL Error #:" . $err;
-        }
+        $data = $this->parseResponse($curl, 'notificationSigners');
     }
 
-    public function deleteEnvelope()
+    public function deleteEnvelope(string $envelopeId)
     {
-        return 'recusado';
+        $curl = curl_init();
+
+        curl_setopt_array($curl, [
+            CURLOPT_URL => "{$this->apiUrl}/envelopes/{$envelopeId}",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "DELETE",
+            CURLOPT_HTTPHEADER => [
+                "Authorization: $this->apiKey",
+                "accept: application/json"
+            ],
+        ]);
+
+        $this->parseResponse($curl, 'deleteEnvelope');
     }
 
-    private function parseResponse(object $curl, null|string $content = null): array|string
+    private function parseResponse(\CurlHandle $curl, ?string $content = null): array
     {
-        $response = curl_exec($curl);
+        $response  = curl_exec($curl);
         $curlError = curl_error($curl);
-        $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        $httpCode  = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
 
         if ($response === false) {
-            throw new Exception("Error cURL {$content}: " . $curlError);
+            throw new RuntimeException("Erro cURL {$content}: {$curlError}");
         }
 
-        curl_close($curl);
-
-        $data = json_decode($response, true);
+        $data = json_decode($response, true) ?? [];
 
         if ($httpCode < 200 || $httpCode >= 300) {
-            $erro = $data['errors'][0]['detail'] ?? 'Error desconhecido';
-            throw new Exception("Error Clicksign {$content} ({$httpCode}): {$erro}");
+            $erros = collect($data['errors'] ?? [])
+                ->map(fn($e) => ($e['source']['pointer'] ?? '') . ' ' . ($e['detail'] ?? ''))
+                ->implode(' | ');
+
+            throw new RuntimeException("Erro Clicksign {$content} ({$httpCode}): " . ($erros ?: $response));
         }
 
         return $data;
@@ -417,20 +400,16 @@ class ClickSignV3Service
      */
     private function keyDocument(string $codLocal): string
     {
-        $key = '';
-
-        if ($this->appEnv == 'local') {
-            return $key = 'f464b143-4f07-4c44-80f1-64790cafd5cd';
-        }
+        $key = null;
 
         //Proposta autorização | declaração Estado - Ba
         if ($codLocal == 2) {
-            $key = '6a908a20-8adb-4a8a-8065-eaffb855da6f';
+            $key = config('services.clicksign.template.estado_ba');
         }
 
         //Contrato mensalidade | Declaração Municipios | Gov Paraíba
         if ($codLocal != 2) {
-            $key = 'fc25b47f-2ce3-418f-89e3-9cdf55eab3da';
+            $key = config('services.clicksign.template.municipios');
         }
 
         return $key;

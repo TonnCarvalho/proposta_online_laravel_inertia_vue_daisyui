@@ -33,6 +33,7 @@ class MontarDadosDocumentoClickSign
         return [
             'id_proposta'   => $dados['id_proposta'],
             'proposta'      => $dados['num_proposta'],
+            'cod_local'     => $dados['cod_local'],
             'cod_corretor'  => $dados['cod_corretor'],
             'nome_praca'    => $dados['origem']['nome'],
         ];

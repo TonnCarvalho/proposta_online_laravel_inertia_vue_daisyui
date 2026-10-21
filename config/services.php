@@ -35,4 +35,18 @@ return [
         ],
     ],
 
+    'clicksign' => [
+        'api_key' => env('CLICKSIGN_API_KEY'),
+        'url' => env('CLICKSIGN_URL'),
+        'contratado' => [
+            'name' => env('CLICKSIGN_CONTRATADO_NOME'),
+            'email' => env('CLICKSIGN_CONTRATADO_EMAIL'),
+            'phone_number' => env('CLICKSIGN_CONTRATADO_TELEFONE'),
+        ],
+        'template' => [
+            'estado_ba' => env('CLICKSIGN_TEMPLATE_ESTADO_BA'),
+            'municipios' => env('CLICKSIGN_TEMPLATE_MUNICIPIOS'),
+        ],
+    ]
+
 ];

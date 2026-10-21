@@ -10,6 +10,7 @@ use App\Queries\PropostaQuery;
 use App\Services\API\ClickSign\ClickSignV3Service;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use RuntimeException;
 use Throwable;
 
 /**
@@ -26,44 +27,55 @@ class EnviarPropostaParaClickSignService
 
     public function executar(int $idProposta): void
     {
-        $dadosParaDocumento = $this->propostaQuery->dadosPropostaParaDocumento($idProposta);
-        $dados = $this->montarDadosDocumentoClickSign->execute($dadosParaDocumento);
+        // 1. Reserva: só uma requisição consegue fazer essa troca
+        $reservada = Proposta::query()
+            ->where('id_proposta', $idProposta)
+            ->where('status_proposta', StatusProposta::CONFERIDO->value)
+            ->where('status_assinatura', StatusAssinatura::NAO_ENVIADO->value)
+            ->update(['status_assinatura' => StatusAssinatura::AGUARDANDO_ASSINATURA->value]);
 
-        //Reserva a proposta: se outra requisição já pegou, aborta.
-        $reservada = Proposta::where('id_proposta', $idProposta)
-            ->update(['status_assinatura' => StatusAssinatura::ENVIADO]);
+        if (! $reservada) {
+            throw new RuntimeException('Proposta já enviada ou com status inválido para envio.');
+        }
 
         $envelopeId = null;
+        $documentId = null;
 
+        // 2. Montagem do envelope (ainda em rascunho, dá para desfazer)
         try {
+            $proposta = $this->propostaQuery->dadosPropostaParaDocumento($idProposta);
+            $dadosAssociado = $this->montarDadosDocumentoClickSign->execute($proposta);
+
             //Cria envelope
             $envelopeId = $this->clicksignV3Service->createEnvelope(
-                "Envelope de {$dados['nome']}"
+                "Envelope de {$dadosAssociado['nome']}"
             );
 
             //Cria documento
             $documentId = $this->clicksignV3Service
                 ->createDocumentTemplate(
                     $envelopeId,
-                    $dados,
-                    $this->nomeArquivo($dados),
-                    $dados['cod_local']
+                    $dadosAssociado,
+                    $this->nomeArquivo($dadosAssociado),
+                    $dadosAssociado['cod_local']
                 );
 
-            //Adiciona o cliente como signatario
+            // Cliente (contratante)
             $this->adicionarSignatario(
                 $envelopeId,
                 $documentId,
                 'contractor',
                 [
-                    'nome'          => $dados['nome'],
-                    'email'         => $dados['email'],
-                    'phone_number'  => $dados['cel']
+                    'name'          => $dadosAssociado['nome'],
+                    'email'         => $dadosAssociado['email'],
+                    'phone_number'  => $dadosAssociado['cel']
                 ],
-                ['whatsapp', 'self']
+                ['whatsapp']
+                // ['whatsapp', 'selfie']
             );
 
-            //Adicionar o contratado como signatario
+            // Contratado
+
             $this->adicionarSignatario(
                 $envelopeId,
                 $documentId,
@@ -73,31 +85,29 @@ class EnviarPropostaParaClickSignService
             );
 
             $this->clicksignV3Service->runningEnvelope($envelopeId);
-
-            $this->clicksignV3Service->notificationSigners($envelopeId);
         } catch (Throwable $e) {
+            $this->desfazerEnvio($idProposta, $envelopeId, $e);
 
-            if ($envelopeId) {
-                rescue(
-                    fn() => $this->clicksignV3Service->deleteEnvelope($envelopeId)
-                );
-            }
-
-            Proposta::where('id_proposta', '=', $idProposta)
-                ->update(['status_assinatura' => StatusAssinatura::PENDENTE]);
-
-            Log::error('Falha ao enviar proposta para Clicksign', [
-                'proposta_id' => $idProposta,
-                'envelope_id' => $envelopeId,
-                'erro' => $e->getMessage()
-            ]);
+            throw $e;
         }
 
-        Proposta::where('id_proposta', $idProposta)
-        ->update([
-            'status_proposta'   => StatusProposta::AGUARDANDO_ASSINATURA,
-            'status_assinatura' => StatusAssinatura::AGUARDANDO_ASSINATURA        
-        ]);
+        // 3. Ponto sem volta: o envelope já está ativo
+        Proposta::query()
+            ->where('id_proposta', $idProposta)
+            ->update([
+                'status_proposta' => StatusProposta::AGUARDANDO_ASSINATURA->value
+            ]);
+
+        // 4. Notificação: se falhar, só registra (dá para reenviar depois)
+        try {
+            $this->clicksignV3Service->notificationSigners($envelopeId);
+        } catch (Throwable $e) {
+            Log::warning('Envelope ativo, mas falhou ao notificar signatários', [
+                'proposta_id' => $idProposta,
+                'envelope_id' => $envelopeId,
+                'exception'   => $e,
+            ]);
+        }
     }
 
     /**
@@ -114,7 +124,7 @@ class EnviarPropostaParaClickSignService
         //Cria o Signatario
         $signerId = $this->clicksignV3Service->createSigners(
             $envelopeId,
-            $signatario['nome'],
+            $signatario['name'],
             $signatario['email'],
             $signatario['phone_number']
         );
@@ -138,13 +148,30 @@ class EnviarPropostaParaClickSignService
         }
     }
 
-    private function nomeArquivo(array $dados): string
+    private function desfazerEnvio(int $idProposta, ?string $envelopeId, Throwable $e): void
+    {
+        if ($envelopeId) {
+            rescue(fn() => $this->clicksignV3Service->deleteEnvelope($envelopeId));
+        }
+
+        Proposta::query()
+            ->where('id_proposta', $idProposta)
+            ->update(['status_assinatura' => StatusAssinatura::NAO_ENVIADO->value]);
+
+        Log::error('Falha ao enviar proposta para Clicksign', [
+            'proposta_id' => $idProposta,
+            'envelope_id' => $envelopeId,
+            'exception'   => $e,
+        ]);
+    }
+
+    private function nomeArquivo(array $dadosAssociado): string
     {
         return sprintf(
-            '%s_%s_%s_docx',
-            $dados['proposta'],
-            Str::upper(Str::slug($dados['nome'], '_')),
-            $dados['cpf']
+            '%s_%s_%s.docx',
+            $dadosAssociado['proposta'],
+            Str::upper(Str::slug($dadosAssociado['nome'], ' ')),
+            $dadosAssociado['cpf']
         );
     }
 }
